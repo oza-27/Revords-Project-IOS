@@ -9,7 +9,7 @@ import TabNavigation from "./components/TabNavigation";
 import ProfileEdit from "./components/ProfileEdit";
 import { useEffect } from "react";
 import LandingScreen from "./components/LandingScreen";
-// import messaging from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import BusinessDetailsView from "./components/BusinessDetailsView";
 import NotificationTray from "./components/NotificationTray";
 import SplashScreen from "react-native-splash-screen";
@@ -21,13 +21,13 @@ export default function App() {
     setTimeout(() => SplashScreen.hide(), 2000);
   },[]);
   const Stack = createStackNavigator();
-  // useEffect(() => {
-  //   getDeviceToken()
-  // }, []);
-  // const getDeviceToken = async () => {
-  //   let token = await messaging().getToken()
-  //   console.log("Device token generated:---", token);
-  // };
+  useEffect(() => {
+    getDeviceToken()
+  }, []);
+  const getDeviceToken = async () => {
+    let token = await messaging().getToken()
+    console.log("Device token generated:---", token);
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator>

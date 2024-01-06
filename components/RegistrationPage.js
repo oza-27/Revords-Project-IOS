@@ -73,7 +73,7 @@ export default function RegistrationPage({ route }) {
         // const monthIndex = months.findIndex(month => month.toLowerCase() === selectedMonths.toLowerCase());
         // const birthMonth = monthIndex > 8 ? monthIndex + 1 : '0' + (monthIndex + 1);
         // const birthDay = selectDays > 9 ? selectDays : '0' + selectDays;
-        //await getToken()
+        await getToken()
         const MemberData = [];
         let currentDate = (new Date()).toISOString();
         let currentYear = new Date().getFullYear();
