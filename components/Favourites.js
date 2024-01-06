@@ -313,9 +313,8 @@ const Favourite = ({ navigation }) => {
 
     return (
         <View style={styles.container} >
-            <View style={[styles.suncontainer, isPromoModalVisible ? { backgroundColor: 'rgba(0,0,0,0.5)', opacity: 0.4 } : '', isAutoPilotModalVisible ? { backgroundColor: 'rgba(0,0,0,0.5)', opacity: 0.4 } : '',
-            isAnnouncementModalVisible ? { backgroundColor: 'rgba(0,0,0,0.5)', opacity: 0.4 } : '']}>
-                <View style={{ flexDirection: 'row', width: '97%', height: '10%', alignItems: 'center', justifyContent: 'center' }}>
+           
+                <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={styles.welcomeText}>Favorite</Text>
                     <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
                         <Image source={require('../assets/notification-skD.png')} style={styles.setimg1} />
@@ -440,7 +439,6 @@ const Favourite = ({ navigation }) => {
                     </ScrollView >
                 </SafeAreaView>
 
-            </View>
 
             <Modal
                 animationType={'slide'}
@@ -565,10 +563,11 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         paddingTop: '5%',
-        height: '90%',
+        height: '100%',
         width: '97%',
         alignItems: 'center',
-        borderRadius: 50
+        borderRadius: 50,
+        marginTop:'-15%'
     },
     modalcontainer: {
         flex: 1,
@@ -691,30 +690,32 @@ const styles = StyleSheet.create({
     pendingpoints: {
         color: '#73a5bc',
         fontWeight: '800',
-        top: 60,
+        top: 50,
         // left: 40,
         alignSelf: 'center',
         bottom: 12,
         fontSize: 13
     },
     progressBar: {
-        top: 55,
+        top: 40,
         left: 15
     },
     achievalbeValue: {
         color: '#717679',
         fontWeight: '700',
         fontSize: 15,
-        top: 50,
+        top: '80%',
         alignSelf: 'center',
         padding: '2%',
-        position: 'absolute'
+        position: 'absolute',
+        // marginTop:'-10%'
     },
     achievableName: {
         fontWeight: '700',
         color: '#000000',
         fontSize: 16,
         width: 160,
+        height:70,
         // top: '20%',
         paddingHorizontal: 5,
         paddingVertical: 7
@@ -831,11 +832,12 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         color: 'black',
-        fontSize: 24,
-        fontWeight: '600',
+        fontSize: 18,
+        fontWeight: '800',
+        textTransform: 'uppercase',
+        marginTop: '5%',
         textAlign: 'center',
-        width: '80%',
-        top:35
+        width: '80%'
     },
     container: {
         height: '100%',
@@ -844,13 +846,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     setimg1: {
-        width: 55,
-        height: 45,
-        marginTop:'-30%',
+        width: 50,
+        height: 50,
+        marginTop: -16,
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -15,
-        top:15
+        right: -30
     },
     modalbusinessName: {
         fontWeight: '800',

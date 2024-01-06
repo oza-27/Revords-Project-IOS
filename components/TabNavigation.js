@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Favourite from './Favourites';
-import { Ionicons } from '@expo/vector-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProfileStack from './ProfileStack';
 import LocationStack from './LocationStack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 export default function TabNavigation({ route, navigation }) {
     const Tab = createBottomTabNavigator();

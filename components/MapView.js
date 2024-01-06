@@ -174,14 +174,14 @@ export default function MapViewing({ navigation }) {
     return (
         <View style={styles.container}>
 
-            <View style={{ flexDirection: 'row', width: '100%', height: 95, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={styles.welcomeText}>Where to go?</Text>
-                <TouchableOpacity activeOpacity={.9} onPress={() => navigation.navigate('NotificationTray')}>
+                <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
                     <Image source={require('../assets/notification-oRK.png')} style={styles.setimg1} />
                 </TouchableOpacity>
             </View>
 
-            <View style={{ flexDirection: 'row', width: '100%', height: 75, marginTop: 20 }}>
+            <View style={{ flexDirection: 'row', width: '100%', height: 75, marginTop: '-5%' }}>
                 <View style={{ width: '82%', paddingHorizontal: '2%', height: '70%' }}>
                     <TextInput style={styles.searchInput} placeholder='Search..' onChangeText={text => handleInputChange(text)} />
                     <Image style={styles.magnifyingGlass} source={require('../assets/magnifyingglass-qQV.png')} />
@@ -294,19 +294,19 @@ export default function MapViewing({ navigation }) {
 
 const styles = StyleSheet.create({
     setimg1: {
-        width: 55,
-        height: 45,
-        marginTop: '-20%',
+        width: 50,
+        height: 50,
+        marginTop: -16,
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -23.9,
-        top:10
+        right: -30
     },
     welcomeText: {
         color: 'black',
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: '800',
-        marginTop: '12%',
+        textTransform: 'uppercase',
+        marginTop: '5%',
         textAlign: 'center',
         width: '80%'
     },

@@ -234,7 +234,7 @@ const Location = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+              
                     <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={styles.welcomeText}>Where to go?</Text>
                         <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
@@ -242,7 +242,7 @@ const Location = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{ width: '97%', height: '93%', marginTop: '2%' }}>
+                    <View style={{ width: '97%', height: '93%', marginTop: '-5%' }}>
                         <View style={styles.searchBoxMain}>
                             <TextInput style={styles.searchInput} placeholder='Search..' onChangeText={text => handleInputChange(text)}/>                           
                             <Image style={styles.magnifyingGlass} source={require('../assets/magnifyingglass-qQV.png')} />
@@ -263,7 +263,7 @@ const Location = ({ navigation }) => {
                                             <Card.Cover source={{ uri: Globals.Root_URL + item.imagePath }} style={styles.cardCover} />
 
                                             <Card.Content style={styles.cardContent}>
-                                                <View style={{  width: '30%', height: 180, alignItems: 'center', justifyContent: 'center' }}>
+                                                <View style={{  width: '30%', height: '90%', alignItems: 'center', justifyContent: 'center' }}>
                                                     <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + item.logoPath }}></Image>
                                                 </View>
                                                 <View style={{ width: '70%', height: '100%' }}>
@@ -289,7 +289,7 @@ const Location = ({ navigation }) => {
                             />
                         </View>
                     </View>
-                </View>
+               
 
                 <SafeAreaView>
                     <View style={styles.container}>
@@ -345,12 +345,12 @@ const styles = StyleSheet.create({
         padding: 14,
         paddingHorizontal: 20,
         paddingBottom: 12,
-        paddingLeft: 18,
+        paddingLeft: '40%',
         height: '100%',
         backgroundColor: '#3380a3',
         borderRadius: 8,
         flexShrink: 0,
-        marginRight: '2%'
+        marginRight: '-15%'
     },
     magnifyingGlass: {
         height: 26.028,
@@ -416,11 +416,10 @@ const styles = StyleSheet.create({
     setimg1: {
         width: 50,
         height: 50,
-        marginTop: 'auto',
+        marginTop: -16,
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -20,
-        top:20
+        right: -30
     },
     milesText: {
         color: '#73a5bc',
@@ -429,9 +428,10 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         color: 'black',
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: '800',
-        marginTop: 'auto',
+        textTransform: 'uppercase',
+        marginTop: '5%',
         textAlign: 'center',
         width: '80%'
     },
