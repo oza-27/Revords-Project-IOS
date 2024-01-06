@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     avatarImg: {
         height: 50,
         width: 110,
-        marginBottom:'100%',
+        marginTop:'-55%',
         marginRight:'20%',
         borderRadius: 10
     },

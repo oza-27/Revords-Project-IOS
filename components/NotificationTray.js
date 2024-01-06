@@ -182,8 +182,7 @@ const NotificationTray = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                <View style={[{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' },
-                isPromoModalVisible ? { backgroundColor: 'rgba(0,0,0,0.5)', opacity: 0.4 } : '', isAutoPilotModalVisible ? { backgroundColor: 'rgba(0,0,0,0.5)', opacity: 0.4 } : '']}>
+               
                     <View style={{ flexDirection: 'row', width: '97%', height: '10%', alignItems: 'center', justifyContent: 'center' }}>
                         <TouchableOpacity activeOpacity={.7} onPress={() => navigation.goBack()}>
                             <Image source={require('../assets/more-button-ved.png')} style={styles.setimg1} />
@@ -229,7 +228,7 @@ const NotificationTray = ({ navigation }) => {
                             />
                         </View>
                     </View>
-                </View>
+
 
                 <Modal
                     animationType={'slide'}
@@ -524,11 +523,10 @@ const styles = StyleSheet.create({
     setimg1: {
         width: 50,
         height: 50,
-        marginTop: '10%',
+        marginTop:'auto',
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -20,
-        top:20
+        right: -25
     },
     milesText: {
         color: '#73a5bc',
@@ -537,9 +535,10 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         color: 'black',
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: '800',
-        marginTop: '20%',
+        textTransform: 'uppercase',
+        marginTop: '12%',
         textAlign: 'center',
         width: '80%'
     },

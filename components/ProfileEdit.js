@@ -1,4 +1,4 @@
-import { StyleSheet, Image, Text, View, ScrollView, ToastAndroid, PermissionsAndroid, Alert, PanResponder, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
+import { StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Alert, PanResponder, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
 // import { TextInput } from 'react-native-gesture-handler';
 import MaskInput from 'react-native-mask-input';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,6 +15,7 @@ import RNFS from 'react-native-fs';
 import { useIsFocused } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import moment from 'moment';
+import Toast from 'react-native-simple-toast';
 
 const ProfileEdit = ({ navigation, route }) => {
     const focus = useIsFocused();
@@ -138,12 +139,10 @@ const ProfileEdit = ({ navigation, route }) => {
                 await getMemberData();
                 setLoading(false);
                 Toast.show(
-                    'Updated Successfully!',
+                    `Updated Successfully`,
                     Toast.LONG,
                     Toast.BOTTOM,
-                    25,
-                    50,
-                );
+                )
                 navigation.navigate('Profiles');
             })
             .catch(error => console.error(error));
