@@ -37,6 +37,15 @@ export default function MapViewing({ navigation }) {
                 // await getCurrentLocation();
             }
         }
+
+        if(Platform.OS === 'ios')
+        {
+            const checkEnabled = await isLocationEnabled();
+            if (!checkEnabled) {
+                await handleEnabledPressed();
+                // await getCurrentLocation();
+            }
+        }
     }
 
     const backPressed = () => {

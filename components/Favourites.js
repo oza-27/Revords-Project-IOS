@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, Image, Text, View, TouchableOpacity, Modal, Platform, Pressable } from 'react-native';
 import Globals from '../components/Globals';
 import { Button, Card } from 'react-native-paper';
@@ -31,10 +32,12 @@ const Favourite = ({ navigation }) => {
     const [MemberData, setMemberData] = useState([{}]);
     const [loading, setLoading] = useState(false);
     const [earnerRewards, setEarnedRevards] = useState([]);
-    const isFocused = useIsFocused;
+    const isFocused = useIsFocused();
     const [isPromoModalVisible, setIsPromoModalVisible] = useState(false);
     const [isAutoPilotModalVisible, setIsAutoPilotModalVisible] = useState(false);
     const [isAnnouncementModalVisible, setIsAnnouncementModalVisible] = useState(false);
+    const [active, setActive] = useState(true);  
+
     const pulse = {
         0:{
             scale: 1,
@@ -239,10 +242,9 @@ const Favourite = ({ navigation }) => {
             )
         }
     }
-
     useEffect(() => {
-        getRefreshData();
-    }, [isFocused]);
+        isFocused && getRefreshData()
+      },[isFocused]);
 
     const likeProfile = (business) => {
         console.log('businesssssss', business)
