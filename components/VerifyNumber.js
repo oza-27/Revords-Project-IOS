@@ -42,36 +42,36 @@ const VerifyNumber = ({ navigation }) => {
       const randomOtp = await generateRandomNumber();
       console.log(randomOtp)
       try {
-        // fetch(`${Globals.API_URL}/Mail/SendOTP/${parseFloat(unMaskPhone)}/${randomOtp}`, {
-        //   method: 'POST',
-        //   headers: {
-        //     Accept: 'application/json',
-        //     'Content-Type': 'application/json',
-        //   },
-        // }).then((res) => {
-        //   console.log('otp response-----',JSON.stringify(res))
-        //   if(res.ok){
+        fetch(`${Globals.API_URL}/Mail/SendOTP/${parseFloat(unMaskPhone)}/${randomOtp}`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }).then((res) => {
+          console.log('otp response-----',JSON.stringify(res))
+          if(res.ok){
             navigation.navigate('GetOtp', { OTP: randomOtp, CustomerExists: CustomerExists, Phone: unMaskPhone })
             setLoading(false);
-        //   }
-        //  else {
-        //   const errorResponse = res.json();
-        //   const statusText = errorResponse.statusText || 'You can only sign in with U.S.A number'
-        //   Toast.show(
-        //     statusText,
-        //     Toast.LONG,
-        //     Toast.CENTER,
-        //     {
-        //         backgroundColor:'blue'
-        //     }
-        //   )
-        //   setLoading(false)
-        //   console.log("Error Message:---", statusText);
-        //  }
-          // return json;
-        // }).catch((error) => {
-        //   console.log("Error fetching OTP! Kindly check your number", error);
-        // });
+          }
+         else {
+          const errorResponse = res.json();
+          const statusText = errorResponse.statusText || 'You can only sign in with U.S.A number'
+          Toast.show(
+            statusText,
+            Toast.LONG,
+            Toast.CENTER,
+            {
+                backgroundColor:'blue'
+            }
+          )
+          setLoading(false)
+          console.log("Error Message:---", statusText);
+         }
+          return json;
+        }).catch((error) => {
+          console.log("Error fetching OTP! Kindly check your number", error);
+        });
       } catch (error) {
         console.log(error);
         Toast.show(

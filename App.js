@@ -24,7 +24,6 @@ export default function App() {
   }, []);
   const getDeviceToken = async () => {
     let token = await messaging().getToken()
-    console.log("Device token generated:---", token);
   };
   return (
     <NavigationContainer>

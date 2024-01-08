@@ -9,7 +9,7 @@ import Globals from '../components/Globals';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
-// import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
 import { useIsFocused } from '@react-navigation/native';
@@ -281,13 +281,34 @@ const ProfileEdit = ({ navigation, route }) => {
                     requestCameraPermission();
                 }
             } else {
-                const result = await check(PERMISSIONS.IOS.CAMERA);
+                setOptionModalVisible(false);
+                const options = {
+                    mediaType: 'photo',
+                    includeBase64: false,
+                    maxHeight: 2000,
+                    maxWidth: 2000,
+                };
+                const launchCallback = (response) => {
+                    if (response.didCancel) {
+                        console.log('User cancelled image picker');
+                    } else if (response.error) {
+                        console.log('ImagePicker Error: ', response.error);
+                    } else {
+                        let imageUri = response.uri || response.assets?.[0]?.uri;
+                        setMemberProfilePic(null);
+                        setSelectedImage(imageUri);
+                        setImageRes(response);
+                        console.log(imageUri)
+                        console.log('response', response)
+                        console.log(MemberData[0].memberId)
+                    }
+                };
 
-                if (result === RESULTS.GRANTED) {
-                    console.log('Camera permission is granted');
-                } else {
-                    console.log('Camera permission is not granted');
-                    requestCameraPermission();
+                if (option === 'library') {
+                    console.log('library')
+                    launchImageLibrary(options, launchCallback);
+                } else if (option === 'camera') {
+                    launchCamera(options, launchCallback);
                 }
             }
         } catch (error) {
@@ -478,6 +499,9 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#d9e7ed',
         alignItems: 'center',
+    },
+    pickerContainer:{
+         border:'none'
     },
     img1: {
         width: 100,

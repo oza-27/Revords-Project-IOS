@@ -77,15 +77,15 @@ const GetOtp = ({ route, navigation }) => {
 
     const verifyOtp = async () => {
         try {
-            // if (otp.join('').length !== 0) {
-            //     if (otp.join('') == OTP) {
+            if (otp.join('').length !== 0) {
+                if (otp.join('') == OTP) {
                     setIsVerified(true);
                     setSeconds(0);
                     navigation.navigate('AppTour', { MemberData: CustomerExists, Phone: Phone });
-                // } else {
-                //     setIsVerified(false);
-                // }
-            //}
+                } else {
+                    setIsVerified(false);
+                }
+            }
         }
         catch (error) {
             console.error('Error storing token:', error);

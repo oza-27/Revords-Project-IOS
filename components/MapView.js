@@ -1,5 +1,5 @@
-import { StyleSheet, View, Text, Image, TextInput, PermissionsAndroid, SafeAreaView, BackHandler, Platform } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import { StyleSheet, View, Text, Image, TextInput, PermissionsAndroid, SafeAreaView, BackHandler, Platform, Pressable, Alert } from 'react-native';
+import MapView, { Marker, Callout, PROVIDER_GOOGLE, CalloutSubview } from 'react-native-maps';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -13,6 +13,7 @@ import { isLocationEnabled } from 'react-native-android-location-enabler';
 import { promptForEnableLocationIfNeeded } from 'react-native-android-location-enabler';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { requestPermission } from '../helper/notificationService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MapViewing({ navigation }) {
     const isFocused = useIsFocused();
@@ -26,27 +27,9 @@ export default function MapViewing({ navigation }) {
     lat = 0;
     const [businessData, setBusinessData] = useState([{}]);
     const businessGroupID = "1";
-    const baseUrl = Globals.API_URL + "/BusinessProfiles/GetBusinessProfilesByGroupID"
+    const baseUrl = Globals.API_URL + "/BusinessProfiles/GetBusinessProfilesForMobile"
     const [loading, setLoading] = useState(false);
 
-    async function handleCheckPressed() {
-        if (Platform.OS === 'android') {
-            const checkEnabled = await isLocationEnabled();
-            if (!checkEnabled) {
-                await handleEnabledPressed();
-                // await getCurrentLocation();
-            }
-        }
-
-        if(Platform.OS === 'ios')
-        {
-            const checkEnabled = await isLocationEnabled();
-            if (!checkEnabled) {
-                await handleEnabledPressed();
-                // await getCurrentLocation();
-            }
-        }
-    }
 
     const backPressed = () => {
         BackHandler.exitApp();
@@ -61,33 +44,26 @@ export default function MapViewing({ navigation }) {
             };
         }, []));
 
-    useEffect(() => {
-        setLoading(true);
-        requestLocationPermission();
-        checkApplicationPermission();
-        axios({
-            method: 'GET',
-            url: `${baseUrl}/${businessGroupID}`
-        })
-            .then(async response => {
-                await setBusinessDataWhole(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error("Error fetching data", error);
-                setLoading(false);
-            });
-    }, [isFocused]);
+        useEffect(() => {
+            setLoading(true);
+            requestLocationPermission();
+            checkApplicationPermission();
+            setLoading(false);
+    
+        }, [isFocused]);
 
     async function setLangandLat(latitude, longitude) {
         lang = longitude,
-            lat = latitude
+        lat = latitude
     }
     async function setBusinessDataWhole(data) {
+        console.log('hjgsfjcxnm,cbxmxbcmvnnbx')
+        console.log(data)
         setBusinessData(data);
         setFilteredData(data);
     }
     async function setMarkers(centerLat, centerLong) {
+        console.log('hekkdkhkdfh')
         setInitialRegion({
             latitude: centerLat,
             longitude: centerLong,
@@ -96,35 +72,47 @@ export default function MapViewing({ navigation }) {
         });
     }
     const getCurrentLocation = async () => {
+        console.log('in')
         Geolocation.getCurrentPosition(
             async position => {
                 const { latitude, longitude } = position.coords;
                 console.log('position.coords',latitude)
                 await setLangandLat(position.coords.latitude, position.coords.longitude);
                 await setMarkers(position.coords.latitude, position.coords.longitude);
+
+                AsyncStorage.getItem('token')
+                .then(async (value) => {
+                    if (value !== null) {
+                        // memberID = (JSON.parse(value))[0].memberId;
+                        axios({
+                            method: 'GET',
+                            url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
+                        })
+                            .then(async response => {
+                                console.log('businesdata-----', response.data)
+                                console.log('businesdata-----', (JSON.parse(value))[0].appToken)
+                                
+                                await setBusinessDataWhole(response.data);
+
+                                setLoading(false);
+                            })
+                            .catch((error) => {
+                                console.error("Error fetching data", error);
+                                setLoading(false);
+                            });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error retrieving dataa:', error);
+                });
                 // You can now use the latitude and longitude in your app
             },
             error => {
                 console.error('Error getting current location: ', error);
             },
-            { enableHighAccuracy: false, timeout: 5000 }
+            { enableHighAccuracy: false, timeout: 10000 }
         );
     };
-
-    async function handleEnabledPressed() {
-        if (Platform.OS === 'android') {
-            try {
-                const enableResult = await promptForEnableLocationIfNeeded();
-                // if (enableResult) {
-                    // await getCurrentLocation();
-                // }
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.error(error.message);
-                }
-            }
-        }
-    }
 
     const checkApplicationPermission = async () => {
         if(Platform.OS === 'ios'){
@@ -137,38 +125,8 @@ export default function MapViewing({ navigation }) {
     }
 
     const requestLocationPermission = async () => {
-        try {
-            let permissionStatus;
-
-            if (Platform.OS === 'ios') {
-                permissionStatus = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-            } else if (Platform.OS === 'android') {
-                permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-            }
-
-            if (permissionStatus === RESULTS.GRANTED) {
-                await handleCheckPressed();
-                await getCurrentLocation();
-                // You can now access the location
-            } else if (permissionStatus === RESULTS.DENIED) {
-                const newPermissionStatus = await request(
-                    Platform.OS === 'ios'
-                        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-                        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-                );
-
-                if (newPermissionStatus === RESULTS.GRANTED) {
-                    await handleCheckPressed();
-                    await getCurrentLocation();
-                    console.log('Location permission granted');
-                    // You can now access the location
-                } else {
-                    console.log('Location permission denied');
-                }
-            }
-        } catch (error) {
-            console.error('Error checking/requesting location permission: ', error);
-        }
+        await getCurrentLocation();
+        await setBusinessDataWhole();
     };
 
     const handleInputChange = (text) => {
@@ -276,13 +234,15 @@ export default function MapViewing({ navigation }) {
                                 style={{ width: 32, height: 32 }}
                                 resizeMode="contain"
                             />
-                            <Callout onPress={() => navigation.navigate('BusinessDetailView', { id: business.id })}
+                            <Callout  onPress={() => navigation.navigate('BusinessDetailView', { id: business.id })}>
+                            <CalloutSubview
                                 style={styles.locationbuttoncallout}>
-                                <TouchableHighlight style={{ width: 180 }} >
+                                <Pressable style={{ width: 180 }} >
                                     <Text style={{ textAlign: 'center' }}>
                                         {business.businessName}
                                     </Text>
-                                </TouchableHighlight >
+                                </Pressable>
+                            </CalloutSubview>
                             </Callout>
                         </Marker>
                     ))}

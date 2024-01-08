@@ -1,4 +1,4 @@
-import { ToastAndroid, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { View, Text, StyleSheet, Image, Modal } from 'react-native';
 import { Card, Title } from 'react-native-paper';
 import axios from 'axios';

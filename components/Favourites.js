@@ -290,10 +290,10 @@ const Favourite = ({ navigation }) => {
                             "baseLocationID": business.businessId
                         }),
                     }).then(async (res) => {
-                        ToastAndroid.showWithGravityAndOffset(
+                        Toast.show(
                             'Liked!',
-                            ToastAndroid.LONG,
-                            ToastAndroid.BOTTOM,
+                            Toast.LONG,
+                            Toast.BOTTOM,
                             25,
                             50,
                         );

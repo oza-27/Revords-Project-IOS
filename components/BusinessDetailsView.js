@@ -1,4 +1,4 @@
-import { StyleSheet, ToastAndroid } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { View, Text, Image } from 'react-native'
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -542,8 +542,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 190,
         position: 'relative',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
     },
     welcomeText: {
         color: 'black',

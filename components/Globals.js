@@ -1,6 +1,6 @@
 export default {
     API_URL: 'http://dashboard.revords.com/liveapi/api',
-    Root_URL: 'http://dashboard.revords.com/liveapi/WWWRoot/',
+    Root_URL: 'http://dashboard.revords.com/liveapi/wwwroot/',
     MemberProfile_URL:'/MemberProfiles/',
     BASE_URL: 'http://someurl.com',
     COLOR: {
