@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Platform, Dimensions,StyleSheet, Image, Text, View, Pressable, Button, SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { Platform, Dimensions, StyleSheet, Image, Text, View, Pressable, Button, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Globals from '../components/Globals';
@@ -32,7 +32,7 @@ const VerifyNumber = ({ navigation }) => {
   async function fetchAPI() {
     try {
       setLoading(true);
-      console.log( Globals.API_URL )
+      console.log(Globals.API_URL)
       const response = await fetch(
         Globals.API_URL + '/MemberProfiles/GetMemberByPhoneNo/' + unMaskPhone)
       console.log('sfdfsfsf')
@@ -49,25 +49,25 @@ const VerifyNumber = ({ navigation }) => {
             'Content-Type': 'application/json',
           },
         }).then((res) => {
-          console.log('otp response-----',JSON.stringify(res))
-          if(res.ok){
+          console.log('otp response-----', JSON.stringify(res))
+          if (res.ok) {
             navigation.navigate('GetOtp', { OTP: randomOtp, CustomerExists: CustomerExists, Phone: unMaskPhone })
             setLoading(false);
           }
-         else {
-          const errorResponse = res.json();
-          const statusText = errorResponse.statusText || 'You can only sign in with U.S.A number'
-          Toast.show(
-            statusText,
-            Toast.LONG,
-            Toast.CENTER,
-            {
-                backgroundColor:'blue'
-            }
-          )
-          setLoading(false)
-          console.log("Error Message:---", statusText);
-         }
+          else {
+            const errorResponse = res.json();
+            const statusText = errorResponse.statusText || 'You can only sign in with U.S.A number'
+            Toast.show(
+              statusText,
+              Toast.LONG,
+              Toast.CENTER,
+              {
+                backgroundColor: 'blue'
+              }
+            )
+            setLoading(false)
+            console.log("Error Message:---", statusText);
+          }
           return json;
         }).catch((error) => {
           console.log("Error fetching OTP! Kindly check your number", error);
@@ -108,7 +108,7 @@ const VerifyNumber = ({ navigation }) => {
   }
 
   return (
-    <KeyboardAwareScrollView style={{ backgroundColor: '#d9e7ed'}}>
+    <KeyboardAwareScrollView style={{ backgroundColor: '#d9e7ed' }}>
       <View style={styles.container}>
         <Text style={styles.welcomeText}>Welcome To</Text>
         <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />

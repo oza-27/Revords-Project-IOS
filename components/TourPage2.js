@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         marginTop: height * 0.02,
         color: '#140D05',
-      },
+    },
     txt3: {
         fontSize: 24,
         fontWeight: '900',

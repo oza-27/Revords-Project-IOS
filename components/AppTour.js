@@ -26,7 +26,7 @@ const AppTourGuide = ({ route, navigation }) => {
         setStep(null);
         if (MemberData) {
             console.log(1)
-            let  platformOS = Platform.OS == "android" ? 1 : 2;
+            let platformOS = Platform.OS == "android" ? 1 : 2;
             await getToken()
             fetch(`${Globals.API_URL}/MemberProfiles/PutDeviceTokenInMobileApp/${MemberData[0].memberId}/${tokenid}/${platformOS}                                       `, {
                 method: 'PUT'
@@ -42,7 +42,7 @@ const AppTourGuide = ({ route, navigation }) => {
     const GotoRegistration = async () => {
         if (MemberData) {
             console.log(1)
-            let  platformOS = Platform.OS == "android" ? 1 : 2;
+            let platformOS = Platform.OS == "android" ? 1 : 2;
             await getToken()
             fetch(`${Globals.API_URL}/MemberProfiles/PutDeviceTokenInMobileApp/${MemberData[0].memberId}/${tokenid}/${platformOS}`, {
                 method: 'PUT'

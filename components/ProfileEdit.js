@@ -500,8 +500,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#d9e7ed',
         alignItems: 'center',
     },
-    pickerContainer:{
-         border:'none'
+    pickerContainer: {
+        border: 'none'
     },
     img1: {
         width: 100,
@@ -512,7 +512,7 @@ const styles = StyleSheet.create({
     setimg1: {
         width: 50,
         height: 50,
-        marginTop:'auto',
+        marginTop: 'auto',
         position: 'absolute',
         alignSelf: 'flex-end',
         right: -25

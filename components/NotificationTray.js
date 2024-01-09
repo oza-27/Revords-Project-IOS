@@ -68,14 +68,13 @@ const NotificationTray = ({ navigation }) => {
             method: 'GET',
             url: `${Globals.API_URL}/Promotions/GetRewardsByActivityTypeAndIDInMobile/${type}/${ID}`
         }).then(async (response) => {
-           if(Platform.OS === 'ios')
-            {
+            if (Platform.OS === 'ios') {
                 Toast.show(
                     `Claimed Successfully!`,
                     Toast.LONG,
                     Toast.CENTER,
                     {
-                        backgroundColor:'blue'
+                        backgroundColor: 'blue'
                     }
                 )
             }
@@ -102,14 +101,13 @@ const NotificationTray = ({ navigation }) => {
             method: 'GET',
             url: `${Globals.API_URL}/Promotions/GetRewardsByActivityTypeAndIDInMobile/${type}/${ID}`
         }).then(async (response) => {
-            if(Platform.OS === 'ios')
-            {
+            if (Platform.OS === 'ios') {
                 Toast.show(
                     `Claimed Successfully!`,
                     Toast.LONG,
                     Toast.CENTER,
                     {
-                        backgroundColor:'blue'
+                        backgroundColor: 'blue'
                     }
                 )
             }
@@ -131,7 +129,7 @@ const NotificationTray = ({ navigation }) => {
             Toast.SHORT,
             Toast.CENTER,
             {
-                backgroundColor:'blue'
+                backgroundColor: 'blue'
             }
         )
     }
@@ -182,52 +180,52 @@ const NotificationTray = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-               
-                    <View style={{ flexDirection: 'row', width: '97%', height: '10%', alignItems: 'center', justifyContent: 'center' }}>
-                        <TouchableOpacity activeOpacity={.7} onPress={() => navigation.goBack()}>
-                            <Image source={require('../assets/more-button-ved.png')} style={styles.setimg1} />
-                        </TouchableOpacity>
-                        <Text style={styles.welcomeText}>Notifications</Text>
-                    </View>
 
-                    <View style={[{ width: '97%', height: '90%', marginTop: '5%' },
-                    isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
-                        {(userData == '' && !loading) &&
-                            <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                <Image style={{ width: '70%', height: '40%', borderRadius: 15, opacity: 0.8, marginBottom: '40%' }} source={require('../assets/NodataImg.png')} />
-                            </View>
-                        }
-                        <View style={[styles.store, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
-                            <FlatList showsVerticalScrollIndicator={false}
-                                data={userData}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <TouchableOpacity style={{ paddingVertical: 10 }} activeOpacity={.9} onPress={() => openPromoModal(item)}>
-                                            <Card style={[styles.card, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
-                                                <Card.Content style={[styles.cardContent, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
-                                                    <View style={{ width: '20%', height: '100%', alignItems: 'center' }}>
-                                                        <Image source={require('../assets/giftImg1.png')} style={[styles.giftIcon]} />
-                                                    </View>
-                                                    <View style={{ width: '80%', height: '100%' }}>
-                                                        <Title style={{ fontSize: 16, fontWeight: '800', color: '#3380a3' }}>{item.message}</Title>
-                                                        <View style={{ flexDirection: 'row' }}>
-                                                            {item.sentAgo > 1 && <Text style={{ color: '#717679', fontSize: 12, fontWeight: '400' }}>{item.sentAgo} Days ago</Text>}
-                                                            {item.sentAgo == 1 && <Text style={{ color: '#717679', fontSize: 12, fontWeight: '400' }}>{item.sentAgo} Day ago</Text>}
-                                                            {item.sentAgo == 0 && <Text style={{ color: '#717679', fontSize: 12, fontWeight: '400' }}>Today</Text>}
-                                                            {item.expiryDays > 1 && <Text style={{ position: 'absolute', right: 0, fontSize: 12, fontWeight: '500', color: '#921c1c' }}>Expires in {item.expiryDays} Days</Text>}
-                                                            {item.expiryDays == 1 && <Text style={{ position: 'absolute', right: 0, fontSize: 12, fontWeight: '500', color: '#921c1c' }}>Expiring Today</Text>}
-                                                            {item.expiryDays <= 0 && <Text style={{ position: 'absolute', right: 0, color: '#b0afaf', fontSize: 12, fontWeight: '400' }}>Expired</Text>}
-                                                        </View>
-                                                    </View>
-                                                </Card.Content>
-                                            </Card>
-                                        </TouchableOpacity>
-                                    );
-                                }}
-                            />
+                <View style={{ flexDirection: 'row', width: '97%', height: '10%', alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity activeOpacity={.7} onPress={() => navigation.goBack()}>
+                        <Image source={require('../assets/more-button-ved.png')} style={styles.setimg1} />
+                    </TouchableOpacity>
+                    <Text style={styles.welcomeText}>Notifications</Text>
+                </View>
+
+                <View style={[{ width: '97%', height: '90%', marginTop: '5%' },
+                isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
+                    {(userData == '' && !loading) &&
+                        <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                            <Image style={{ width: '70%', height: '40%', borderRadius: 15, opacity: 0.8, marginBottom: '40%' }} source={require('../assets/NodataImg.png')} />
                         </View>
+                    }
+                    <View style={[styles.store, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
+                        <FlatList showsVerticalScrollIndicator={false}
+                            data={userData}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => {
+                                return (
+                                    <TouchableOpacity style={{ paddingVertical: 10 }} activeOpacity={.9} onPress={() => openPromoModal(item)}>
+                                        <Card style={[styles.card, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
+                                            <Card.Content style={[styles.cardContent, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
+                                                <View style={{ width: '20%', height: '100%', alignItems: 'center' }}>
+                                                    <Image source={require('../assets/giftImg1.png')} style={[styles.giftIcon]} />
+                                                </View>
+                                                <View style={{ width: '80%', height: '100%' }}>
+                                                    <Title style={{ fontSize: 16, fontWeight: '800', color: '#3380a3' }}>{item.message}</Title>
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        {item.sentAgo > 1 && <Text style={{ color: '#717679', fontSize: 12, fontWeight: '400' }}>{item.sentAgo} Days ago</Text>}
+                                                        {item.sentAgo == 1 && <Text style={{ color: '#717679', fontSize: 12, fontWeight: '400' }}>{item.sentAgo} Day ago</Text>}
+                                                        {item.sentAgo == 0 && <Text style={{ color: '#717679', fontSize: 12, fontWeight: '400' }}>Today</Text>}
+                                                        {item.expiryDays > 1 && <Text style={{ position: 'absolute', right: 0, fontSize: 12, fontWeight: '500', color: '#921c1c' }}>Expires in {item.expiryDays} Days</Text>}
+                                                        {item.expiryDays == 1 && <Text style={{ position: 'absolute', right: 0, fontSize: 12, fontWeight: '500', color: '#921c1c' }}>Expiring Today</Text>}
+                                                        {item.expiryDays <= 0 && <Text style={{ position: 'absolute', right: 0, color: '#b0afaf', fontSize: 12, fontWeight: '400' }}>Expired</Text>}
+                                                    </View>
+                                                </View>
+                                            </Card.Content>
+                                        </Card>
+                                    </TouchableOpacity>
+                                );
+                            }}
+                        />
                     </View>
+                </View>
 
 
                 <Modal
@@ -523,7 +521,7 @@ const styles = StyleSheet.create({
     setimg1: {
         width: 50,
         height: 50,
-        marginTop:'auto',
+        marginTop: 'auto',
         position: 'absolute',
         alignSelf: 'flex-end',
         right: -25

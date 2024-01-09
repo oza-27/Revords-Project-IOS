@@ -39,7 +39,7 @@ const Location = ({ navigation }) => {
         Geolocation.getCurrentPosition(
             async position => {
                 const { latitude, longitude } = position.coords;
-             
+
                 await setLangandLat(latitude, longitude);
                 // You can now use the latitude and longitude in your app
             },
@@ -52,7 +52,7 @@ const Location = ({ navigation }) => {
     async function handleCheckPressed() {
         if (Platform.OS === 'android') {
             const checkEnabled = await isLocationEnabled();
-          
+
             if (!checkEnabled) {
                 await handleEnabledPressed();
             }
@@ -60,10 +60,10 @@ const Location = ({ navigation }) => {
                 await getData();
             }
         }
-       else if (Platform.OS === 'ios') {
-         
-                await getData();
-            
+        else if (Platform.OS === 'ios') {
+
+            await getData();
+
         }
     }
 
@@ -72,7 +72,7 @@ const Location = ({ navigation }) => {
             try {
                 const enableResult = await promptForEnableLocationIfNeeded();
                 await getData();
-              
+
             } catch (error) {
                 if (error instanceof Error) {
                     console.error(error.message);
@@ -88,15 +88,15 @@ const Location = ({ navigation }) => {
 
     NavigateToBusinessDetails = (item) => {
         navigation.navigate("BusinessDetailView", { id: item })
-       
+
     }
 
     const getData = async () => {
         setLoadingData(true);
-        
+
         AsyncStorage.getItem('token')
             .then(async (value) => {
-                if(value != null){
+                if (value != null) {
                     await axios({
                         method: 'GET',
                         url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
@@ -104,19 +104,19 @@ const Location = ({ navigation }) => {
                         await Geolocation.getCurrentPosition(
                             async position => {
                                 const { latitude, longitude } = position.coords;
-                         
+
                                 await setLangandLat(latitude, longitude);
                                 // You can now use the latitude and longitude in your app
-            
+
                                 await response.data.map((data1, index) => {
-                                
-            
+
+
                                     const toRadian = n => (n * Math.PI) / 180
                                     let lat2 = data1.latitude
                                     let lon2 = data1.longitude
                                     let lat1 = lat
                                     let lon1 = lang
-                                
+
                                     let R = 6371  // km
                                     let x1 = lat2 - lat1
                                     let dLat = toRadian(x1)
@@ -130,7 +130,7 @@ const Location = ({ navigation }) => {
                                     data1.distance = parseInt(d * 0.621371);
                                 })
                                 // Sort the data based on distance
-                                response.data.sort((a,b) => {return a.distance - b.distance})
+                                response.data.sort((a, b) => { return a.distance - b.distance })
                                 await setUserData(response.data);
                                 await setFilteredData(response.data);
                                 console.log(response.data)
@@ -142,14 +142,14 @@ const Location = ({ navigation }) => {
                             },
                             { enableHighAccuracy: false, timeout: 5000 }
                         );
-        
+
                     }).catch((error) => {
                         console.error("Error fetching data", error)
                     });
                 }
             })
             .catch((error) => {
-                console.log("Error retreiving data",error);
+                console.log("Error retreiving data", error);
             });
     }
 
@@ -158,8 +158,7 @@ const Location = ({ navigation }) => {
     }, [focus]);
 
     const handleInputChange = (text) => {
-        if(text === '')
-        {
+        if (text === '') {
             setFilteredData(userData);
         } else {
             let data = userData.filter(item => item.metaData.toLowerCase().includes(text.toLowerCase()));
@@ -234,62 +233,62 @@ const Location = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-              
-                    <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={styles.welcomeText}>Where to go?</Text>
-                        <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
-                            <Image source={require('../assets/notification-oRK.png')} style={styles.setimg1} />
+
+                <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={styles.welcomeText}>Where to go?</Text>
+                    <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
+                        <Image source={require('../assets/notification-oRK.png')} style={styles.setimg1} />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ width: '97%', height: '93%', marginTop: '-5%' }}>
+                    <View style={styles.searchBoxMain}>
+                        <TextInput style={styles.searchInput} placeholder='Search..' onChangeText={text => handleInputChange(text)} />
+                        <Image style={styles.magnifyingGlass} source={require('../assets/magnifyingglass-qQV.png')} />
+                        <TouchableOpacity style={{ width: '16%', marginRight: '2%', }} activeOpacity={.7} onPress={() => navigation.navigate("MapViewing")}>
+                            <View style={styles.mainMapImage}>
+                                <Image style={styles.mapImage} source={require('../assets/mapImg.png')} />
+                            </View>
                         </TouchableOpacity>
                     </View>
+                    <View style={styles.store}>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            data={filteredData}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => {
+                                return (
+                                    <Card style={styles.card} onPress={() => this.NavigateToBusinessDetails(item.id)}>
+                                        <Card.Cover source={{ uri: Globals.Root_URL + item.imagePath }} style={styles.cardCover} />
 
-                    <View style={{ width: '97%', height: '93%', marginTop: '-5%' }}>
-                        <View style={styles.searchBoxMain}>
-                            <TextInput style={styles.searchInput} placeholder='Search..' onChangeText={text => handleInputChange(text)}/>                           
-                            <Image style={styles.magnifyingGlass} source={require('../assets/magnifyingglass-qQV.png')} />
-                            <TouchableOpacity style={{ width: '16%', marginRight: '2%', }} activeOpacity={.7} onPress={() => navigation.navigate("MapViewing")}>
-                                <View style={styles.mainMapImage}>
-                                    <Image style={styles.mapImage} source={require('../assets/mapImg.png')} />
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.store}>
-                            <FlatList
-                                showsVerticalScrollIndicator={false}
-                                data={filteredData}
-                                keyExtractor={(item, index) => index.toString()}
-                                renderItem={({ item }) => {
-                                    return (
-                                        <Card style={styles.card} onPress={() => this.NavigateToBusinessDetails(item.id)}>
-                                            <Card.Cover source={{ uri: Globals.Root_URL + item.imagePath }} style={styles.cardCover} />
-
-                                            <Card.Content style={styles.cardContent}>
-                                                <View style={{  width: '30%', height: '90%', alignItems: 'center', justifyContent: 'center' }}>
-                                                    <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + item.logoPath }}></Image>
+                                        <Card.Content style={styles.cardContent}>
+                                            <View style={{ width: '30%', height: '90%', alignItems: 'center', justifyContent: 'center' }}>
+                                                <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + item.logoPath }}></Image>
+                                            </View>
+                                            <View style={{ width: '70%', height: '100%' }}>
+                                                {(item.businessName).toString().length < 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {item.businessName}</Title>}
+                                                {(item.businessName).toString().length >= 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {(item.businessName).toString().substring(0, 20)}...</Title>}
+                                                <Text style={{ color: '#717679', fontWeight: '500' }}> {item.industry} </Text>
+                                                <View style={{ flexDirection: 'row', width: '85%', justifyContent: 'space-between' }}>
+                                                    <Text style={styles.milesText}> {item.distance} mi </Text>
+                                                    {(item.isLiked == false) && <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
+                                                        <Animatable.Image animation={pulse} easing="ease-in-out" iterationCount="infinite"
+                                                            style={{ width: 25, height: 25, left: '41%', position: 'absolute' }} source={require('../assets/likeOutline.png')} />
+                                                        {/* <Image source={require('../assets/likeOutline.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image> */}
+                                                    </TouchableOpacity>}
+                                                    {(item.isLiked == true) && <TouchableOpacity activeOpacity={.7}>
+                                                        <Image source={require('../assets/likeFill.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image>
+                                                    </TouchableOpacity>}
                                                 </View>
-                                                <View style={{ width: '70%', height: '100%' }}>
-                                                    {(item.businessName).toString().length < 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {item.businessName}</Title>}
-                                                    {(item.businessName).toString().length >= 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {(item.businessName).toString().substring(0, 20)}...</Title>}
-                                                    <Text style={{ color: '#717679', fontWeight: '500' }}> {item.industry} </Text>
-                                                    <View style={{ flexDirection: 'row', width: '85%', justifyContent: 'space-between' }}>
-                                                        <Text style={styles.milesText}> {item.distance} mi </Text>
-                                                        {(item.isLiked == false) && <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
-                                                            <Animatable.Image animation={pulse} easing="ease-in-out" iterationCount="infinite"
-                                                                style={{ width: 25, height: 25, left: '41%', position: 'absolute' }} source={require('../assets/likeOutline.png')} />
-                                                            {/* <Image source={require('../assets/likeOutline.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image> */}
-                                                        </TouchableOpacity>}
-                                                        {(item.isLiked == true) && <TouchableOpacity activeOpacity={.7}>
-                                                            <Image source={require('../assets/likeFill.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image>
-                                                        </TouchableOpacity>}
-                                                    </View>
-                                                </View>
-                                            </Card.Content>
-                                        </Card>
-                                    );
-                                }}
-                            />
-                        </View>
+                                            </View>
+                                        </Card.Content>
+                                    </Card>
+                                );
+                            }}
+                        />
                     </View>
-               
+                </View>
+
 
                 <SafeAreaView>
                     <View style={styles.container}>
@@ -316,8 +315,8 @@ const styles = StyleSheet.create({
     avatarImg: {
         height: 50,
         width: 110,
-        marginTop:'-55%',
-        marginRight:'20%',
+        marginTop: '-55%',
+        marginRight: '20%',
         borderRadius: 10
     },
     cardCover: {
@@ -361,7 +360,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         width: '50%',
-        height:50,
+        height: 50,
         padding: 13.97,
         backgroundColor: '#ffffff',
         borderRadius: 8,
@@ -374,8 +373,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flexShrink: 0,
-        height:50,
-        marginTop:10
+        height: 50,
+        marginTop: 10
     },
     notificationLbl: {
         width: 48,

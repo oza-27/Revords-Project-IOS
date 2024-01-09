@@ -1,4 +1,4 @@
-import { StyleSheet, Image, Text, View, Platform,  Dimensions} from 'react-native';
+import { StyleSheet, Image, Text, View, Platform, Dimensions } from 'react-native';
 
 
 const TourPage1 = () => {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         marginTop: height * 0.02,
         color: '#140D05',
-      },
+    },
     txt3: {
         fontSize: 24,
         fontWeight: '900',

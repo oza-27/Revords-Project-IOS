@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         backgroundColor: '#d9e7ed',
         alignItems: 'center',
         paddingHorizontal: width * 0.05
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     companylogo: {
         width: '55%',
         resizeMode: 'contain',
-        aspectRatio:1
+        aspectRatio: 1
     },
     img1: {
         width: width * 0.4,
@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         marginTop: height * 0.03,
         color: '#140D05',
-      },
+    },
     txt5: {
         fontSize: 15,
         fontWeight: '500',
         marginTop: height * 0.03,
         color: '#8c9194',
         textAlign: 'center',
-    },    
+    },
 });
 
 export default TourPage4;

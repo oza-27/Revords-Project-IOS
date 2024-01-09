@@ -159,8 +159,8 @@ export default function RegistrationPage({ route }) {
 }
 const styles = StyleSheet.create({
     pickerContainer: {
-        marginTop:'2%',
-        width:'95%',
+        marginTop: '2%',
+        width: '95%',
     },
     txtRegister: {
         color: 'white',
@@ -280,8 +280,8 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
     },
     createYourAccount: {
-        top:'10%',
-        fontSize:24,
+        top: '10%',
+        fontSize: 24,
         fontWeight: 'bold',
         color: '#000000',
         fontFamily: 'Satoshi Variable, "Source Sans Pro"',
@@ -311,7 +311,7 @@ const pickerSelectStyles = StyleSheet.create({
         // backgroundColor: 'white',
         marginTop: 5,
         width: '100%',
-        alignSelf: 'center',             
+        alignSelf: 'center',
     },
     inputIOSContainer: {
         // borderBottomColor: 'purple', // Border color when open

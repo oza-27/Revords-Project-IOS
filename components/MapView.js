@@ -44,17 +44,17 @@ export default function MapViewing({ navigation }) {
             };
         }, []));
 
-        useEffect(() => {
-            setLoading(true);
-            requestLocationPermission();
-            checkApplicationPermission();
-            setLoading(false);
-    
-        }, [isFocused]);
+    useEffect(() => {
+        setLoading(true);
+        requestLocationPermission();
+        checkApplicationPermission();
+        setLoading(false);
+
+    }, [isFocused]);
 
     async function setLangandLat(latitude, longitude) {
         lang = longitude,
-        lat = latitude
+            lat = latitude
     }
     async function setBusinessDataWhole(data) {
         console.log('hjgsfjcxnm,cbxmxbcmvnnbx')
@@ -76,35 +76,35 @@ export default function MapViewing({ navigation }) {
         Geolocation.getCurrentPosition(
             async position => {
                 const { latitude, longitude } = position.coords;
-                console.log('position.coords',latitude)
+                console.log('position.coords', latitude)
                 await setLangandLat(position.coords.latitude, position.coords.longitude);
                 await setMarkers(position.coords.latitude, position.coords.longitude);
 
                 AsyncStorage.getItem('token')
-                .then(async (value) => {
-                    if (value !== null) {
-                        // memberID = (JSON.parse(value))[0].memberId;
-                        axios({
-                            method: 'GET',
-                            url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
-                        })
-                            .then(async response => {
-                                console.log('businesdata-----', response.data)
-                                console.log('businesdata-----', (JSON.parse(value))[0].appToken)
-                                
-                                await setBusinessDataWhole(response.data);
-
-                                setLoading(false);
+                    .then(async (value) => {
+                        if (value !== null) {
+                            // memberID = (JSON.parse(value))[0].memberId;
+                            axios({
+                                method: 'GET',
+                                url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
                             })
-                            .catch((error) => {
-                                console.error("Error fetching data", error);
-                                setLoading(false);
-                            });
-                    }
-                })
-                .catch(error => {
-                    console.error('Error retrieving dataa:', error);
-                });
+                                .then(async response => {
+                                    console.log('businesdata-----', response.data)
+                                    console.log('businesdata-----', (JSON.parse(value))[0].appToken)
+
+                                    await setBusinessDataWhole(response.data);
+
+                                    setLoading(false);
+                                })
+                                .catch((error) => {
+                                    console.error("Error fetching data", error);
+                                    setLoading(false);
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error retrieving dataa:', error);
+                    });
                 // You can now use the latitude and longitude in your app
             },
             error => {
@@ -115,7 +115,7 @@ export default function MapViewing({ navigation }) {
     };
 
     const checkApplicationPermission = async () => {
-        if(Platform.OS === 'ios'){
+        if (Platform.OS === 'ios') {
             try {
                 requestPermission()
             } catch (error) {
@@ -130,8 +130,7 @@ export default function MapViewing({ navigation }) {
     };
 
     const handleInputChange = (text) => {
-        if(text === '')
-        {
+        if (text === '') {
             setFilteredData(businessData);
         } else {
             let data = businessData.filter(item => item.metaData.toLowerCase().includes(text.toLowerCase()));
@@ -230,19 +229,19 @@ export default function MapViewing({ navigation }) {
                             key={index}
                             coordinate={{ latitude: parseFloat(business.latitude), longitude: parseFloat(business.longitude) }}>
                             <Image
-                                source={{uri: Globals.Root_URL + business.mapIconPath}}
+                                source={{ uri: Globals.Root_URL + business.mapIconPath }}
                                 style={{ width: 32, height: 32 }}
                                 resizeMode="contain"
                             />
-                            <Callout  onPress={() => navigation.navigate('BusinessDetailView', { id: business.id })}>
-                            <CalloutSubview
-                                style={styles.locationbuttoncallout}>
-                                <Pressable style={{ width: 180 }} >
-                                    <Text style={{ textAlign: 'center' }}>
-                                        {business.businessName}
-                                    </Text>
-                                </Pressable>
-                            </CalloutSubview>
+                            <Callout onPress={() => navigation.navigate('BusinessDetailView', { id: business.id })}>
+                                <CalloutSubview
+                                    style={styles.locationbuttoncallout}>
+                                    <Pressable style={{ width: 180 }} >
+                                        <Text style={{ textAlign: 'center' }}>
+                                            {business.businessName}
+                                        </Text>
+                                    </Pressable>
+                                </CalloutSubview>
                             </Callout>
                         </Marker>
                     ))}
@@ -311,7 +310,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: '#ffffff',
         borderRadius: 8,
-        top:10
+        top: 10
     },
     mapImage: {
         width: 26,
@@ -326,14 +325,14 @@ const styles = StyleSheet.create({
         height: '70%',
         alignItems: 'center',
         justifyContent: 'center',
-        top:5
+        top: 5
     },
     magnifyingGlass: {
         height: 25,
         resizeMode: 'contain',
         backgroundColor: 'transparent',
         right: 0,
-        left:'80%',
+        left: '80%',
         top: 20,
         position: 'absolute'
     },

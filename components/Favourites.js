@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState,useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, Image, Text, View, TouchableOpacity, Modal, Platform, Pressable } from 'react-native';
 import Globals from '../components/Globals';
@@ -36,17 +36,17 @@ const Favourite = ({ navigation }) => {
     const [isPromoModalVisible, setIsPromoModalVisible] = useState(false);
     const [isAutoPilotModalVisible, setIsAutoPilotModalVisible] = useState(false);
     const [isAnnouncementModalVisible, setIsAnnouncementModalVisible] = useState(false);
-    const [active, setActive] = useState(true);  
+    const [active, setActive] = useState(true);
 
     const pulse = {
-        0:{
+        0: {
             scale: 1,
         },
-        0.5:{
-            scale:1.3
+        0.5: {
+            scale: 1.3
         },
-        1:{
-            scale:1
+        1: {
+            scale: 1
         }
     }
     async function setLangandLat(latitude, longitude) {
@@ -120,14 +120,13 @@ const Favourite = ({ navigation }) => {
             method: 'GET',
             url: `${Globals.API_URL}/Promotions/GetRewardsByActivityTypeAndIDInMobile/${type}/${ID}`
         }).then(async (response) => {
-           if(Platform.OS === 'ios')
-            {
+            if (Platform.OS === 'ios') {
                 Toast.show(
                     `Claimed Successfully!`,
                     Toast.LONG,
                     Toast.CENTER,
                     {
-                        backgroundColor:'blue'
+                        backgroundColor: 'blue'
                     }
                 )
             }
@@ -144,14 +143,13 @@ const Favourite = ({ navigation }) => {
             method: 'GET',
             url: `${Globals.API_URL}/Promotions/GetRewardsByActivityTypeAndIDInMobile/${type}/${ID}`
         }).then(async (response) => {
-            if(Platform.OS === 'ios')
-            {
+            if (Platform.OS === 'ios') {
                 Toast.show(
                     `Claimed Successfully!`,
                     Toast.LONG,
                     Toast.CENTER,
                     {
-                        backgroundColor:'blue'
+                        backgroundColor: 'blue'
                     }
                 )
             }
@@ -210,7 +208,7 @@ const Favourite = ({ navigation }) => {
                                     data1.distance = parseInt(d * 0.621371);
                                 })
 
-                                response.data = response.data.sort((a,b) => {return a.distance = b.distance})
+                                response.data = response.data.sort((a, b) => { return a.distance = b.distance })
                                 await setWishListData(response.data);
                                 setLoading(false)
                             },
@@ -230,21 +228,20 @@ const Favourite = ({ navigation }) => {
     }
 
     const ToastForClaimed = () => {
-       if(Platform.OS === 'ios')
-        {
+        if (Platform.OS === 'ios') {
             Toast.show(
                 `You've already Claimed!`,
                 Toast.SHORT,
                 Toast.CENTER,
                 {
-                    backgroundColor:'blue'
+                    backgroundColor: 'blue'
                 }
             )
         }
     }
     useEffect(() => {
         isFocused && getRefreshData()
-      },[isFocused]);
+    }, [isFocused]);
 
     const likeProfile = (business) => {
         console.log('businesssssss', business)
@@ -315,131 +312,131 @@ const Favourite = ({ navigation }) => {
 
     return (
         <View style={styles.container} >
-           
-                <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={styles.welcomeText}>Favorite</Text>
-                    <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
-                        <Image source={require('../assets/notification-skD.png')} style={styles.setimg1} />
-                    </TouchableOpacity>
-                </View>
 
-                <SafeAreaView style={styles.scrollContainer}>
-                    {(wishList.length == 0 && !loading) &&
-                        <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                            <Image style={{ width: '70%', height: '40%', opacity: 0.8, borderRadius: 15 }} source={require('../assets/NodataImg.png')} />
-                        </View>
-                    }
-                    <ScrollView style={{ flex: 1, height: '100%', width: '100%', borderRadius: 50 }} showsVerticalScrollIndicator={false}>
-                        <View style={styles.wishlistView}>
-                            {wishList && wishList.map((item, index) => (
-                                <View key={index} style={[styles.listView, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '',
-                                isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                    <Image source={{ uri: Globals.Root_URL + item.logoPath }} style={styles.logoBusiness} />
-                                    <View style={{ position: 'absolute', right: '1%', flexDirection: 'row' }}>
-                                        {item.isLiked && <Image  style={styles.likeFillHeart} source={require('../assets/likeFill.png')} />}
-                                        {!item.isLiked &&        
-                                            <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
-                                                <Animatable.Image
-                                                    animation={pulse}
-                                                    easing="ease-in-out"
-                                                    iterationCount="infinite" style={styles.likeHeart} source={require('../assets/likeOutline.png')} />
-                                            </TouchableOpacity>
-                                        }
-                                        <Text style={styles.totalLikes}> {item.likeCount} Likes </Text>
-                                    </View>
+            <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={styles.welcomeText}>Favorite</Text>
+                <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
+                    <Image source={require('../assets/notification-skD.png')} style={styles.setimg1} />
+                </TouchableOpacity>
+            </View>
 
-                                    <View style={{ width:'100%' }}>
-                                        <TouchableOpacity activeOpacity={.7} style={styles.ViewBtn} onPress={() => navigation.navigate('BusinessDetailView', { id: item.businessId })}>
-                                            <Text style={styles.businessName}>{item.businessName}</Text>
+            <SafeAreaView style={styles.scrollContainer}>
+                {(wishList.length == 0 && !loading) &&
+                    <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                        <Image style={{ width: '70%', height: '40%', opacity: 0.8, borderRadius: 15 }} source={require('../assets/NodataImg.png')} />
+                    </View>
+                }
+                <ScrollView style={{ flex: 1, height: '100%', width: '100%', borderRadius: 50 }} showsVerticalScrollIndicator={false}>
+                    <View style={styles.wishlistView}>
+                        {wishList && wishList.map((item, index) => (
+                            <View key={index} style={[styles.listView, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '',
+                            isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
+                                <Image source={{ uri: Globals.Root_URL + item.logoPath }} style={styles.logoBusiness} />
+                                <View style={{ position: 'absolute', right: '1%', flexDirection: 'row' }}>
+                                    {item.isLiked && <Image style={styles.likeFillHeart} source={require('../assets/likeFill.png')} />}
+                                    {!item.isLiked &&
+                                        <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
+                                            <Animatable.Image
+                                                animation={pulse}
+                                                easing="ease-in-out"
+                                                iterationCount="infinite" style={styles.likeHeart} source={require('../assets/likeOutline.png')} />
                                         </TouchableOpacity>
-                                        <Text style={styles.industry}>{item.industry}</Text>
-                                        <Text style={styles.memberDetails}><Text style={{ color: '#73a5bc' }}>{item.distance} mi </Text> | Member Since - {moment(item.createdDate).format("MM/DD/YYYY")}</Text>
-                                    </View>
-
-                                   
-
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                        <View style={styles.cardView}>
-                                            <Card style={[{ width: 150, borderRadius: 20, height: 150, marginRight: 10, marginLeft: 5, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
-                                            isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                <Text style={styles.badge}> {item.badgeName} </Text>
-                                                {(item.badgeName).toString().toLowerCase() == 'bronze' && <Image source={require('../assets/Bronze.png')} style={[styles.trophyImg]} />}
-                                                {(item.badgeName).toString().toLowerCase() == 'silver' && <Image source={require('../assets/Silver.png')} style={[styles.trophyImg]} />}
-                                                {(item.badgeName).toString().toLowerCase() == 'gold' && <Image source={require('../assets/Gold.png')} style={[styles.trophyImg]} />}
-                                                {(item.badgeName).toString().toLowerCase() == 'platinum' && <Image source={require('../assets/platinum.png')} style={[styles.trophyImg]} />}
-                                                <Text style={styles.memberPoints}> {item.currentPoints} pt </Text>
-                                            </Card>
-
-                                            {item.promotionData.map((promotion, earnReward) => (
-                                                <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
-                                                isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                    <Text style={styles.achievableName}>{promotion.promotionalMessage}</Text>
-                                                    {promotion.expiryDays > 1 && <Text style={styles.achievalbeValue}>Expires in - {promotion.expiryDays} days</Text>}
-                                                    {promotion.expiryDays == 1 && <Text style={styles.achievalbeValue}>Expiring Today</Text>}
-                                                    {/* {promotion.expiryDays == 0 &&<Text style={styles.achievalbeValue}>Expiring Today</Text>} */}
-                                                    <TouchableOpacity activeOpacity={.7} onPress={() => openPromoModal(promotion, item)} style={[promotion.isClaimed == false ? styles.frame2vJuClaim : styles.frame2vJuClaimed]}>
-                                                        {promotion.isClaimed == false && <Text style={styles.getStartednru}>Claim</Text>}
-                                                        {promotion.isClaimed == true && <Text style={styles.getStartednru}>Claimed</Text>}
-                                                    </TouchableOpacity>
-                                                </Card>
-                                            ))}
-
-                                            {item.autopilotData.map((autopilot, earnReward) => (
-                                                <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
-                                                isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                    <Text style={styles.achievableName}>{autopilot.rewardName}</Text>
-                                                    {autopilot.expiryDays > 1 && <Text style={styles.achievalbeValue}>Expires in - {autopilot.expiryDays} days</Text>}
-                                                    {autopilot.expiryDays == 1 && <Text style={styles.achievalbeValue}>Expiring Today</Text>}
-                                                    {/* {autopilot.expiryDays == 0 &&<Text style={styles.achievalbeValue}>Expiring Today</Text>} */}
-                                                    <TouchableOpacity activeOpacity={.7} onPress={() => openAPModal(autopilot, item)} style={[autopilot.isClaimed == false ? styles.frame2vJuClaim : styles.frame2vJuClaimed]}>
-                                                        {autopilot.isClaimed == false && <Text style={styles.getStartednru}>Claim</Text>}
-                                                        {autopilot.isClaimed == true && <Text style={styles.getStartednru}>Claimed</Text>}
-                                                    </TouchableOpacity>
-                                                </Card>
-                                            ))}
-
-                                            {item.announcementData.map((announcement, earnReward) => (
-                                                <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
-                                                isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                    <Text style={styles.achievableName}>{announcement.subject}</Text>
-                                                    <TouchableOpacity activeOpacity={.7} onPress={() => openAnnouncementModal(announcement, item)} style={styles.ViewAnnouncement}>
-                                                        <Text style={styles.getStartednru}>View</Text>
-                                                    </TouchableOpacity>
-                                                </Card>
-                                            ))}
-
-                                            {item.rewardData.map((reward, earnReward) => (
-                                                <Card key={earnReward} style={[{ width: 150, borderRadius: 20, height: 150, paddingHorizontal: 2, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
-                                                isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                    <Text style={styles.achievableName}>{reward.rewardName}</Text>
-                                                    <Text style={styles.achievalbeValue}>{reward.achivableTargetValue} pts</Text>
-                                                    <View>
-                                                        <Progress.Bar
-                                                            style={styles.progressBar}
-                                                            progress={1 - ((reward.pendingToAchiveValue) / reward.achivableTargetValue)}
-                                                            width={110}
-                                                            color='#2ac95d' />
-                                                    </View>
-                                                    {(reward.pendingToAchiveValue > 0) && <Text style={styles.pendingpoints}>{reward.pendingToAchiveValue} left</Text>}
-                                                    {(reward.pendingToAchiveValue <= 0) && <Text style={styles.pendingpoints}>0 left</Text>}
-                                                </Card>
-                                            ))}
-                                        </View>
-                                    </ScrollView>
+                                    }
+                                    <Text style={styles.totalLikes}> {item.likeCount} Likes </Text>
                                 </View>
-                            ))}
-                        </View>
 
-                        <SafeAreaView>
-                            <View style={styles.container}>
-                                <Spinner
-                                    visible={loading}
-                                    textContent={''}
-                                    textStyle={styles.spinnerStyle} />
+                                <View style={{ width: '100%' }}>
+                                    <TouchableOpacity activeOpacity={.7} style={styles.ViewBtn} onPress={() => navigation.navigate('BusinessDetailView', { id: item.businessId })}>
+                                        <Text style={styles.businessName}>{item.businessName}</Text>
+                                    </TouchableOpacity>
+                                    <Text style={styles.industry}>{item.industry}</Text>
+                                    <Text style={styles.memberDetails}><Text style={{ color: '#73a5bc' }}>{item.distance} mi </Text> | Member Since - {moment(item.createdDate).format("MM/DD/YYYY")}</Text>
+                                </View>
+
+
+
+                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    <View style={styles.cardView}>
+                                        <Card style={[{ width: 150, borderRadius: 20, height: 150, marginRight: 10, marginLeft: 5, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
+                                        isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
+                                            <Text style={styles.badge}> {item.badgeName} </Text>
+                                            {(item.badgeName).toString().toLowerCase() == 'bronze' && <Image source={require('../assets/Bronze.png')} style={[styles.trophyImg]} />}
+                                            {(item.badgeName).toString().toLowerCase() == 'silver' && <Image source={require('../assets/Silver.png')} style={[styles.trophyImg]} />}
+                                            {(item.badgeName).toString().toLowerCase() == 'gold' && <Image source={require('../assets/Gold.png')} style={[styles.trophyImg]} />}
+                                            {(item.badgeName).toString().toLowerCase() == 'platinum' && <Image source={require('../assets/platinum.png')} style={[styles.trophyImg]} />}
+                                            <Text style={styles.memberPoints}> {item.currentPoints} pt </Text>
+                                        </Card>
+
+                                        {item.promotionData.map((promotion, earnReward) => (
+                                            <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
+                                            isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
+                                                <Text style={styles.achievableName}>{promotion.promotionalMessage}</Text>
+                                                {promotion.expiryDays > 1 && <Text style={styles.achievalbeValue}>Expires in - {promotion.expiryDays} days</Text>}
+                                                {promotion.expiryDays == 1 && <Text style={styles.achievalbeValue}>Expiring Today</Text>}
+                                                {/* {promotion.expiryDays == 0 &&<Text style={styles.achievalbeValue}>Expiring Today</Text>} */}
+                                                <TouchableOpacity activeOpacity={.7} onPress={() => openPromoModal(promotion, item)} style={[promotion.isClaimed == false ? styles.frame2vJuClaim : styles.frame2vJuClaimed]}>
+                                                    {promotion.isClaimed == false && <Text style={styles.getStartednru}>Claim</Text>}
+                                                    {promotion.isClaimed == true && <Text style={styles.getStartednru}>Claimed</Text>}
+                                                </TouchableOpacity>
+                                            </Card>
+                                        ))}
+
+                                        {item.autopilotData.map((autopilot, earnReward) => (
+                                            <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
+                                            isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
+                                                <Text style={styles.achievableName}>{autopilot.rewardName}</Text>
+                                                {autopilot.expiryDays > 1 && <Text style={styles.achievalbeValue}>Expires in - {autopilot.expiryDays} days</Text>}
+                                                {autopilot.expiryDays == 1 && <Text style={styles.achievalbeValue}>Expiring Today</Text>}
+                                                {/* {autopilot.expiryDays == 0 &&<Text style={styles.achievalbeValue}>Expiring Today</Text>} */}
+                                                <TouchableOpacity activeOpacity={.7} onPress={() => openAPModal(autopilot, item)} style={[autopilot.isClaimed == false ? styles.frame2vJuClaim : styles.frame2vJuClaimed]}>
+                                                    {autopilot.isClaimed == false && <Text style={styles.getStartednru}>Claim</Text>}
+                                                    {autopilot.isClaimed == true && <Text style={styles.getStartednru}>Claimed</Text>}
+                                                </TouchableOpacity>
+                                            </Card>
+                                        ))}
+
+                                        {item.announcementData.map((announcement, earnReward) => (
+                                            <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
+                                            isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
+                                                <Text style={styles.achievableName}>{announcement.subject}</Text>
+                                                <TouchableOpacity activeOpacity={.7} onPress={() => openAnnouncementModal(announcement, item)} style={styles.ViewAnnouncement}>
+                                                    <Text style={styles.getStartednru}>View</Text>
+                                                </TouchableOpacity>
+                                            </Card>
+                                        ))}
+
+                                        {item.rewardData.map((reward, earnReward) => (
+                                            <Card key={earnReward} style={[{ width: 150, borderRadius: 20, height: 150, paddingHorizontal: 2, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
+                                            isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
+                                                <Text style={styles.achievableName}>{reward.rewardName}</Text>
+                                                <Text style={styles.achievalbeValue}>{reward.achivableTargetValue} pts</Text>
+                                                <View>
+                                                    <Progress.Bar
+                                                        style={styles.progressBar}
+                                                        progress={1 - ((reward.pendingToAchiveValue) / reward.achivableTargetValue)}
+                                                        width={110}
+                                                        color='#2ac95d' />
+                                                </View>
+                                                {(reward.pendingToAchiveValue > 0) && <Text style={styles.pendingpoints}>{reward.pendingToAchiveValue} left</Text>}
+                                                {(reward.pendingToAchiveValue <= 0) && <Text style={styles.pendingpoints}>0 left</Text>}
+                                            </Card>
+                                        ))}
+                                    </View>
+                                </ScrollView>
                             </View>
-                        </SafeAreaView>
-                    </ScrollView >
-                </SafeAreaView>
+                        ))}
+                    </View>
+
+                    <SafeAreaView>
+                        <View style={styles.container}>
+                            <Spinner
+                                visible={loading}
+                                textContent={''}
+                                textStyle={styles.spinnerStyle} />
+                        </View>
+                    </SafeAreaView>
+                </ScrollView >
+            </SafeAreaView>
 
 
             <Modal
@@ -569,7 +566,7 @@ const styles = StyleSheet.create({
         width: '97%',
         alignItems: 'center',
         borderRadius: 50,
-        marginTop:'-15%'
+        marginTop: '-15%'
     },
     modalcontainer: {
         flex: 1,
@@ -625,7 +622,7 @@ const styles = StyleSheet.create({
     ViewBtn: {
         paddingStart: 1,
         bottom: '17%',
-        width:'100%'
+        width: '100%'
     },
     frame2vJuClaimed: {
         backgroundColor: '#6b6868',
@@ -670,7 +667,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
         textAlign: 'center',
         textAlignVertical: 'center',
-        top:'15%'
+        top: '15%'
     },
     ViewBtnImg: {
         height: 15,
@@ -687,7 +684,7 @@ const styles = StyleSheet.create({
         zIndex: 10,
         textAlign: 'center',
         textAlignVertical: 'center',
-        top:'15%'
+        top: '15%'
     },
     pendingpoints: {
         color: '#73a5bc',
@@ -717,7 +714,7 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontSize: 16,
         width: 160,
-        height:70,
+        height: 70,
         // top: '20%',
         paddingHorizontal: 5,
         paddingVertical: 7
@@ -781,22 +778,22 @@ const styles = StyleSheet.create({
         height: 21,
         alignSelf: 'flex-end',
         right: '21%',
-        marginBottom:'5%',
-        marginTop:'100%'
+        marginBottom: '5%',
+        marginTop: '100%'
     },
     likeFillHeart: {
         width: 24,
         height: 21,
         alignSelf: 'flex-end',
         right: '21%',
-        marginBottom:'5%'
+        marginBottom: '5%'
     },
     businessName: {
         fontWeight: '800',
         fontSize: 18,
         color: '#000000',
         marginTop: '7%'
-       
+
     },
     logoBusiness: {
         height: 50,

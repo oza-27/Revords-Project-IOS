@@ -62,14 +62,14 @@ const GetOtp = ({ route, navigation }) => {
                 setResentDisabled(true);
             });
         } catch (error) {
-          
+
             console.log(error);
             Toast.show(
                 `There is some issue! Try again after few minutes!`,
                 Toast.LONG,
                 Toast.CENTER,
                 {
-                    backgroundColor:'blue'
+                    backgroundColor: 'blue'
                 }
             )
         }

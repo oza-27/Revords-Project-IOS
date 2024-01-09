@@ -21,14 +21,14 @@ const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         backgroundColor: '#d9e7ed',
         alignItems: 'center',
         paddingHorizontal: width * 0.05
     },
     companylogo: {
-        width:'55%',
-        aspectRatio:1,
+        width: '55%',
+        aspectRatio: 1,
         resizeMode: 'contain',
     },
     img1: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         marginTop: height * 0.03,
         color: '#140D05',
-      },
+    },
     txt4: {
         fontSize: 24,
         fontWeight: '900',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         marginTop: height * 0.03,
         color: '#8c9194',
         textAlign: 'center',
-    },    
+    },
 });
 
 export default TourPage3;
