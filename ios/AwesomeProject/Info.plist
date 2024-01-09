@@ -46,19 +46,19 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your Camera</string>
+	<string>Allow Revords to access your Camera to change your Profile Picture</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your Local Network</string>
+	<string>Allow Revords to access your Local Network</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your location</string>
+	<string>Allow Revords to access your Location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your location</string>
+	<string>Allow Revords to access your Location</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to use your Location</string>
+	<string>Allow Revords to access your Location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your location</string>
+	<string>Allow Revords to access your Location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your Library</string>
+	<string>Allow Revords to access your Library to change your Profile Picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Ionicons.ttf</string>
