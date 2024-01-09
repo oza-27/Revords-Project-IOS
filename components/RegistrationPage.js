@@ -22,7 +22,7 @@ export default function RegistrationPage({ route }) {
     const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedDay, setSelectedDay] = useState('');
     const [daysInMonth, setDaysInMonth] = useState([]);
-
+    const [validDOB, setValidDOB] = useState(null);
     const months = [
         { label: 'January', value: '01' },
         { label: 'February', value: '02' },
@@ -52,14 +52,6 @@ export default function RegistrationPage({ route }) {
             setSelectedDay('');
         }
     }, [selectedMonth]);
-
-
-    //console.log(Phone)
-    // const months = [
-    //     'January', 'February', 'March', 'April', 'May',
-    //     'June', 'July', 'August', 'September', 'October',
-    //     'November', 'December'
-    // ];
     let tokenid = "";
     const days = Array.from({ length: 31 }, (_, index) => (index + 1).toString());
     const navigation = useNavigation();
@@ -70,9 +62,6 @@ export default function RegistrationPage({ route }) {
     };
 
     const postData = async () => {
-        // const monthIndex = months.findIndex(month => month.toLowerCase() === selectedMonths.toLowerCase());
-        // const birthMonth = monthIndex > 8 ? monthIndex + 1 : '0' + (monthIndex + 1);
-        // const birthDay = selectDays > 9 ? selectDays : '0' + selectDays;
         await getToken()
         const MemberData = [];
         let currentDate = (new Date()).toISOString();
@@ -140,15 +129,6 @@ export default function RegistrationPage({ route }) {
             <TextInput style={styles.emailInput} onChangeText={(t) => setEmail(t)} placeholder='Enter your Email' />
             <View style={styles.lineTwo}></View>
             {!isValid && <Text style={{ color: 'red', marginTop: '2%', marginLeft: '4%', }}>Invalid Email Address</Text>}
-
-            {/* <View style={styles.grpDrpDown}>
-                <SelectDropdown style={styles.drpDownMonth} data={months} onSelect={(selectedItem, index) => setSelectedMonth(selectedItem)}
-                    defaultButtonText='Birth Month' buttonTextAfterSelection={(selectedItem, index) => selectedItem}
-                    rowTextForSelection={(item, index) => item} />
-                <SelectDropdown style={styles.drpDownDays} data={days} onSelect={(selectedItem, index) => setSelectedDays(selectedItem)}
-                    defaultButtonText='Birth Day' buttonTextAfterSelection={(selectedItem, index) => selectedItem}
-                    rowTextForSelection={(item, index) => item} />
-            </View> */}
             <View style={styles.pickerContainer}>
                 <RNPickerSelect
                     placeholder={{ label: 'Select Birth Month', value: null }}
