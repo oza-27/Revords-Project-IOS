@@ -50,13 +50,13 @@
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Allow Revords to access your Local Network</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Allow Revords to access your Location</string>
+	<string>Allow Revords to access your Location to see nearby restaurants, cafe, etc</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Allow Revords to access your Location</string>
+	<string>Allow Revords to access your Location to see nearby restaurants, cafe, etc</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Allow Revords to access your Location</string>
+	<string>Allow Revords to access your Location to see nearby restaurants, cafe, etc</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Revords to access your Location</string>
+	<string>Allow Revords to access your Location to see nearby restaurants, cafe, etc</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow Revords to access your Library to change your Profile Picture</string>
 	<key>UIAppFonts</key>
