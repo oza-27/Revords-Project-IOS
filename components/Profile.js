@@ -49,6 +49,30 @@ const Profile = ({ route, navigation }) => {
             },
         ]);
 
+    const onDeleteAccount = () =>
+        Alert.alert('Delete', 'Do you want to Delete your Account?', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: 'Yes', onPress: async () => {
+                    try {
+                        fetch(`${Globals.API_URL}/MemberProfiles/PutDeviceTokenInMobileApp/${MemberData[0].memberId}/NULL`, {
+                            method: 'PUT'
+                        }).then(async (res) => {
+                            await AsyncStorage.removeItem('token');
+                            console.log('Token removed successfully');
+                            navigation.navigate('LandingScreen')
+                        });
+                        // navigation.navigate('LandingScreen')
+                    } catch (error) {
+                        console.error('Error removing token:', error);
+                    }
+                }
+            },
+        ]);
     async function setMemData(value) {
         await setMemberData(value);
         console.log('111111', MemberData)
@@ -174,6 +198,18 @@ const Profile = ({ route, navigation }) => {
                                     }}>
                                         <Image source={require('../assets/group-9.png')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Logout</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{
+                                    flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
+                                    marginLeft: 16, paddingVertical: 9
+                                }}>
+                                    <TouchableOpacity activeOpacity={.7} onPress={onDeleteAccount} style={{
+                                        flexDirection: 'row', alignItems: 'left', justifyContent: 'left',
+
+                                    }}>
+                                        <Image source={require('../assets/trash.png')} style={styles.iconimg1} />
+                                        <Text style={styles.innerDText}>Delete Account</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
