@@ -11,8 +11,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import messaging from '@react-native-firebase/messaging';
 
 export default function RegistrationPage({ route }) {
-    // const [selectedMonths, setSelectedMonth] = useState('January');
-    // const [selectDays, setSelectedDays] = useState('1');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const { Phone } = route.params;
