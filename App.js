@@ -13,18 +13,57 @@ import messaging from '@react-native-firebase/messaging';
 import BusinessDetailsView from "./components/BusinessDetailsView";
 import NotificationTray from "./components/NotificationTray";
 import SplashScreen from "react-native-splash-screen";
+import { Platform } from "react-native";
+import Globals from "./components/Globals";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
+  let token = "";
+  let platformOS;
   useEffect(() => {
     setTimeout(() => SplashScreen.hide(), 2000);
-  },[]);
+  }, []);
   const Stack = createStackNavigator();
   useEffect(() => {
-    getDeviceToken()
+    getDeviceToken();
+    AsyncStorage.getItem('token').then(async (value) => {
+      if (value !== null) {
+        await postData((JSON.parse(value))[0].memberId);
+      }
+    })
   }, []);
   const getDeviceToken = async () => {
-    let token = await messaging().getToken()
+    token = await messaging().getToken()
   };
+
+  const postData = async (memberId) => {
+    let currentDate = (new Date()).toISOString();
+    platformOS = (Platform.OS == "android" ? 1 : 2);
+    await getDeviceToken();
+    let obj = JSON.stringify({
+      "uniqueID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "id": 0,
+      "memberId": memberId,
+      "createdDate": currentDate,
+      "deviceOS": platformOS,
+      "appToken": token
+    })
+
+    fetch(Globals.API_URL + '/MobileAppVisitersLogs/PostMobileAppVisitersLog', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: obj
+    })
+      .then((response) => {
+        console.log('JSON.stringify(res)', JSON.stringify(response));
+      })
+      .catch((error) => {
+        console.log("Error saving logs:- ", error);
+      })
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator>
