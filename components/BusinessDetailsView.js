@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Modal, StyleSheet } from 'react-native'
 import { View, Text, Image } from 'react-native'
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +15,8 @@ import currentIcon from '../assets/casinoIcon.png';
 import Geolocation from '@react-native-community/geolocation';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-simple-toast';
+import ImageViewer from 'react-native-image-zoom-viewer';
+
 export default function BusinessDetailsView({ route }) {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
@@ -39,6 +41,31 @@ export default function BusinessDetailsView({ route }) {
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [error, setError] = useState(null);
     const [MemberData, setMemberData] = useState([{}]);
+    let isSave = false;
+    const [buttonClicked, setButtonClikced] = useState(false);
+    const galleryImagePath1 = businessDetails ? businessDetails.galleryImagePath1 : null;
+    const galleryImagePath2 = businessDetails ? businessDetails.galleryImagePath2 : null;
+    const galleryImagePath3 = businessDetails ? businessDetails.galleryImagePath3 : null;
+    const galleryImagePath4 = businessDetails ? businessDetails.galleryImagePath4 : null;
+    const galleryImagePath1Url = Globals.Root_URL + `${galleryImagePath1}`;
+    const galleryImagePath2Url = Globals.Root_URL + `${galleryImagePath2}`;
+    const galleryImagePath3Url = Globals.Root_URL + `${galleryImagePath3}`;
+    const galleryImagePath4Url = Globals.Root_URL + `${galleryImagePath4}`;
+    const images = [
+        { url: galleryImagePath1Url },
+        { url: galleryImagePath2Url },
+        { url: galleryImagePath3Url },
+        { url: galleryImagePath4Url }
+
+    ]
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+
+    const handleGalleryImagePress = (index) => {
+        setSelectedImageIndex(index);
+        setModalVisible(true);
+    }
 
     async function setMarkers(centerLat, centerLong) {
         setInitialRegion({
@@ -130,75 +157,77 @@ export default function BusinessDetailsView({ route }) {
     }
 
     const saveProfile = () => {
-        AsyncStorage.getItem('token')
-            .then(async (value) => {
-                if (value !== null) {
-                    memberID = (JSON.parse(value))[0].memberId;
-                    console.log(memberID)
-                    console.log(businessDetails.businessGroupId)
-                    let currentDate = (new Date()).toISOString();
-                    await fetch(Globals.API_URL + '/MemberProfiles/PostMemberProfileInMobileBySave', {
-                        method: 'POST',
-                        headers: {
-                            Accept: 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            "uniqueId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            "id": 0,
-                            "memberId": (JSON.parse(value))[0].memberId,
-                            "notes": null,
-                            "badgeId": 1,
-                            "tagId": null,
-                            "businessGroupId": businessDetails.businessGroupId,
-                            "lastVisitDate": currentDate,
-                            "lifeTimePoints": 0,
-                            "lifeTimeVisits": 0,
-                            "smsoptIn": true,
-                            "emailOptIn": true,
-                            "notificationOptIn": true,
-                            "isHighroller": false,
-                            "currentPoints": 0,
-                            "sourceId": 14,
-                            "stateId": 3,
-                            "isActive": true,
-                            "createdBy": (JSON.parse(value))[0].memberId,
-                            "createdDate": currentDate,
-                            "lastModifiedBy": (JSON.parse(value))[0].memberId,
-                            "lastModifiedDate": currentDate,
-                            "businessLocationID": businessDetails.businessId
-                        }),
-                    }).then(async (res) => {
-                        Toast.show(
-                            `Claimed Successfully!`,
-                            Toast.LONG,
-                            Toast.CENTER,
-                            {
-                                backgroundColor:'blue'
-                            }
-                        )
-                        await LoadData();
-                    });
-                } else {
-                    console.log('not available')
-                }
-            })
-            .catch(error => {
-                console.error('Error retrieving dataa:', error);
-                setLoading(false);
-            });
+        if (!buttonClicked) {
+            setButtonClikced(true);
+            setLoading(true);
+
+            AsyncStorage.getItem('token')
+                .then(async (value) => {
+                    if (value !== null) {
+                        memberID = (JSON.parse(value))[0].memberId;
+                        console.log(memberID)
+                        console.log(businessDetails.businessGroupId)
+                        let currentDate = (new Date()).toISOString();
+                        await fetch(Globals.API_URL + '/MemberProfiles/PostMemberProfileInMobileBySave', {
+                            method: 'POST',
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                "uniqueId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "id": 0,
+                                "memberId": (JSON.parse(value))[0].memberId,
+                                "notes": null,
+                                "badgeId": 1,
+                                "tagId": null,
+                                "businessGroupId": businessDetails.businessGroupId,
+                                "lastVisitDate": currentDate,
+                                "lifeTimePoints": 0,
+                                "lifeTimeVisits": 0,
+                                "smsoptIn": false,
+                                "emailOptIn": ((JSON.parse(value))[0].emailId == '' || (JSON.parse(value))[0].emailId == null ||
+                                    (JSON.parse(value))[0].emailId == undefined) ? false : true,
+                                "notificationOptIn": true,
+                                "isHighroller": false,
+                                "currentPoints": 0,
+                                "sourceId": 14,
+                                "stateId": 3,
+                                "isActive": true,
+                                "createdBy": (JSON.parse(value))[0].memberId,
+                                "createdDate": currentDate,
+                                "lastModifiedBy": (JSON.parse(value))[0].memberId,
+                                "lastModifiedDate": currentDate,
+                                "businessLocationID": businessDetails.businessId
+                            }),
+                        }).then(async (res) => {
+                            Toast.show(
+                                `Claimed Successfully!`,
+                                Toast.LONG,
+                                Toast.CENTER,
+                                {
+                                    backgroundColor: 'blue'
+                                }
+                            )
+                            await LoadData();
+                        }).catch(async (error) => {
+                            setLoading(false);
+                            setButtonClikced(false);
+                        });
+                    } else {
+                        console.log('not available')
+                    }
+                })
+                .catch(error => {
+                    console.error('Error retrieving dataa:', error);
+                    setLoading(false);
+                    setButtonClikced(false);
+                });
+        }
     }
 
     useEffect(() => {
         LoadData();
-
-        // axios({
-        //     method: 'GET',
-        //     url: `${wdays}/${id}`
-        // }).then(async (response) => {
-        //     await setworkingDaysAwait(response.data);x
-        //     setLoading(false);
-        // });
     }, [isFocused])
     return (
         <View style={styles.container}>
@@ -290,7 +319,7 @@ export default function BusinessDetailsView({ route }) {
                                             }
                                             {(auto.campaignName == 'Acquirement' && businessDetails.memberString != 'Member') &&
                                                 <View style={{ width: '35%', alignItems: 'flex-end', justifyContent: 'center' }}>
-                                                    <TouchableOpacity activeOpacity={.7} onPress={saveProfile} style={styles.frame2vJu}>
+                                                    <TouchableOpacity activeOpacity={.7} disabled={buttonClicked} onPress={saveProfile} style={styles.frame2vJu}>
                                                         <Text style={styles.getStartednru}>Save</Text>
                                                     </TouchableOpacity>
                                                 </View>
@@ -331,11 +360,16 @@ export default function BusinessDetailsView({ route }) {
                             </View>}
                             <View style={{ paddingHorizontal: '3%' }}>
                                 <Text style={{ marginTop: '7%', fontWeight: '700', fontSize: 18 }}>Photos</Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Image style={{ width: 80, height: 80, borderRadius: 10, marginTop: '2%', marginLeft: '2%' }} source={require('../assets/rectangle-32.png')} />
-                                    <Image style={{ width: 80, height: 80, borderRadius: 10, marginTop: '2%', marginLeft: '2%' }} source={require('../assets/rectangle-33.png')} />
-                                    <Image style={{ width: 80, height: 80, borderRadius: 10, marginTop: '2%', marginLeft: '2%' }} source={require('../assets/rectangle-34.png')} />
-                                </View>
+                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    <View style={{ flexDirection: 'row', width: 350, height: 100 }}>
+                                        {images.map((image, index) => (
+                                            <TouchableOpacity key={index} onPress={() => handleGalleryImagePress(index)}>
+                                                <Image style={{ width: 80, height: 80, borderRadius: 10, marginTop: '2%', marginLeft: '2%' }} source={{ uri: image.url }} />
+                                            </TouchableOpacity>
+                                        ))}
+                                    </View>
+                                </ScrollView>
+
                             </View>
                             <View style={{ paddingHorizontal: '3%' }} >
                                 <Text style={{ marginTop: '7%', fontWeight: '700', fontSize: 18 }}>Hours</Text>
@@ -438,6 +472,17 @@ export default function BusinessDetailsView({ route }) {
                     </ScrollView>
                 </SafeAreaView>
             </View>
+
+            <Modal visible={modalVisible} transparent={true}>
+                <ImageViewer
+                    imageUrls={images}
+                    index={selectedImageIndex}
+                    enableImageZoom={true}
+                    enableSwipeDown={false}
+                    scrollEnabled={true}
+                    onClick={() => setModalVisible(false)}
+                />
+            </Modal>
 
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.container}>

@@ -248,6 +248,11 @@ const Favourite = ({ navigation }) => {
         AsyncStorage.getItem('token')
             .then(async (value) => {
                 if (value !== null) {
+                    await wishList.map((data1, index) => {
+                        if (business.businessId == data1.businessId) {
+                            data1.isLiked = true;
+                        }
+                    })
                     memberID = (JSON.parse(value))[0].memberId;
                     console.log(memberID)
                     console.log('business', business.id)
@@ -295,8 +300,13 @@ const Favourite = ({ navigation }) => {
                             50,
                         );
                         await getRefreshData();
-                    }).catch((error) => {
-                        console.log("Error fetching data:/", error)
+                    }).catch(async (error) => {
+                        console.log("Error fetching data:/", error);
+                        await wishList.map((data1, index) => {
+                            if (business, businessId == data1.businessId) {
+                                data1.isLiked = true;
+                            }
+                        })
                         setLoading(false);
                     });
                     ;
