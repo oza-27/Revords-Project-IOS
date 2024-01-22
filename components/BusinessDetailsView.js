@@ -51,17 +51,15 @@ export default function BusinessDetailsView({ route }) {
     const galleryImagePath2Url = Globals.Root_URL + `${galleryImagePath2}`;
     const galleryImagePath3Url = Globals.Root_URL + `${galleryImagePath3}`;
     const galleryImagePath4Url = Globals.Root_URL + `${galleryImagePath4}`;
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const images = [
         { url: galleryImagePath1Url },
         { url: galleryImagePath2Url },
         { url: galleryImagePath3Url },
-        { url: galleryImagePath4Url }
-
+        { url: galleryImagePath4Url },
     ]
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-
-
+    
     const handleGalleryImagePress = (index) => {
         setSelectedImageIndex(index);
         setModalVisible(true);
@@ -361,7 +359,7 @@ export default function BusinessDetailsView({ route }) {
                             <View style={{ paddingHorizontal: '3%' }}>
                                 <Text style={{ marginTop: '7%', fontWeight: '700', fontSize: 18 }}>Photos</Text>
                                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                    <View style={{ flexDirection: 'row', width: 350, height: 100 }}>
+                                    <View style={{ flexDirection: 'row', width: 350, height: 100, marginTop: 20 }}>
                                         {images.map((image, index) => (
                                             <TouchableOpacity key={index} onPress={() => handleGalleryImagePress(index)}>
                                                 <Image style={{ width: 80, height: 80, borderRadius: 10, marginTop: '2%', marginLeft: '2%' }} source={{ uri: image.url }} />
@@ -369,7 +367,6 @@ export default function BusinessDetailsView({ route }) {
                                         ))}
                                     </View>
                                 </ScrollView>
-
                             </View>
                             <View style={{ paddingHorizontal: '3%' }} >
                                 <Text style={{ marginTop: '7%', fontWeight: '700', fontSize: 18 }}>Hours</Text>
@@ -478,8 +475,9 @@ export default function BusinessDetailsView({ route }) {
                     imageUrls={images}
                     index={selectedImageIndex}
                     enableImageZoom={true}
-                    enableSwipeDown={false}
+                    enableSwipeDown={true}
                     scrollEnabled={true}
+                    onCancel={() => setModalVisible(false)}
                     onClick={() => setModalVisible(false)}
                 />
             </Modal>
