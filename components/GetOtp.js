@@ -5,7 +5,6 @@ import { Toast } from 'react-native-simple-toast';
 const GetOtp = ({ route, navigation }) => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const refs = [useRef(), useRef(), useRef(), useRef()];
-
     const [isVerified, setIsVerified] = useState(true);
     let { OTP, CustomerExists, Phone } = route.params;
     console.log(OTP);
@@ -13,7 +12,6 @@ const GetOtp = ({ route, navigation }) => {
     const [seconds, setSeconds] = useState(60);
     const [isResentDisabled, setResentDisabled] = useState(false);
     const [token, setToken] = useState(null);
-
     const handleInputChange = (text, index) => {
         let newOtp = [...otp];
         newOtp[index] = text;
@@ -98,11 +96,11 @@ const GetOtp = ({ route, navigation }) => {
         }, 1000);
 
         if (seconds === 0) {
-            // Add your logic here when the timer reaches 0
-            clearInterval(interval); // Clear the interval to stop the timer
+
+            clearInterval(interval);
         }
 
-        // Clear the interval when the component is unmounted
+
         return () => clearInterval(interval);
     }, [seconds]);
 

@@ -15,12 +15,9 @@ export default function RegistrationPage({ route }) {
     const [email, setEmail] = useState('');
     const { Phone } = route.params;
     const [isValid, setIsValid] = useState(true);
-
-
     const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedDay, setSelectedDay] = useState('');
     const [daysInMonth, setDaysInMonth] = useState([]);
-    const [validDOB, setValidDOB] = useState(null);
     const months = [
         { label: 'January', value: '01' },
         { label: 'February', value: '02' },
@@ -39,7 +36,6 @@ export default function RegistrationPage({ route }) {
     useEffect(() => {
         if (selectedMonth) {
             const daysArray = [];
-            //const daysInSelectedMonth = moment(`2022-${selectedMonth}`, 'YYYY-MM').daysInMonth();
             const daysInSelectedMonth = moment(`2024-${selectedMonth}`, 'YYYY-MM').daysInMonth();
             for (let i = 1; i <= daysInSelectedMonth; i++) {
                 const formattedDay = i < 10 ? `0${i}` : `${i}`;
@@ -51,7 +47,6 @@ export default function RegistrationPage({ route }) {
         }
     }, [selectedMonth]);
     let tokenid = "";
-    const days = Array.from({ length: 31 }, (_, index) => (index + 1).toString());
     const navigation = useNavigation();
 
     const getToken = async () => {
@@ -61,7 +56,6 @@ export default function RegistrationPage({ route }) {
 
     const postData = async () => {
         await getToken()
-        const MemberData = [];
         let currentDate = (new Date()).toISOString();
         let currentYear = new Date().getFullYear();
         let platformOS = Platform.OS == "android" ? 1 : 2;
@@ -88,7 +82,6 @@ export default function RegistrationPage({ route }) {
                 "memberProfile": []
             }),
         }).then((res) => {
-            console.log(JSON.stringify(res))
             getMemberData();
         });
     }
@@ -266,16 +259,13 @@ const styles = StyleSheet.create({
         width: '95%',
         height: 1.5,
         backgroundColor: '#ffffff',
-        // marginTop: '2%',
         alignSelf: 'center',
     },
     screen93X: {
         width: '100%',
         height: '100%',
-        // position: 'relative',
         backgroundColor: '#d9e7ed',
         alignItems: 'center',
-        // justifyContent: 'center',
     },
     createYourAccount: {
         top: '10%',
@@ -302,18 +292,15 @@ const pickerSelectStyles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 8,
         borderWidth: 0.5,
-        // borderColor: 'purple',
         borderRadius: 8,
         color: 'black',
         paddingRight: 30,
-        // backgroundColor: 'white',
         marginTop: 5,
         width: '100%',
         alignSelf: 'center',
     },
     inputIOSContainer: {
-        // borderBottomColor: 'purple', // Border color when open
-        borderBottomWidth: 2, // Border width when open
+        borderBottomWidth: 2,
     },
     inputAndroidContainer: {
         borderBottomColor: 'purple', // Border color when open

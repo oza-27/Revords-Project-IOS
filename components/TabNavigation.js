@@ -10,13 +10,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 export default function TabNavigation({ route, navigation }) {
     const Tab = createBottomTabNavigator();
     const { MemberData } = route.params;
-    console.log(MemberData)
     const Stack = createNativeStackNavigator();
 
     AsyncStorage.getItem('token')
         .then(value => {
             if (value !== null) {
-                console.log(value)
+                console.log("This is not null value:- ", value)
             } else {
                 AsyncStorage.setItem('token', JSON.stringify(MemberData))
                     .then(() => {

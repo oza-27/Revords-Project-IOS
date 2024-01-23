@@ -1,16 +1,12 @@
-import { StyleSheet, View, Text, Image, TextInput, PermissionsAndroid, SafeAreaView, BackHandler, Platform, Pressable, Alert } from 'react-native';
+import { StyleSheet, View, Text, Image, TextInput, SafeAreaView, BackHandler, Platform, Pressable } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE, CalloutSubview } from 'react-native-maps';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect, useCallback } from 'react';
-import customIcon from '../assets/casinoIcon.png';
 import currentIcon from '../assets/currentlocation.png';
-import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import Globals from './Globals';
 import axios from 'axios';
-import { isLocationEnabled } from 'react-native-android-location-enabler';
-import { promptForEnableLocationIfNeeded } from 'react-native-android-location-enabler';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { requestPermission } from '../helper/notificationService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,14 +15,9 @@ export default function MapViewing({ navigation }) {
     const isFocused = useIsFocused();
     const [filteredData, setFilteredData] = useState('');
     const [initialRegion, setInitialRegion] = useState(null);
-    const [markerForOther, setMarkersForOtherBusiness] = useState({ title: '', coordinate: { latitude: 0.00000, longitude: 0.00000 } });
-    const [locationPermission, setLocationPermission] = useState(null);
-    const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
     lang = 0;
     lat = 0;
     const [businessData, setBusinessData] = useState([{}]);
-    const businessGroupID = "1";
     const baseUrl = Globals.API_URL + "/BusinessProfiles/GetBusinessProfilesForMobile"
     const [loading, setLoading] = useState(false);
 
@@ -57,8 +48,6 @@ export default function MapViewing({ navigation }) {
             lat = latitude
     }
     async function setBusinessDataWhole(data) {
-        console.log('hjgsfjcxnm,cbxmxbcmvnnbx')
-        console.log(data)
         setBusinessData(data);
         setFilteredData(data);
     }
@@ -89,11 +78,7 @@ export default function MapViewing({ navigation }) {
                                 url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
                             })
                                 .then(async response => {
-                                    console.log('businesdata-----', response.data)
-                                    console.log('businesdata-----', (JSON.parse(value))[0].appToken)
-
                                     await setBusinessDataWhole(response.data);
-
                                     setLoading(false);
                                 })
                                 .catch((error) => {
@@ -105,7 +90,6 @@ export default function MapViewing({ navigation }) {
                     .catch(error => {
                         console.error('Error retrieving dataa:', error);
                     });
-                // You can now use the latitude and longitude in your app
             },
             error => {
                 console.error('Error getting current location: ', error);

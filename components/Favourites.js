@@ -20,7 +20,6 @@ const Favourite = ({ navigation }) => {
     lang = 0;
     lat = 0;
     const wishListUrl = `${Globals.API_URL}/MembersWishLists/GetMemberWishListByMemberID`;
-    // const userEarnedRewardsAPI = Globals.API_URL + `/RewardConfigs/GetRewardConfigBusinessGroupwiseMemberwise/${businessGroupId}`;
     const [announcementClaimData, setAnnouncementClaimData] = useState([]);
     const [wishList, setWishList] = useState([]);
     const [promotionClaimData, setPromotionClaimData] = useState([]);
@@ -471,10 +470,7 @@ const Favourite = ({ navigation }) => {
                         <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Offer End Date </Text>- {moment(promotionClaimData.offerEndDate).format("MM/DD/YYYY")}</Text>
                         {promotionClaimData.expiryDays > 1 && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expires in </Text>- {promotionClaimData.expiryDays} days</Text>}
                         {promotionClaimData.expiryDays == 1 && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expiring Today </Text></Text>}
-                        {/* {promotionClaimData.expiryDays == 0 &&<Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expiring Today</Text></Text>} */}
-
                         {promotionClaimData.isSpinWheel && <Text style={styles.modaltext}>Spin the wheel and get rewards at store</Text>}
-
                         {(promotionClaimData.filePath != '' && promotionClaimData.filePath != null) && <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + promotionClaimData.filePath }} ></Image>}
                         <Text style={styles.modaltext}>Redeemable at -<Text style={{ fontWeight: '700' }}> {promotionClaimData.redeemableAt}</Text></Text>
                         {promotionClaimData.isClaimed == false && <TouchableOpacity activeOpacity={.7} onPress={() => closePromoRedeemModal('promo', promotionClaimData.id)} style={styles.frame2vJu1ModalClaim}>
@@ -508,8 +504,6 @@ const Favourite = ({ navigation }) => {
                         <Text style={styles.modalPromoMsg}>{autoPilotClaimData.rewardName}</Text>
                         {autoPilotClaimData.expiryDays > 1 && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expires in </Text>- {autoPilotClaimData.expiryDays} days</Text>}
                         {autoPilotClaimData.expiryDays == 1 && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expiring Today</Text></Text>}
-                        {/* {autoPilotClaimData.expiryDays == 0 && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expiring Today</Text></Text>} */}
-
                         {(autoPilotClaimData.filePath != '' && autoPilotClaimData.filePath != null) && <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + autoPilotClaimData.filePath }} ></Image>}
                         <Text style={styles.modaltext}>Redeemable at -<Text style={{ fontWeight: '700' }}> Any Locations</Text></Text>
                         {autoPilotClaimData.isClaimed == false && <TouchableOpacity activeOpacity={.7} onPress={() => closeAutoPilotRedeemModal('ap', autoPilotClaimData.historyId)} style={styles.frame2vJu1ModalClaim}>
@@ -542,13 +536,7 @@ const Favourite = ({ navigation }) => {
                         <Text style={styles.modalbusinessName}>{businessClaimData.businessName}</Text>
                         <Text style={styles.modalPromoMsg}>{announcementClaimData.subject}</Text>
                         {announcementClaimData.validDate && <Text style={[styles.modaltext, { textAlign: 'center' }]}><Text style={{ fontWeight: '700' }}>Expiry Date: </Text>{moment(announcementClaimData.validDate).format("MM/DD/YYYY")}</Text>}
-
                         {(announcementClaimData.fileName != '' && announcementClaimData.fileName != null) && <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + announcementClaimData.fileName }} ></Image>}
-
-                        {/* <TouchableOpacity activeOpacity={.7} onPress={closeAnnouncementModal} style={styles.frame2vJu1ModalBack}>
-                            <Text style={styles.getStartednru1}>Back</Text>
-                        </TouchableOpacity> */}
-
                     </View>
                 </View>
             </Modal>
@@ -593,11 +581,17 @@ const styles = StyleSheet.create({
         borderRadius: 15
     },
     suncontainer: {
-        width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'
+        width: '100%', 
+        height: '100%', 
+        alignItems: 'center', 
+        justifyContent: 'center'
     },
     modcontainer: {
-
-        width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute'
+        width: '100%', 
+        height: '100%', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        position: 'absolute'
     },
     modal: {
         alignSelf: 'center',

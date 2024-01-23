@@ -15,11 +15,9 @@ const VerifyNumber = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [unMaskPhone, setunMaskPhone] = useState('');
   const [isValid, setIsValid] = useState(true);
-
   spinner = false;
   randomnumber = "";
   CustomerExists = false;
-
   function generateRandomNumber() {
     const min = 1000;
     const max = 9999;
@@ -85,9 +83,7 @@ const VerifyNumber = ({ navigation }) => {
 
     } catch (error) {
       setLoading(false);
-      console.log('dsffsdfsdfsf')
       alert(error)
-
       return error;
     }
   }
@@ -164,23 +160,23 @@ const styles = StyleSheet.create({
     fontSize: isIPad ? 32 : 24,
     fontWeight: '700',
     textTransform: 'uppercase',
-    marginTop: isIPad ? '10%' : '15%', // Adjust for iPad
+    marginTop: isIPad ? '10%' : '15%'
 
   },
   companylogo: {
     flexShrink: 0,
-    width: isIPad ? '50%' : '70%', // Adjust for iPad
+    width: isIPad ? '50%' : '70%',
     resizeMode: 'contain',
-    marginTop: isIPad ? '2%' : '-5%', // Adjust for iPad
+    marginTop: isIPad ? '2%' : '-5%', 
   },
   deviceView: {
     backgroundColor: '#fff',
-    width: isIPad ? 200 : 150, // Adjust for iPad
-    height: isIPad ? 200 : 150, // Adjust for iPad
+    width: isIPad ? 200 : 150, 
+    height: isIPad ? 200 : 150, 
     alignItems: 'center',
     padding: '5%',
-    borderRadius: isIPad ? 100 : 75, // Adjust for iPad
-    marginTop: isIPad ? '5%' : '5%', // Adjust for iPad
+    borderRadius: isIPad ? 100 : 75, 
+    marginTop: isIPad ? '5%' : '5%', 
     justifyContent: 'center',
   },
   mobilelogo: {
@@ -189,29 +185,29 @@ const styles = StyleSheet.create({
   },
   verifyText: {
     color: '#140d05',
-    fontSize: isIPad ? 32 : 24, // Adjust for iPad
+    fontSize: isIPad ? 32 : 24, 
     fontWeight: '700',
     marginTop: '5%',
     marginBottom: '5%',
   },
   textInput: {
-    height: isIPad ? 60 : 45, // Adjust for iPad
-    width: isIPad ? '38%' : '45%', // Adjust for iPad
+    height: isIPad ? 60 : 45,
+    width: isIPad ? '38%' : '45%', 
     borderColor: 'gray',
     borderBottomWidth: 1,
     paddingLeft: 2,
     borderRadius: 8,
-    fontSize: isIPad ? 32 : 24, // Adjust for iPad
+    fontSize: isIPad ? 32 : 24, 
   },
   frame2vJu: {
     marginTop: '5%',
-    marginBottom: isIPad ? '8%' : 35, // Adjust for iPad
+    marginBottom: isIPad ? '8%' : 35, 
     backgroundColor: '#140d05',
     borderRadius: 8,
     alignItems: 'center',
     paddingVertical: 15,
     paddingHorizontal: 15,
-    width: isIPad ? '50%' : '60%', // Adjust for iPad
+    width: isIPad ? '50%' : '60%', 
     flexDirection: 'row',
   },
   getStartednru: {

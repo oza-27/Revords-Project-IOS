@@ -15,17 +15,14 @@ import Toast from 'react-native-simple-toast';
 const NotificationTray = ({ navigation }) => {
     const focus = useIsFocused();
     memberID = 0;
-    // const [loadingData, setLoadingData] = useState(true);
     const [userData, setUserData] = useState('');
     const baseUrl = Globals.API_URL + "/MembersWishLists/GetMobileNotificationTray"
     const [MemberData, setMemberData] = useState([{}]);
     const [isPromoModalVisible, setIsPromoModalVisible] = useState(false);
     const [isAutoPilotModalVisible, setIsAutoPilotModalVisible] = useState(false);
-    //const [promotionClaimData, setPromotionClaimData] = useState([]);
     const [notificationData, setNotificationData] = useState([]);
     const [autoPilotClaimData, setAutoPilotClaimData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const videoPlayer = useRef(null);
 
     async function setMemData(value) {
         await setMemberData(value);
@@ -33,7 +30,6 @@ const NotificationTray = ({ navigation }) => {
 
     const setIsPromoModalVisibleData = async (promotion) => {
         setIsPromoModalVisible(true);
-        //setPromotionClaimData(promotion);
         setNotificationData(promotion);
     }
     const setIsAPModalVisibleData = async (autopilot, businessdata) => {
@@ -78,10 +74,7 @@ const NotificationTray = ({ navigation }) => {
                     }
                 )
             }
-            // setWishList([]);
-            // await getRefreshData();
             setIsPromoModalVisible(false);
-            // setLoading(false)
         }).catch(error => {
             console.error('Error retrieving dataa:', error);
             setLoading(false);
@@ -91,7 +84,6 @@ const NotificationTray = ({ navigation }) => {
     const closePromoRedeemModal = async (type, ID) => {
         setLoading(true)
         await claimData(type, ID);
-        // setIsPromoModalVisible(false);
         await getData();
         setLoading(false);
     }
@@ -111,16 +103,11 @@ const NotificationTray = ({ navigation }) => {
                     }
                 )
             }
-            // setWishList([]);
-            // await getRefreshData();
-
             setIsAutoPilotModalVisible(false);
-            // setLoading(false)
         }).catch(error => {
             console.error('Error retrieving dataa:', error);
             setLoading(false);
         });
-        // setLoading(false)
     }
 
     const ToastForClaimed = () => {

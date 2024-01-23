@@ -1,17 +1,13 @@
-import { StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Alert, PanResponder, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
-// import { TextInput } from 'react-native-gesture-handler';
-import MaskInput from 'react-native-mask-input';
+import { StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView } from "react-native";
-import { StatusBar } from "react-native";
 import Globals from '../components/Globals';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
+import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
 import { useIsFocused } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import moment from 'moment';
@@ -71,12 +67,6 @@ const ProfileEdit = ({ navigation, route }) => {
         let numP3 = String(value[0].phone).toString().substring(6,);
         setFormatPhone('(' + numP1 + ') ' + numP2 + '-' + numP3);
         setPhone(String(value[0].phone));
-
-        // if (value[0].birthDay != '' && value[0].birthDay != null && value[0].birthDay != undefined &&
-        //     value[0].birthMonth != '' && value[0].birthMonth != null && value[0].birthMonth != undefined) {
-        //     setSelectedDay(value[0].birthDay);
-        //     setSelectedMonth(value[0].birthMonth);
-        // }
     }
 
     useEffect(() => {
@@ -119,8 +109,6 @@ const ProfileEdit = ({ navigation, route }) => {
         } else {
             bDate = null;
         }
-
-        console.log('bDate', bDate)
 
         const requestBody = {
             id: MemberData[0].memberId,
@@ -261,21 +249,6 @@ const ProfileEdit = ({ navigation, route }) => {
                     } else if (option === 'camera') {
                         launchCamera(options, launchCallback);
                     }
-                    // launchImageLibrary(options, (response) => {
-                    //     if (response.didCancel) {
-                    //         console.log('User cancelled image picker');
-                    //     } else if (response.error) {
-                    //         console.log('Image picker error: ', response.error);
-                    //     } else {
-                    //         let imageUri = response.uri || response.assets?.[0]?.uri;
-                    //         setMemberProfilePic(null);
-                    //         setSelectedImage(imageUri);
-                    //         setImageRes(response);
-                    //         console.log(imageUri)
-                    //         console.log('response', response)
-                    //         console.log(MemberData[0].memberId)
-                    //     }
-                    // });
                 } else {
                     console.log('Camera permission is not granted');
                     requestCameraPermission();
@@ -305,7 +278,6 @@ const ProfileEdit = ({ navigation, route }) => {
                 };
 
                 if (option === 'library') {
-                    console.log('library')
                     launchImageLibrary(options, launchCallback);
                 } else if (option === 'camera') {
                     launchCamera(options, launchCallback);
@@ -323,18 +295,13 @@ const ProfileEdit = ({ navigation, route }) => {
             type: response.type || response.assets?.[0]?.type,
             name: response.fileName || response.assets?.[0]?.fileName,
         });
-        console.log(formData);
         try {
             const response = await axios.post(Globals.API_URL + `/MemberProfiles/UpdateMemberImageInMobileApp/${MemberData[0].memberId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
-            // Handle the response from the server if needed
-            console.log('Image upload success', response.data);
         } catch (error) {
-            // Handle errors
             console.error('Image upload failed', error);
         }
     };
@@ -479,16 +446,13 @@ const ProfileEdit = ({ navigation, route }) => {
                 <SafeAreaView style={{ flex: 1 }}>
                     <View style={styles.container}>
                         <Spinner
-                            //visibility of Overlay Loading Spinner
                             visible={loading}
-                            //Text with the Spinner
                             textContent={''}
-                            //Text style of the Spinner Text
                             textStyle={styles.spinnerTextStyle}
                         />
                     </View>
                 </SafeAreaView>
-            </View >
+            </View>
         </>
     );
 };

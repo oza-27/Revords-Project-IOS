@@ -2,8 +2,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { StyleSheet, Image, Text, View, BackHandler, Pressable, Platform, Dimensions } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
-//const isIPad = Platform.OS === 'ios' && (height > 1024 || width > 1024);
 const GetStarted = ({ navigation }) => {
     const backPressed = () => {
         BackHandler.exitApp();

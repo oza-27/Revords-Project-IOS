@@ -1,4 +1,4 @@
-import { StyleSheet, Image, Text, View, Platform, Dimensions } from 'react-native';
+import { StyleSheet, Image, Text, View, Dimensions } from 'react-native';
 
 
 const TourPage1 = () => {

@@ -41,7 +41,7 @@ const Location = ({ navigation }) => {
                 const { latitude, longitude } = position.coords;
 
                 await setLangandLat(latitude, longitude);
-                // You can now use the latitude and longitude in your app
+
             },
             error => {
                 console.error('Error getting current location: ', error);
@@ -104,13 +104,8 @@ const Location = ({ navigation }) => {
                         await Geolocation.getCurrentPosition(
                             async position => {
                                 const { latitude, longitude } = position.coords;
-
                                 await setLangandLat(latitude, longitude);
-                                // You can now use the latitude and longitude in your app
-
                                 await response.data.map((data1, index) => {
-
-
                                     const toRadian = n => (n * Math.PI) / 180
                                     let lat2 = data1.latitude
                                     let lon2 = data1.longitude
@@ -274,7 +269,6 @@ const Location = ({ navigation }) => {
                                                     {(item.isLiked == false) && <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
                                                         <Animatable.Image animation={pulse} easing="ease-in-out" iterationCount="infinite"
                                                             style={{ width: 25, height: 25, left: '41%', position: 'absolute' }} source={require('../assets/likeOutline.png')} />
-                                                        {/* <Image source={require('../assets/likeOutline.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image> */}
                                                     </TouchableOpacity>}
                                                     {(item.isLiked == true) && <TouchableOpacity activeOpacity={.7}>
                                                         <Image source={require('../assets/likeFill.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image>
@@ -308,9 +302,6 @@ const styles = StyleSheet.create({
         marginHorizontal: '2%',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        // alignItems: 'flex-start',
-        // bottom: '25%',
-        // left: '27%',
     },
     avatarImg: {
         height: 50,

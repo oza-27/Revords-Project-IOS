@@ -53,12 +53,14 @@ export default function BusinessDetailsView({ route }) {
     const galleryImagePath4Url = Globals.Root_URL + `${galleryImagePath4}`;
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-    const images = [
-        { url: galleryImagePath1Url },
-        { url: galleryImagePath2Url },
-        { url: galleryImagePath3Url },
-        { url: galleryImagePath4Url },
+    const imagesTemp = [
+        { url: galleryImagePath1Url, img: galleryImagePath1 },
+        { url: galleryImagePath2Url, img: galleryImagePath2 },
+        { url: galleryImagePath3Url, img: galleryImagePath3 },
+        { url: galleryImagePath4Url, img: galleryImagePath4 },
     ]
+    
+    const images = imagesTemp.filter(x => x.img != null);
     
     const handleGalleryImagePress = (index) => {
         setSelectedImageIndex(index);

@@ -1,12 +1,7 @@
-import { StyleSheet, Image, Text, View, Button, Modal, Alert, Platform, ScrollView, Pressable } from 'react-native';
-// import { TextInput } from 'react-native-gesture-handler';
-import MaskInput from 'react-native-mask-input';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import { useRef, useState } from 'react';
-import ProfileEdit from './ProfileEdit';
+import { StyleSheet, Image, Text, View, Alert, Platform, ScrollView, Pressable } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { useIsFocused } from "@react-navigation/native";
@@ -21,7 +16,6 @@ const Profile = ({ route, navigation }) => {
     const [birthDay, setBirthDay] = useState('');
     const [memberProfilePic, setMemberProfilePic] = useState('');
     const [MemberData, setMemberData] = useState([{}]);
-    // const TokenNull = '';
     const appVersion = require('../package.json').version;
 
     const createTwoButtonAlert = () =>
@@ -41,7 +35,6 @@ const Profile = ({ route, navigation }) => {
                             console.log('Token removed successfully');
                             navigation.navigate('LandingScreen')
                         });
-                        // navigation.navigate('LandingScreen')
                     } catch (error) {
                         console.error('Error removing token:', error);
                     }
@@ -66,7 +59,6 @@ const Profile = ({ route, navigation }) => {
                             console.log('Token removed successfully');
                             navigation.navigate('LandingScreen')
                         });
-                        // navigation.navigate('LandingScreen')
                     } catch (error) {
                         console.error('Error removing token:', error);
                     }
