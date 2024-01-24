@@ -1,5 +1,5 @@
-import { StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from "react-native";
 import Globals from '../components/Globals';
@@ -305,7 +305,18 @@ const ProfileEdit = ({ navigation, route }) => {
             console.error('Image upload failed', error);
         }
     };
-
+    const alertForBirthDate = () => {
+        Alert.alert(
+            null,
+            'Your birthdate has been updated once before. If you need further assistance, please contact our Revords support team.',
+            [
+                {
+                    text: 'OK'
+                },
+            ],
+            { cancelable: false }
+        );
+    }
     return (
         <>
             <View style={styles.container}>
@@ -377,14 +388,17 @@ const ProfileEdit = ({ navigation, route }) => {
                                     </View>
                                     <View style={{ borderRadius: 23, padding: 5, width: '100%' }}>
                                         <Text style={{ fontSize: 18, fontWeight: '700', paddingLeft: 5 }}>Birth Date</Text>
-                                        {MemberData[0].isBirthDateChange && <TextInput
-                                            style={{
-                                                height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10,
-                                                marginTop: 5, fontSize: 16, borderRadius: 10, backgroundColor: '#e1e5e8', fontWeight: '600'
-                                            }}
-                                            value={(birthDate == '' || birthDate == null || birthDate == undefined) ? 'No BirthDate Given' : birthDate}
-                                            editable={false}
-                                        />}
+                                        {MemberData[0].isBirthDateChange &&
+                                            <Pressable activeOpacity={.7} onPress={alertForBirthDate}>
+                                                <TextInput
+                                                    style={{
+                                                        height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10,
+                                                        marginTop: 5, fontSize: 16, borderRadius: 10, backgroundColor: '#e1e5e8', fontWeight: '600'
+                                                    }}
+                                                    value={(birthDate == '' || birthDate == null || birthDate == undefined) ? 'No BirthDate Given' : birthDate}
+                                                    editable={false}
+                                                />
+                                            </Pressable>}
 
                                         {!MemberData[0].isBirthDateChange &&
                                             <>
@@ -397,7 +411,7 @@ const ProfileEdit = ({ navigation, route }) => {
                                                         value={selectedMonth}
                                                     />
                                                 </View>
-                                                <View style={styles.pickerContainer}>
+                                                <View>
                                                     <RNPickerSelect
                                                         placeholder={{ label: 'Select Birth Day', value: null }}
                                                         items={daysInMonth}
@@ -458,14 +472,14 @@ const ProfileEdit = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+    pickerContainer: {
+        width: '100%'
+    },
     container: {
         height: '100%',
         width: '100%',
         backgroundColor: '#d9e7ed',
         alignItems: 'center',
-    },
-    pickerContainer: {
-        border: 'none'
     },
     img1: {
         width: 100,

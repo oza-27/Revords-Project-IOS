@@ -16,10 +16,17 @@ import SplashScreen from "react-native-splash-screen";
 import { Platform } from "react-native";
 import Globals from "./components/Globals";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Text } from 'react-native';
+
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
 
 export default function App() {
+
   let token = "";
   let platformOS;
+  let long = 0;
+  let lat = 0;
   useEffect(() => {
     setTimeout(() => SplashScreen.hide(), 2000);
   }, []);

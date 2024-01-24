@@ -356,10 +356,10 @@ const Favourite = ({ navigation }) => {
 
                                 <View style={{ width: '100%' }}>
                                     <TouchableOpacity activeOpacity={.7} style={styles.ViewBtn} onPress={() => navigation.navigate('BusinessDetailView', { id: item.businessId })}>
-                                        <Text style={styles.businessName}>{item.businessName}</Text>
+                                        <Text allowFontScaling={false} style={styles.businessName}>{item.businessName}</Text>
                                     </TouchableOpacity>
-                                    <Text style={styles.industry}>{item.industry}</Text>
-                                    <Text style={styles.memberDetails}><Text style={{ color: '#73a5bc' }}>{item.distance} mi </Text> | Member Since - {moment(item.createdDate).format("MM/DD/YYYY")}</Text>
+                                    <Text allowFontScaling={false} style={styles.industry}>{item.industry}</Text>
+                                    <Text allowFontScaling={false} style={styles.memberDetails}><Text style={{ color: '#73a5bc' }}>{item.distance} mi </Text> | Member Since - {moment(item.createdDate).format("MM/DD/YYYY")}</Text>
                                 </View>
 
 
@@ -368,24 +368,23 @@ const Favourite = ({ navigation }) => {
                                     <View style={styles.cardView}>
                                         <Card style={[{ width: 150, borderRadius: 20, height: 150, marginRight: 10, marginLeft: 5, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
                                         isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                            <Text style={styles.badge}> {item.badgeName} </Text>
+                                            <Text allowFontScaling={false} style={styles.badge}> {item.badgeName} </Text>
                                             {(item.badgeName).toString().toLowerCase() == 'bronze' && <Image source={require('../assets/Bronze.png')} style={[styles.trophyImg]} />}
                                             {(item.badgeName).toString().toLowerCase() == 'silver' && <Image source={require('../assets/Silver.png')} style={[styles.trophyImg]} />}
                                             {(item.badgeName).toString().toLowerCase() == 'gold' && <Image source={require('../assets/Gold.png')} style={[styles.trophyImg]} />}
                                             {(item.badgeName).toString().toLowerCase() == 'platinum' && <Image source={require('../assets/platinum.png')} style={[styles.trophyImg]} />}
-                                            <Text style={styles.memberPoints}> {item.currentPoints} pt </Text>
+                                            <Text allowFontScaling={false} style={styles.memberPoints}> {item.currentPoints} pt </Text>
                                         </Card>
 
                                         {item.promotionData.map((promotion, earnReward) => (
-                                            <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
+                                            <Card key={earnReward} style={[{ width: 180, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
                                             isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                <Text style={styles.achievableName}>{promotion.promotionalMessage}</Text>
+                                                <Text allowFontScaling={false} style={styles.achievableName}>{promotion.promotionalMessage}</Text>
                                                 {promotion.expiryDays > 1 && <Text style={styles.achievalbeValue}>Expires in - {promotion.expiryDays} days</Text>}
                                                 {promotion.expiryDays == 1 && <Text style={styles.achievalbeValue}>Expiring Today</Text>}
-                                                {/* {promotion.expiryDays == 0 &&<Text style={styles.achievalbeValue}>Expiring Today</Text>} */}
                                                 <TouchableOpacity activeOpacity={.7} onPress={() => openPromoModal(promotion, item)} style={[promotion.isClaimed == false ? styles.frame2vJuClaim : styles.frame2vJuClaimed]}>
-                                                    {promotion.isClaimed == false && <Text style={styles.getStartednru}>Claim</Text>}
-                                                    {promotion.isClaimed == true && <Text style={styles.getStartednru}>Claimed</Text>}
+                                                    {promotion.isClaimed == false && <Text allowFontScaling={false} style={styles.getStartednru}>Claim</Text>}
+                                                    {promotion.isClaimed == true && <Text allowFontScaling={false} style={styles.getStartednru}>Claimed</Text>}
                                                 </TouchableOpacity>
                                             </Card>
                                         ))}
@@ -393,13 +392,13 @@ const Favourite = ({ navigation }) => {
                                         {item.autopilotData.map((autopilot, earnReward) => (
                                             <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
                                             isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                <Text style={styles.achievableName}>{autopilot.rewardName}</Text>
+                                                <Text allowFontScaling={false} style={styles.achievableName}>{autopilot.rewardName}</Text>
                                                 {autopilot.expiryDays > 1 && <Text style={styles.achievalbeValue}>Expires in - {autopilot.expiryDays} days</Text>}
                                                 {autopilot.expiryDays == 1 && <Text style={styles.achievalbeValue}>Expiring Today</Text>}
                                                 {/* {autopilot.expiryDays == 0 &&<Text style={styles.achievalbeValue}>Expiring Today</Text>} */}
                                                 <TouchableOpacity activeOpacity={.7} onPress={() => openAPModal(autopilot, item)} style={[autopilot.isClaimed == false ? styles.frame2vJuClaim : styles.frame2vJuClaimed]}>
-                                                    {autopilot.isClaimed == false && <Text style={styles.getStartednru}>Claim</Text>}
-                                                    {autopilot.isClaimed == true && <Text style={styles.getStartednru}>Claimed</Text>}
+                                                    {autopilot.isClaimed == false && <Text allowFontScaling={false} style={styles.getStartednru}>Claim</Text>}
+                                                    {autopilot.isClaimed == true && <Text allowFontScaling={false} style={styles.getStartednru}>Claimed</Text>}
                                                 </TouchableOpacity>
                                             </Card>
                                         ))}
@@ -407,7 +406,7 @@ const Favourite = ({ navigation }) => {
                                         {item.announcementData.map((announcement, earnReward) => (
                                             <Card key={earnReward} style={[{ width: 150, borderRadius: 20, paddingHorizontal: 2, height: 150, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
                                             isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                <Text style={styles.achievableName}>{announcement.subject}</Text>
+                                                <Text allowFontScaling={false} style={styles.achievableName}>{announcement.subject}</Text>
                                                 <TouchableOpacity activeOpacity={.7} onPress={() => openAnnouncementModal(announcement, item)} style={styles.ViewAnnouncement}>
                                                     <Text style={styles.getStartednru}>View</Text>
                                                 </TouchableOpacity>
@@ -417,8 +416,8 @@ const Favourite = ({ navigation }) => {
                                         {item.rewardData.map((reward, earnReward) => (
                                             <Card key={earnReward} style={[{ width: 150, borderRadius: 20, height: 150, paddingHorizontal: 2, marginRight: 10, marginBottom: 5, backgroundColor: '#f4f5f5' }, isPromoModalVisible ? { opacity: 0.4 } : '',
                                             isAutoPilotModalVisible ? { opacity: 0.4 } : '', isAnnouncementModalVisible ? { opacity: 0.4 } : '']}>
-                                                <Text style={styles.achievableName}>{reward.rewardName}</Text>
-                                                <Text style={styles.achievalbeValue}>{reward.achivableTargetValue} pts</Text>
+                                                <Text allowFontScaling={false} style={styles.achievableName}>{reward.rewardName}</Text>
+                                                <Text allowFontScaling={false} style={styles.achievalbeValue}>{reward.achivableTargetValue} pts</Text>
                                                 <View>
                                                     <Progress.Bar
                                                         style={styles.progressBar}
@@ -426,15 +425,16 @@ const Favourite = ({ navigation }) => {
                                                         width={110}
                                                         color='#2ac95d' />
                                                 </View>
-                                                {(reward.pendingToAchiveValue > 0) && <Text style={styles.pendingpoints}>{reward.pendingToAchiveValue} left</Text>}
-                                                {(reward.pendingToAchiveValue <= 0) && <Text style={styles.pendingpoints}>0 left</Text>}
+                                                {(reward.pendingToAchiveValue > 0) && <Text allowFontScaling={false} style={styles.pendingpoints}>{reward.pendingToAchiveValue} left</Text>}
+                                                {(reward.pendingToAchiveValue <= 0) && <Text allowFontScaling={false} style={styles.pendingpoints}>0 left</Text>}
                                             </Card>
                                         ))}
                                     </View>
                                 </ScrollView>
                             </View>
-                        ))}
-                    </View>
+                        ))
+                        }
+                    </View >
 
                     <SafeAreaView>
                         <View style={styles.container}>
@@ -445,7 +445,7 @@ const Favourite = ({ navigation }) => {
                         </View>
                     </SafeAreaView>
                 </ScrollView >
-            </SafeAreaView>
+            </SafeAreaView >
 
 
             <Modal
@@ -464,17 +464,17 @@ const Favourite = ({ navigation }) => {
                                 <Image source={require('../assets/cancelImg.png')} style={styles.cancelImg} />
                             </TouchableOpacity>
                         </View>
-                        <Text style={styles.modalbusinessName}>{businessClaimData.businessName}</Text>
-                        <Text style={styles.modalPromoMsg}>DEAL : {promotionClaimData.promotionalMessage}</Text>
-                        <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Offer Start Date </Text>- {moment(promotionClaimData.offerStartDate).format("MM/DD/YYYY")}</Text>
-                        <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Offer End Date </Text>- {moment(promotionClaimData.offerEndDate).format("MM/DD/YYYY")}</Text>
+                        <Text allowFontScaling={false} style={styles.modalbusinessName}>{businessClaimData.businessName}</Text>
+                        <Text allowFontScaling={false} style={styles.modalPromoMsg}>DEAL : {promotionClaimData.promotionalMessage}</Text>
+                        <Text allowFontScaling={false} style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Offer Start Date </Text>- {moment(promotionClaimData.offerStartDate).format("MM/DD/YYYY")}</Text>
+                        <Text allowFontScaling={false} style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Offer End Date </Text>- {moment(promotionClaimData.offerEndDate).format("MM/DD/YYYY")}</Text>
                         {promotionClaimData.expiryDays > 1 && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expires in </Text>- {promotionClaimData.expiryDays} days</Text>}
                         {promotionClaimData.expiryDays == 1 && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expiring Today </Text></Text>}
                         {promotionClaimData.isSpinWheel && <Text style={styles.modaltext}>Spin the wheel and get rewards at store</Text>}
                         {(promotionClaimData.filePath != '' && promotionClaimData.filePath != null) && <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + promotionClaimData.filePath }} ></Image>}
                         <Text style={styles.modaltext}>Redeemable at -<Text style={{ fontWeight: '700' }}> {promotionClaimData.redeemableAt}</Text></Text>
                         {promotionClaimData.isClaimed == false && <TouchableOpacity activeOpacity={.7} onPress={() => closePromoRedeemModal('promo', promotionClaimData.id)} style={styles.frame2vJu1ModalClaim}>
-                            <Text style={styles.getStartednru1}>Claim</Text>
+                            <Text allowFontScaling={false} style={styles.getStartednru1}>Claim</Text>
                         </TouchableOpacity>}
                         {promotionClaimData.isClaimed == true &&
                             <TouchableOpacity activeOpacity={.7} style={styles.frame2vJu1ModalBack} onPress={ToastForClaimed}>
@@ -581,16 +581,16 @@ const styles = StyleSheet.create({
         borderRadius: 15
     },
     suncontainer: {
-        width: '100%', 
-        height: '100%', 
-        alignItems: 'center', 
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
         justifyContent: 'center'
     },
     modcontainer: {
-        width: '100%', 
-        height: '100%', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
         position: 'absolute'
     },
     modal: {
@@ -716,7 +716,7 @@ const styles = StyleSheet.create({
     achievableName: {
         fontWeight: '700',
         color: '#000000',
-        fontSize: 16,
+        fontSize: 15,
         width: 160,
         height: 70,
         // top: '20%',

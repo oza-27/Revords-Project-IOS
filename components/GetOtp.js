@@ -133,18 +133,18 @@ const GetOtp = ({ route, navigation }) => {
                 {otp.join('').length == 0 && <Text style={{ 'paddingTop': 4, 'color': '#203139' }}>Please Enter the OTP</Text>}
             </View>
             <TouchableOpacity activeOpacity={.7} onPress={verifyOtp} style={styles.frame2vJu}>
-                <Text style={styles.getStartednru}>Verify</Text>
+                <Text allowFontScaling={false} style={styles.getStartednru}>Verify</Text>
             </TouchableOpacity>
 
             <Text style={styles.verifyCodeText1}>Didn't receive the code?</Text>
-            {seconds !== 0 && <Text style={styles.timerText}>{`${Math.floor(seconds / 60)}:${(seconds % 60).toLocaleString('en-US', {
+            {seconds !== 0 && <Text allowFontScaling={false} style={styles.timerText}>{`${Math.floor(seconds / 60)}:${(seconds % 60).toLocaleString('en-US', {
                 minimumIntegerDigits: 2,
                 useGrouping: false,
             })}`}</Text>}
             {(seconds === 0 && !isResentDisabled) && <TouchableOpacity activeOpacity={.7} onPress={resendOtp} style={styles.resendView}>
-                <Text style={styles.verifyCodeText2}>Resend</Text>
+                <Text allowFontScaling={false} style={styles.verifyCodeText2}>Resend</Text>
             </TouchableOpacity>}
-            {(seconds === 0 && isResentDisabled) && <Text style={styles.resentText}>Resent</Text>}
+            {(seconds === 0 && isResentDisabled) && <Text allowFontScaling={false} style={styles.resentText}>Resent</Text>}
         </View>
     );
 };

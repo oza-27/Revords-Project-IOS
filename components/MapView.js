@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, Image, TextInput, SafeAreaView, BackHandler, Platform, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Image, TextInput, SafeAreaView, BackHandler, Platform, Pressable, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE, CalloutSubview } from 'react-native-maps';
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect, useCallback } from 'react';
 import currentIcon from '../assets/currentlocation.png';

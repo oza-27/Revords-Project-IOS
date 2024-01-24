@@ -22,7 +22,7 @@ const GetStarted = ({ navigation }) => {
             <Image source={require('../assets/vector-Ypq.png')} style={styles.vectorP61} />
             <View style={{ width: '90%', alignItems: 'center' }}>
                 <Pressable activeOpacity={.7} onPress={() => { navigation.navigate('VerifyNumber') }} style={styles.frame2vJu}>
-                    <Text style={styles.getStartednru}>Get Started</Text>
+                    <Text allowFontScaling={false} style={styles.getStartednru}>Get Started</Text>
                     <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
                 </Pressable>
             </View>

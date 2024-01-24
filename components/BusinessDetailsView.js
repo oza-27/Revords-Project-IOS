@@ -1,4 +1,4 @@
-import { Modal, StyleSheet } from 'react-native'
+import { Linking, Modal, Platform, StyleSheet } from 'react-native'
 import { View, Text, Image } from 'react-native'
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -59,9 +59,9 @@ export default function BusinessDetailsView({ route }) {
         { url: galleryImagePath3Url, img: galleryImagePath3 },
         { url: galleryImagePath4Url, img: galleryImagePath4 },
     ]
-    
+
     const images = imagesTemp.filter(x => x.img != null);
-    
+
     const handleGalleryImagePress = (index) => {
         setSelectedImageIndex(index);
         setModalVisible(true);
@@ -243,7 +243,7 @@ export default function BusinessDetailsView({ route }) {
                 </View>
 
                 <SafeAreaView style={{ paddingTop: '6%', height: '90%', width: '97%', alignItems: 'center', borderRadius: 50 }}>
-                    <ScrollView style={{ flex: 1, height: '85%', width: '97%', borderRadius: 50 }} showsVerticalScrollIndicator={false}>
+                    <ScrollView style={{ flex: 1, height: '97%', width: '97%', borderRadius: 50 }} showsVerticalScrollIndicator={false}>
                         <View style={styles.detailView}>
                             <Image source={{ uri: imageUrl }} style={styles.imageBusiness} />
                             <Text style={{ fontWeight: '800', paddingHorizontal: '3%', fontSize: 18, top: 5 }}>{businessDetails.businessName}</Text>
@@ -457,9 +457,13 @@ export default function BusinessDetailsView({ route }) {
                             </View>
                             <View style={{ paddingHorizontal: '3%' }} >
                                 <Text style={styles.adressHeading}>Phone:</Text>
-                                {businessDetails.phoneNo && <Text style={{ color: '#8c9194', fontSize: 14, marginTop: '2%', paddingHorizontal: '2%' }}>
-                                    {businessDetails.phoneNo.replace(/(\d{3})(\d{3})(\d{4})/, (_, a, b, c) => `(${a}) ${b}-${c}`)}
-                                </Text>}
+                                {businessDetails.phoneNo &&
+                                    <TouchableOpacity activeOpacity={.7}
+                                        onPress={() => Platform.OS === 'ios' ? Linking.openURL(`telprompt:${businessDetails.phoneNo}`) : Linking.openURL(`tel:${businessDetails.phoneNo}`)}>
+                                        <Text style={{ color: '#1a7da5', fontSize: 14, marginTop: '2%', paddingHorizontal: '2%' }}>
+                                            {businessDetails.phoneNo.replace(/(\d{3})(\d{3})(\d{4})/, (_, a, b, c) => `(${a}) ${b}-${c}`)}
+                                        </Text>
+                                    </TouchableOpacity>}
                             </View>
                             <View style={{ paddingHorizontal: '3%' }} >
                                 <Text style={styles.adressHeading}>Description:</Text>
@@ -521,7 +525,6 @@ const styles = StyleSheet.create({
         height: 40
     },
     getStartednru: {
-        // lineHeight: 22.5,
         textTransform: 'uppercase',
         fontFamily: 'SatoshiVariable, SourceSansPro',
         flexShrink: 0,
