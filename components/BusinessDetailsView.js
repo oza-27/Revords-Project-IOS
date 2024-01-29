@@ -23,9 +23,7 @@ export default function BusinessDetailsView({ route }) {
     lang = 0;
     lat = 0;
     const [initialRegion, setInitialRegion] = useState(null);
-    let memberID = 0;
     const [loading, setLoading] = useState(false);
-
     const businessDetailsAPI = `${Globals.API_URL}/BusinessProfiles/GetBusinessLocationWiseMemberDetails`;
     const businessGroupId = "1";
     const userEarnedRewardsAPI = Globals.API_URL + `/RewardConfigs/GetRewardConfigBusinessGroupwiseMemberwise/${businessGroupId}`;
@@ -127,7 +125,6 @@ export default function BusinessDetailsView({ route }) {
 
     async function LoadData() {
         setLoading(true);
-
         AsyncStorage.getItem('token')
             .then(async (value) => {
                 if (value !== null) {
@@ -142,8 +139,6 @@ export default function BusinessDetailsView({ route }) {
                         console.log("Error fetching data:/", error)
                         setLoading(false);
                     });
-
-                    await setMemData(JSON.parse(value));
 
                 } else {
                     console.log('not available')
@@ -164,9 +159,6 @@ export default function BusinessDetailsView({ route }) {
             AsyncStorage.getItem('token')
                 .then(async (value) => {
                     if (value !== null) {
-                        memberID = (JSON.parse(value))[0].memberId;
-                        console.log(memberID)
-                        console.log(businessDetails.businessGroupId)
                         let currentDate = (new Date()).toISOString();
                         await fetch(Globals.API_URL + '/MemberProfiles/PostMemberProfileInMobileBySave', {
                             method: 'POST',
@@ -182,7 +174,7 @@ export default function BusinessDetailsView({ route }) {
                                 "badgeId": 1,
                                 "tagId": null,
                                 "businessGroupId": businessDetails.businessGroupId,
-                                "lastVisitDate": currentDate,
+                                "lastVisitDate": null,
                                 "lifeTimePoints": 0,
                                 "lifeTimeVisits": 0,
                                 "smsoptIn": false,
@@ -198,7 +190,8 @@ export default function BusinessDetailsView({ route }) {
                                 "createdDate": currentDate,
                                 "lastModifiedBy": (JSON.parse(value))[0].memberId,
                                 "lastModifiedDate": currentDate,
-                                "businessLocationID": businessDetails.businessId
+                                "businessLocationID": businessDetails.businessId,
+                                "baseLocationID": businessDetails.businessId
                             }),
                         }).then(async (res) => {
                             Toast.show(

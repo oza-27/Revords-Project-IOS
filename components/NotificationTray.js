@@ -323,7 +323,8 @@ const styles = StyleSheet.create({
         flex: 10,
         zIndex: 10,
         textAlign: 'center',
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        top: '15%'
     },
     frame2vJu1ModalClaim: {
         backgroundColor: '#7d5513',

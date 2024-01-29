@@ -264,7 +264,7 @@ const Location = ({ navigation }) => {
                                                 {(item.businessName).toString().length >= 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {(item.businessName).toString().substring(0, 20)}...</Title>}
                                                 <Text style={{ color: '#717679', fontWeight: '500' }}> {item.industry} </Text>
                                                 <View style={{ flexDirection: 'row', width: '85%', justifyContent: 'space-between' }}>
-                                                    <Text allowFontScaling={false} style={styles.milesText}> {item.distance} mi </Text>
+                                                    <Text style={styles.milesText}> {item.distance} mi </Text>
                                                     {(item.isLiked == false) && <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
                                                         <Animatable.Image animation={pulse} easing="ease-in-out" iterationCount="infinite"
                                                             style={{ width: 25, height: 25, left: '41%', position: 'absolute' }} source={require('../assets/likeOutline.png')} />

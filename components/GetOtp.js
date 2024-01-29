@@ -2,6 +2,7 @@ import { StyleSheet, Image, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useRef, useState, useEffect } from 'react';
 import { Toast } from 'react-native-simple-toast';
+import Globals from './Globals';
 const GetOtp = ({ route, navigation }) => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const refs = [useRef(), useRef(), useRef(), useRef()];
@@ -104,6 +105,13 @@ const GetOtp = ({ route, navigation }) => {
         return () => clearInterval(interval);
     }, [seconds]);
 
+    const handleAutoFill = (event, index) => {
+        if (event.nativeEvent.textContentType === 'oneTimeCode') {
+            const autoFilledValue = event.nativeEvent.text;
+            handleInputChange(autoFilledValue, index);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.welcomeText}>Enter Otp</Text>
@@ -125,6 +133,8 @@ const GetOtp = ({ route, navigation }) => {
                         onKeyPress={(e) => handleKeyPress(e, index)}
                         value={otp[index]}
                         textContentType='oneTimeCode'
+                        autoComplete='sms-otp'
+                        onTextInput={(e) => handleAutoFill(e, index)}
                     />
                 ))}
             </View>
@@ -133,18 +143,18 @@ const GetOtp = ({ route, navigation }) => {
                 {otp.join('').length == 0 && <Text style={{ 'paddingTop': 4, 'color': '#203139' }}>Please Enter the OTP</Text>}
             </View>
             <TouchableOpacity activeOpacity={.7} onPress={verifyOtp} style={styles.frame2vJu}>
-                <Text allowFontScaling={false} style={styles.getStartednru}>Verify</Text>
+                <Text style={styles.getStartednru}>Verify</Text>
             </TouchableOpacity>
 
             <Text style={styles.verifyCodeText1}>Didn't receive the code?</Text>
-            {seconds !== 0 && <Text allowFontScaling={false} style={styles.timerText}>{`${Math.floor(seconds / 60)}:${(seconds % 60).toLocaleString('en-US', {
+            {seconds !== 0 && <Text style={styles.timerText}>{`${Math.floor(seconds / 60)}:${(seconds % 60).toLocaleString('en-US', {
                 minimumIntegerDigits: 2,
                 useGrouping: false,
             })}`}</Text>}
             {(seconds === 0 && !isResentDisabled) && <TouchableOpacity activeOpacity={.7} onPress={resendOtp} style={styles.resendView}>
-                <Text allowFontScaling={false} style={styles.verifyCodeText2}>Resend</Text>
+                <Text style={styles.verifyCodeText2}>Resend</Text>
             </TouchableOpacity>}
-            {(seconds === 0 && isResentDisabled) && <Text allowFontScaling={false} style={styles.resentText}>Resent</Text>}
+            {(seconds === 0 && isResentDisabled) && <Text style={styles.resentText}>Resent</Text>}
         </View>
     );
 };
