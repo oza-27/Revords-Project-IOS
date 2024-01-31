@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { Avatar, Card, Drawer, Title } from 'react-native-paper';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Globals from './Globals';
@@ -14,13 +14,18 @@ import { promptForEnableLocationIfNeeded } from 'react-native-android-location-e
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Animatable from 'react-native-animatable';
 import Toast from 'react-native-simple-toast';
+import LinearGradient from 'react-native-linear-gradient';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+
+
+const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 const Location = ({ navigation }) => {
     const [search, setSearch] = useState('');
     const [filteredData, setFilteredData] = useState('');
     const focus = useIsFocused();
     lang = 0;
     lat = 0;
-    const [loadingData, setLoadingData] = useState(false);
+    const [loadingData, setLoadingData] = useState(true);
     const [userData, setUserData] = useState('');
     const userId = "1";
     const baseUrl = Globals.API_URL + "/BusinessProfiles/GetBusinessProfilesForMobile";
@@ -224,11 +229,10 @@ const Location = ({ navigation }) => {
                 setLoading(false);
             });
     }
-
+    const { isShimmering } = true;
     return (
         <>
             <View style={styles.container}>
-
                 <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={styles.welcomeText}>Where to go?</Text>
                     <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
@@ -247,56 +251,147 @@ const Location = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.store}>
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            data={filteredData}
-                            keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item }) => {
-                                return (
-                                    <Card style={styles.card} onPress={() => this.NavigateToBusinessDetails(item.id)}>
-                                        <Card.Cover source={{ uri: Globals.Root_URL + item.imagePath }} style={styles.cardCover} />
-                                        <Card.Content style={styles.cardContent}>
-                                            <View style={{ width: '30%', height: '90%', alignItems: 'center', justifyContent: 'center' }}>
-                                                <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + item.logoPath }}></Image>
+                        {loadingData ?
+                            <>
+                                <SafeAreaView style={styles.scrollContainer}>
+                                    <ScrollView style={{ flex: 1, height: '100%', width: '100%', borderRadius: 50 }} showsVerticalScrollIndicator={false}>
+                                        <LinearGradient
+                                            colors={['#b0bec5', '#e1e1e1', '#b0bec5']}
+                                            style={[styles.gradient, { marginTop: 10 }]}>
+                                            <View style={{ width: '100%', height: 220, }}>
+                                                <ShimmerPlaceHolder
+                                                    style={styles.shimmer}
+                                                    shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                >
+                                                </ShimmerPlaceHolder>
                                             </View>
-                                            <View style={{ width: '70%', height: '100%' }}>
-                                                {(item.businessName).toString().length < 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {item.businessName}</Title>}
-                                                {(item.businessName).toString().length >= 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {(item.businessName).toString().substring(0, 20)}...</Title>}
-                                                <Text style={{ color: '#717679', fontWeight: '500' }}> {item.industry} </Text>
-                                                <View style={{ flexDirection: 'row', width: '85%', justifyContent: 'space-between' }}>
-                                                    <Text style={styles.milesText}> {item.distance} mi </Text>
-                                                    {(item.isLiked == false) && <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
-                                                        <Animatable.Image animation={pulse} easing="ease-in-out" iterationCount="infinite"
-                                                            style={{ width: 25, height: 25, left: '41%', position: 'absolute' }} source={require('../assets/likeOutline.png')} />
-                                                    </TouchableOpacity>}
-                                                    {(item.isLiked == true) && <TouchableOpacity activeOpacity={.7}>
-                                                        <Image source={require('../assets/likeFill.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image>
-                                                    </TouchableOpacity>}
+
+                                            <View style={{ width: '100%', height: 80, flexDirection: 'row', alignItems: 'center' }}>
+                                                <View style={{ width: '40%', height: '90%', marginLeft: 2 }}>
+                                                    <ShimmerPlaceHolder
+                                                        style={styles.shimmer}
+                                                        shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                    >
+                                                    </ShimmerPlaceHolder>
+                                                </View>
+                                                <View style={{ width: '55%', height: '90%', marginLeft: 10, justifyContent: 'center' }}>
+                                                    <View style={{ width: '85%', height: '35%' }}>
+                                                        <ShimmerPlaceHolder
+                                                            style={styles.shimmer}
+                                                            shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                        >
+                                                        </ShimmerPlaceHolder>
+                                                    </View>
+                                                    <View style={{ width: '60%', height: '25%', marginTop: 10 }}>
+                                                        <ShimmerPlaceHolder
+                                                            style={styles.shimmer}
+                                                            shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                        >
+                                                        </ShimmerPlaceHolder>
+                                                    </View>
                                                 </View>
                                             </View>
-                                        </Card.Content>
-                                    </Card>
-                                );
-                            }}
-                        />
+                                        </LinearGradient>
+
+                                        <LinearGradient
+                                            colors={['#b0bec5', '#e1e1e1', '#b0bec5']}
+                                            style={[styles.gradient, { marginTop: 10 }]}>
+                                            <View style={{ width: '100%', height: 220 }}>
+                                                <ShimmerPlaceHolder
+                                                    style={styles.shimmer}
+                                                    shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                >
+                                                </ShimmerPlaceHolder>
+                                            </View>
+
+                                            <View style={{ width: '100%', height: 80, flexDirection: 'row', alignItems: 'center' }}>
+                                                <View style={{ width: '40%', height: '90%', marginLeft: 2 }}>
+                                                    <ShimmerPlaceHolder
+                                                        style={styles.shimmer}
+                                                        shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                    >
+                                                    </ShimmerPlaceHolder>
+                                                </View>
+                                                <View style={{ width: '55%', height: '90%', marginLeft: 10, justifyContent: 'center' }}>
+                                                    <View style={{ width: '85%', height: '35%' }}>
+                                                        <ShimmerPlaceHolder
+                                                            style={styles.shimmer}
+                                                            shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                        >
+                                                        </ShimmerPlaceHolder>
+                                                    </View>
+                                                    <View style={{ width: '60%', height: '25%', marginTop: 10 }}>
+                                                        <ShimmerPlaceHolder
+                                                            style={styles.shimmer}
+                                                            shimmerColors={['#f3f3f3', '#e1e1e1', '#f3f3f3']}
+                                                        >
+                                                        </ShimmerPlaceHolder>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </LinearGradient>
+                                    </ScrollView>
+                                </SafeAreaView>
+                            </> :
+                            <FlatList
+                                showsVerticalScrollIndicator={false}
+                                data={filteredData}
+                                keyExtractor={(item, index) => index.toString()}
+                                renderItem={({ item }) => {
+                                    return (
+                                        <Card style={styles.card} onPress={() => this.NavigateToBusinessDetails(item.id)}>
+                                            <Card.Cover source={{ uri: Globals.Root_URL + item.imagePath }} style={styles.cardCover} />
+                                            <Card.Content style={styles.cardContent}>
+                                                <View style={{ width: '30%', height: '90%', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + item.logoPath }}></Image>
+                                                </View>
+                                                <View style={{ width: '70%', height: '100%' }}>
+                                                    {(item.businessName).toString().length < 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {item.businessName}</Title>}
+                                                    {(item.businessName).toString().length >= 20 && <Title style={{ fontSize: 16, fontWeight: '800', color: '#3b3939' }}> {(item.businessName).toString().substring(0, 20)}...</Title>}
+                                                    <Text style={{ color: '#717679', fontWeight: '500' }}> {item.industry} </Text>
+                                                    <View style={{ flexDirection: 'row', width: '85%', justifyContent: 'space-between' }}>
+                                                        <Text style={styles.milesText}> {item.distance} mi </Text>
+                                                        {(item.isLiked == false) && <TouchableOpacity activeOpacity={.7} onPress={() => likeProfile(item)}>
+                                                            <Animatable.Image animation={pulse} easing="ease-in-out" iterationCount="infinite"
+                                                                style={{ width: 25, height: 25, left: '41%', position: 'absolute' }} source={require('../assets/likeOutline.png')} />
+                                                        </TouchableOpacity>}
+                                                        {(item.isLiked == true) && <TouchableOpacity activeOpacity={.7}>
+                                                            <Image source={require('../assets/likeFill.png')} style={{ width: 25, height: 25, left: '41%', position: 'absolute' }}></Image>
+                                                        </TouchableOpacity>}
+                                                    </View>
+                                                </View>
+                                            </Card.Content>
+                                        </Card>
+                                    );
+                                }}
+                            />
+                        }
                     </View>
                 </View>
-
-
-                <SafeAreaView>
-                    <View style={styles.container}>
-                        <Spinner
-                            visible={loadingData}
-                            textContent={''}
-                            textStyle={styles.spinnerStyle} />
-                    </View>
-                </SafeAreaView>
             </View>
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        paddingTop: '5%',
+        height: '100%',
+        width: '100%',
+        alignItems: 'center',
+        borderRadius: 50
+    },
+    gradient: {
+        width: '100%',
+        height: 300,
+        borderRadius: 10
+    },
+    shimmer: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10
+    },
+
     cardContent: {
         marginHorizontal: '2%',
         flexDirection: 'row',

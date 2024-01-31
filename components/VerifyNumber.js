@@ -6,6 +6,7 @@ import Globals from '../components/Globals';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-simple-toast';
+import LinearGradient from 'react-native-linear-gradient';
 
 const { height, width } = Dimensions.get('window');
 const isIPad = Platform.OS === 'ios' && (height > 1024 || width > 1024);
@@ -106,50 +107,63 @@ const VerifyNumber = ({ navigation }) => {
   return (
     <KeyboardAwareScrollView style={{ backgroundColor: '#d9e7ed' }}>
       <View style={styles.container}>
-        <Text style={styles.welcomeText}>Welcome To</Text>
-        <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
-        <View style={styles.deviceView}>
-          <Image source={require('../assets/devicemobile-9n9.png')} style={styles.mobilelogo} />
-        </View>
-        <Text style={styles.verifyText}>Verify Your Number</Text>
-        <MaskInput
-          value={phone}
-          style={styles.textInput}
-          keyboardType="numeric"
-          maxLength={14}
-          onChangeText={(masked, unmasked) => {
-            if (unmasked.length <= 10) {
-              setPhone(masked); // you can use the unmasked value as well       
-              setunMaskPhone(unmasked);
-            }
-          }}
-          mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-          placeholder="(000) 000-0000"
-        />
-        {!isValid && <Text style={{ color: 'red', marginTop: 4 }}>Invalid Phone Number</Text>}
-
-        <TouchableOpacity activeOpacity={.7} onPress={handleOnPress} style={styles.frame2vJu}>
-          <Text style={styles.getStartednru}>Request Otp</Text>
-          <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
-        </TouchableOpacity>
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={styles.container}>
-            <Spinner
-              //visibility of Overlay Loading Spinner
-              visible={loading}
-              //Text with the Spinner
-              textContent={''}
-              //Text style of the Spinner Text
-              textStyle={styles.spinnerTextStyle}
+        <LinearGradient
+          colors={['#d9e7ed', '#bfdfed', '#d9e7ed']}
+          style={[styles.gradient]}>
+          <Text style={styles.welcomeText}>Welcome To</Text>
+          <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
+          <View style={styles.deviceView}>
+            <Image source={require('../assets/devicemobile-9n9.png')} style={styles.mobilelogo} />
+          </View>
+          <Text style={styles.verifyText}>Verify Your Number</Text>
+          <View style={{ flexDirection: 'row', height: 50, alignItems: 'center', justifyContent: 'center' }}>
+            <MaskInput
+              value={phone}
+              style={styles.textInput}
+              keyboardType="numeric"
+              maxLength={14}
+              onChangeText={(masked, unmasked) => {
+                if (unmasked.length <= 10) {
+                  setPhone(masked); // you can use the unmasked value as well       
+                  setunMaskPhone(unmasked);
+                }
+              }}
+              mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+              placeholder="(000) 000-0000"
             />
           </View>
-        </SafeAreaView>
+          {!isValid && <Text style={{ color: 'red', marginTop: 4 }}>Invalid Phone Number</Text>}
+
+          <TouchableOpacity activeOpacity={.7} onPress={handleOnPress} style={styles.frame2vJu}>
+            <Text style={styles.getStartednru}>Request Otp</Text>
+            <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
+          </TouchableOpacity>
+          <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.container}>
+              <Spinner
+                //visibility of Overlay Loading Spinner
+                visible={loading}
+                //Text with the Spinner
+                textContent={''}
+                //Text style of the Spinner Text
+                textStyle={styles.spinnerTextStyle}
+              />
+            </View>
+          </SafeAreaView>
+        </LinearGradient>
+
       </View>
     </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  gradient: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     backgroundColor: '#d9e7ed',
@@ -167,16 +181,16 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     width: isIPad ? '50%' : '70%',
     resizeMode: 'contain',
-    marginTop: isIPad ? '2%' : '-5%', 
+    marginTop: isIPad ? '2%' : '-5%',
   },
   deviceView: {
     backgroundColor: '#fff',
-    width: isIPad ? 200 : 150, 
-    height: isIPad ? 200 : 150, 
+    width: isIPad ? 200 : 150,
+    height: isIPad ? 200 : 150,
     alignItems: 'center',
     padding: '5%',
-    borderRadius: isIPad ? 100 : 75, 
-    marginTop: isIPad ? '5%' : '5%', 
+    borderRadius: isIPad ? 100 : 75,
+    marginTop: isIPad ? '5%' : '5%',
     justifyContent: 'center',
   },
   mobilelogo: {
@@ -185,29 +199,29 @@ const styles = StyleSheet.create({
   },
   verifyText: {
     color: '#140d05',
-    fontSize: isIPad ? 32 : 24, 
+    fontSize: isIPad ? 32 : 24,
     fontWeight: '700',
     marginTop: '5%',
     marginBottom: '5%',
   },
   textInput: {
     height: isIPad ? 60 : 45,
-    width: isIPad ? '38%' : '45%', 
+    width: isIPad ? '38%' : '45%',
     borderColor: 'gray',
     borderBottomWidth: 1,
     paddingLeft: 2,
     borderRadius: 8,
-    fontSize: isIPad ? 32 : 24, 
+    fontSize: isIPad ? 32 : 24,
   },
   frame2vJu: {
     marginTop: '5%',
-    marginBottom: isIPad ? '8%' : 35, 
+    marginBottom: isIPad ? '8%' : 35,
     backgroundColor: '#140d05',
     borderRadius: 8,
     alignItems: 'center',
     paddingVertical: 15,
     paddingHorizontal: 15,
-    width: isIPad ? '50%' : '60%', 
+    width: isIPad ? '50%' : '60%',
     flexDirection: 'row',
   },
   getStartednru: {

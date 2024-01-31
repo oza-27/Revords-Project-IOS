@@ -39,12 +39,18 @@ export default function TabNavigation({ route, navigation }) {
                     fontSize: 20,
                     fontWeight: 'bold',
                 },
-                tabBarStyle: { backgroundColor: 'black', height: 70, paddingBottom: 10 },
+                tabBarStyle: { backgroundColor: 'black', height: 72, paddingBottom: 10 },
                 style: {
                     backgroundColor: 'white',
                     borderTopWidth: 1,
                     borderTopColor: 'lightgray',
                 },
+                tabBarLabelStyle: {
+                    bottom: 15
+                },
+                tabBarIconStyle: {
+                    bottom: 5
+                }
             })}>
                 <Tab.Screen name="Location" component={LocationStack} options={{
                     unmountOnBlur: true,

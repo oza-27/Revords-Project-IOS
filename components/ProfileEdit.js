@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from "react-native";
@@ -6,7 +6,7 @@ import Globals from '../components/Globals';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
+import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useIsFocused } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
@@ -23,6 +23,7 @@ const ProfileEdit = ({ navigation, route }) => {
     const [formatPhone, setFormatPhone] = useState('');
     const [loading, setLoading] = useState(false);
     const [isValid, setIsValid] = useState(true);
+    const [isValidName, setIsValidName] = useState(true);
 
     const [memberProfilePic, setMemberProfilePic] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -87,7 +88,6 @@ const ProfileEdit = ({ navigation, route }) => {
             .then(async (value) => {
                 if (value !== null) {
                     await setMemData(JSON.parse(value));
-                    console.log(value);
                 }
             })
             .catch(error => {
@@ -96,44 +96,49 @@ const ProfileEdit = ({ navigation, route }) => {
     }, [focus, selectedMonth]);
 
     const putData = () => {
-        setLoading(true);
-        const apiUrl = Globals.API_URL + '/MemberProfiles/PutMemberInMobileApp';
-        let currentDate = (new Date()).toISOString();
-
-        let currentYear = new Date().getFullYear();
-        let bDate;
-        if (!MemberData[0].isBirthDateChange) {
-            bDate = (selectedMonth == '' || selectedDay == '' || selectedMonth == null || selectedDay == null ||
-                selectedMonth == undefined || selectedDay == undefined) ? null
-                : `${currentYear}-${selectedMonth}-${selectedDay}`;
+        if (name == '' || name == null || name == undefined) {
+            setIsValidName(false);
         } else {
-            bDate = null;
+            setIsValidName(true);
+            setLoading(true);
+            const apiUrl = Globals.API_URL + '/MemberProfiles/PutMemberInMobileApp';
+            let currentDate = (new Date()).toISOString();
+
+            let currentYear = new Date().getFullYear();
+            let bDate;
+            if (!MemberData[0].isBirthDateChange) {
+                bDate = (selectedMonth == '' || selectedDay == '' || selectedMonth == null || selectedDay == null ||
+                    selectedMonth == undefined || selectedDay == undefined) ? null
+                    : `${currentYear}-${selectedMonth}-${selectedDay}`;
+            } else {
+                bDate = null;
+            }
+
+            const requestBody = {
+                id: MemberData[0].memberId,
+                memberName: name,
+                emailID: emailId,
+                lastModifiedBy: MemberData[0].memberId,
+                lastModifiedDate: currentDate,
+                birthDate: bDate
+            };
+
+            axios.put(apiUrl, requestBody)
+                .then(async (response) => {
+                    if (selectedImage) {
+                        await uploadImage(imageRes);
+                    }
+                    await getMemberData();
+                    setLoading(false);
+                    Toast.show(
+                        `Updated Successfully`,
+                        Toast.LONG,
+                        Toast.BOTTOM,
+                    )
+                    navigation.navigate('Profiles');
+                })
+                .catch(error => console.error(error));
         }
-
-        const requestBody = {
-            id: MemberData[0].memberId,
-            memberName: name,
-            emailID: emailId,
-            lastModifiedBy: MemberData[0].memberId,
-            lastModifiedDate: currentDate,
-            birthDate: bDate
-        };
-
-        axios.put(apiUrl, requestBody)
-            .then(async (response) => {
-                if (selectedImage) {
-                    await uploadImage(imageRes);
-                }
-                await getMemberData();
-                setLoading(false);
-                Toast.show(
-                    `Updated Successfully`,
-                    Toast.LONG,
-                    Toast.BOTTOM,
-                )
-                navigation.navigate('Profiles');
-            })
-            .catch(error => console.error(error));
     }
     const Save = () => {
         if (emailId !== null && emailId !== undefined && emailId !== '') {
@@ -253,7 +258,7 @@ const ProfileEdit = ({ navigation, route }) => {
                     console.log('Camera permission is not granted');
                     requestCameraPermission();
                 }
-            } else {
+            } else if (Platform.OS === 'ios') {
                 setOptionModalVisible(false);
                 const options = {
                     mediaType: 'photo',
@@ -359,9 +364,10 @@ const ProfileEdit = ({ navigation, route }) => {
                                                 height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10,
                                                 marginTop: 5, fontSize: 16, borderRadius: 10, backgroundColor: '#e6edf1', fontWeight: '600'
                                             }}
-                                            onChangeText={(inputText) => { setName(inputText) }}
+                                            onChangeText={(inputText) => { setName(inputText.trim()) }}
                                             value={name}
                                         />
+                                        {!isValidName && <Text style={{ color: 'red' }}> Name shouldn't be empty </Text>}
                                     </View>
                                     <View style={{ borderRadius: 23, padding: 5, width: '100%' }}>
                                         <Text style={{ fontSize: 18, fontWeight: '700', paddingLeft: 5 }}>Email</Text>

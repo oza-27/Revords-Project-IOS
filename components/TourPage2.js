@@ -1,17 +1,22 @@
 import { StyleSheet, Image, Text, View, Dimensions } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const TourPage1 = () => {
 
 
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
-            <Image source={require('../assets/image-1-Mpm.png')} style={styles.img1} />
-            <Text style={styles.txt1}>Welcome!</Text>
-            <Text style={styles.txt2}>Everything is <Text style={{ color: '#8D5A25' }}>Straight</Text></Text>
-            <Text style={styles.txt3}>to the point.</Text>
-            <Text style={styles.txt4}>Revords App is an connection between customer and business owners,
-                where customer can earn rewards from business owners for their loyalty.</Text>
+            <LinearGradient
+                colors={['#d9e7ed', '#bfdfed', '#d9e7ed']}
+                style={[styles.gradient]}>
+                <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
+                <Image source={require('../assets/image-1-Mpm.png')} style={styles.img1} />
+                <Text style={styles.txt1}>Welcome!</Text>
+                <Text style={styles.txt2}>Everything is <Text style={{ color: '#8D5A25' }}>Straight</Text></Text>
+                <Text style={styles.txt3}>to the point.</Text>
+                <Text style={styles.txt4}>Revords App is an connection between customer and business owners,
+                    where customer can earn rewards from business owners for their loyalty.</Text>
+            </LinearGradient>
         </View>
     );
 };
@@ -19,6 +24,15 @@ const TourPage1 = () => {
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+    gradient: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10,
+        // marginLeft: 7,
+        // paddingLeft: 10,
+        alignItems: 'center',
+        paddingHorizontal: width * 0.05, // Adjust based on your design
+    },
     container: {
         height: '100%',
         width: '100%',

@@ -1,15 +1,20 @@
 import { StyleSheet, Image, Text, View, Dimensions } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const TourPage4 = () => {
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
-            <Image source={require('../assets/04TourImage.png')} style={styles.img1} />
-            <Text style={styles.txt1}>Thank You!</Text>
-            <Text style={styles.txt2}>Ready to
-                <Text style={{ color: '#8D5A25' }}> Explore</Text>
-            </Text>
-            <Text style={styles.txt5}>Best of Luck for your Revords journey.</Text>
+            <LinearGradient
+                colors={['#d9e7ed', '#bfdfed', '#d9e7ed']}
+                style={[styles.gradient]}>
+                <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
+                <Image source={require('../assets/04TourImage.png')} style={styles.img1} />
+                <Text style={styles.txt1}>Thank You!</Text>
+                <Text style={styles.txt2}>Ready to
+                    <Text style={{ color: '#8D5A25' }}> Explore</Text>
+                </Text>
+                <Text style={styles.txt5}>Best of Luck for your Revords journey.</Text>
+            </LinearGradient>
         </View>
     );
 };
@@ -17,6 +22,15 @@ const TourPage4 = () => {
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+    gradient: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10,
+        // marginLeft: 7,
+        // paddingLeft: 10,
+        alignItems: 'center',
+        paddingHorizontal: width * 0.05, // Adjust based on your design
+    },
     container: {
         flex: 1,
         backgroundColor: '#d9e7ed',

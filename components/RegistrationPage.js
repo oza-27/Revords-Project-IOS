@@ -9,6 +9,7 @@ import Globals from '../components/Globals';
 import moment from 'moment';
 import RNPickerSelect from 'react-native-picker-select';
 import messaging from '@react-native-firebase/messaging';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function RegistrationPage({ route }) {
     const [name, setName] = useState('');
@@ -114,41 +115,53 @@ export default function RegistrationPage({ route }) {
 
     return (
         <View style={styles.screen93X}>
-            <Text style={styles.createYourAccount}> Create your Account! </Text>
-            <TextInput style={styles.nameInput} onChangeText={(t) => setName(t)} placeholder='Enter your Name'></TextInput>
-            <View style={styles.lineOne}></View>
-            <TextInput style={styles.emailInput} onChangeText={(t) => setEmail(t)} placeholder='Enter your Email' />
-            <View style={styles.lineTwo}></View>
-            {!isValid && <Text style={{ color: 'red', marginTop: '2%', marginLeft: '4%', }}>Invalid Email Address</Text>}
-            <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                    placeholder={{ label: 'Select Birth Month', value: null }}
-                    items={months}
-                    onValueChange={(value) => setSelectedMonth(value)}
-                    style={pickerSelectStyles}
-                    value={selectedMonth}
-                />
-            </View>
-            <View style={styles.pickerContainer}>
-                <RNPickerSelect
-                    placeholder={{ label: 'Select Birth Day', value: null }}
-                    items={daysInMonth}
-                    onValueChange={(value) => setSelectedDay(value)}
-                    style={pickerSelectStyles}
-                    value={selectedDay}
-                />
-            </View>
-            <View style={styles.registrationViewBtn}>
-                <TouchableOpacity activeOpacity={.7} style={styles.btnRegister} onPress={start}>
-                    <Text style={styles.txtRegister}>
-                        REGISTER
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <LinearGradient
+                colors={['#d9e7ed', '#bfdfed', '#d9e7ed']}
+                style={[styles.gradient]}>
+                <Text style={styles.createYourAccount}> Create your Account! </Text>
+                <TextInput style={styles.nameInput} onChangeText={(t) => setName(t.trim())} placeholder='Enter your Name'></TextInput>
+                <View style={styles.lineOne}></View>
+                <TextInput style={styles.emailInput} onChangeText={(t) => setEmail(t)} placeholder='Enter your Email' />
+                <View style={styles.lineTwo}></View>
+                {!isValid && <Text style={{ color: 'red', marginTop: '2%', marginLeft: '4%', }}>Invalid Email Address</Text>}
+                <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                        placeholder={{ label: 'Select Birth Month', value: null }}
+                        items={months}
+                        onValueChange={(value) => setSelectedMonth(value)}
+                        style={pickerSelectStyles}
+                        value={selectedMonth}
+                    />
+                </View>
+                <View style={styles.pickerContainer}>
+                    <RNPickerSelect
+                        placeholder={{ label: 'Select Birth Day', value: null }}
+                        items={daysInMonth}
+                        onValueChange={(value) => setSelectedDay(value)}
+                        style={pickerSelectStyles}
+                        value={selectedDay}
+                    />
+                </View>
+                <View style={styles.registrationViewBtn}>
+                    <TouchableOpacity activeOpacity={.7} style={styles.btnRegister} onPress={start}>
+                        <Text style={styles.txtRegister}>
+                            REGISTER
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </LinearGradient>
         </View>
     );
 }
 const styles = StyleSheet.create({
+    gradient: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10,
+        // marginLeft: 7,
+        // paddingLeft: 10,
+        alignItems: 'center',
+    },
     pickerContainer: {
         marginTop: '2%',
         width: '95%',
@@ -286,6 +299,7 @@ const pickerSelectStyles = StyleSheet.create({
         borderRadius: 4,
         color: 'black',
         paddingRight: 30,
+        fontWeight:'700'
     },
     inputAndroid: {
         fontSize: 16,

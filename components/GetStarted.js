@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { StyleSheet, Image, Text, View, BackHandler, Pressable, Platform, Dimensions } from 'react-native';
-
+import LinearGradient from 'react-native-linear-gradient';
 const GetStarted = ({ navigation }) => {
     const backPressed = () => {
         BackHandler.exitApp();
@@ -18,23 +18,29 @@ const GetStarted = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
-            <Image source={require('../assets/vector-Ypq.png')} style={styles.vectorP61} />
-            <View style={{ width: '90%', alignItems: 'center' }}>
-                <Pressable activeOpacity={.7} onPress={() => { navigation.navigate('VerifyNumber') }} style={styles.frame2vJu}>
-                    <Text style={styles.getStartednru}>Get Started</Text>
-                    <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
-                </Pressable>
-            </View>
+            <LinearGradient colors={['#d9e7ed', '#a5becb', '#d9e7ed']} style={styles.gradient}>
+                <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
+                <Image source={require('../assets/vector-Ypq.png')} style={styles.vectorP61} />
+                <View style={{ width: '90%', alignItems: 'center', position:'absolute', bottom:'5%' }}>
+                    <Pressable activeOpacity={.7} onPress={() => { navigation.navigate('VerifyNumber') }} style={styles.frame2vJu}>
+                        <Text style={styles.getStartednru}>Get Started</Text>
+                        <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
+                    </Pressable>
+                </View>
+            </LinearGradient>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    gradient: {
+        height: '100%',
+        width: '100%',
+        alignItems: 'center'
+    },
     container: {
         height: '100%',
         width: '100%',
-        backgroundColor: '#d9e7ed',
         alignItems: 'center'
     },
     companylogo: {
@@ -46,13 +52,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#140d05',
         borderRadius: 12,
         alignItems: 'center',
-        paddingVertical: '5%',
-        paddingHorizontal: '-17%',
+        paddingVertical: 15,
+        paddingHorizontal: 15,
         width: '65%',
         flexDirection: 'row',
-        top: '95%'
     },
     getStartednru: {
+        backgroundColor: '#140d05',
         textTransform: 'uppercase',
         fontFamily: 'SatoshiVariable, SourceSansPro',
         flexShrink: 0,
