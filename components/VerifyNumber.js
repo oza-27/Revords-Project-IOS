@@ -94,6 +94,8 @@ const VerifyNumber = ({ navigation }) => {
     try {
       if (unMaskPhone.length == 10) {
         await fetchAPI();
+      } else if (unMaskPhone.length === 0 || unMaskPhone.length === null) {
+        setIsValid(false)
       }
       else {
         setIsValid(false);
@@ -132,7 +134,10 @@ const VerifyNumber = ({ navigation }) => {
               placeholder="(000) 000-0000"
             />
           </View>
-          {!isValid && <Text style={{ color: 'red', marginTop: 4 }}>Invalid Phone Number</Text>}
+          {!isValid && (
+            <Text style={{ color: 'red', marginTop: 4 }}>
+              {unMaskPhone ? 'Invalid Phone Number' : 'Please enter a Phone number'}
+            </Text>)}
           <TouchableOpacity activeOpacity={.7} onPress={handleOnPress} style={styles.frame2vJu}>
             <Text style={styles.getStartednru}>Request Otp</Text>
             <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
