@@ -133,7 +133,6 @@ const VerifyNumber = ({ navigation }) => {
             />
           </View>
           {!isValid && <Text style={{ color: 'red', marginTop: 4 }}>Invalid Phone Number</Text>}
-
           <TouchableOpacity activeOpacity={.7} onPress={handleOnPress} style={styles.frame2vJu}>
             <Text style={styles.getStartednru}>Request Otp</Text>
             <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
@@ -151,7 +150,6 @@ const VerifyNumber = ({ navigation }) => {
             </View>
           </SafeAreaView>
         </LinearGradient>
-
       </View>
     </KeyboardAwareScrollView>
   );

@@ -32,7 +32,7 @@ const Favourite = ({ navigation }) => {
     const logoPath = wishList[0] ? wishList[0].logoPath : null;
     const logoUrl = Globals.Root_URL + `${logoPath}`;
     const [MemberData, setMemberData] = useState([{}]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [earnerRewards, setEarnedRevards] = useState([]);
     const isFocused = useIsFocused();
     const [isPromoModalVisible, setIsPromoModalVisible] = useState(false);
@@ -75,13 +75,11 @@ const Favourite = ({ navigation }) => {
         setAutoPilotClaimData(autopilot);
         setbusinessClaimData(businessdata);
     }
-
-    const setIsAnnouncementModalVisibleData = async (announcement, businessData) => {
+    const setIsAnnouncementModalVisibleData = async (announcement, businessdata) => {
         setIsAnnouncementModalVisible(true);
         setAnnouncementClaimData(announcement);
-        setbusinessClaimData(businessData);
+        setbusinessClaimData(businessdata);
     }
-
     const openPromoModal = async (promotion, item) => {
         setLoading(true)
         await setIsPromoModalVisibleData(promotion, item);
@@ -92,13 +90,11 @@ const Favourite = ({ navigation }) => {
         await setIsAPModalVisibleData(autopilot, item);
         setLoading(false)
     }
-
     const openAnnouncementModal = async (announcement, item) => {
-        setLoading(true);
+        setLoading(true)
         await setIsAnnouncementModalVisibleData(announcement, item);
-        setLoading(false);
+        setLoading(false)
     }
-
     const closePromoModal = () => {
         setLoading(true);
         setIsPromoModalVisible(false);
@@ -109,7 +105,6 @@ const Favourite = ({ navigation }) => {
         setIsAutoPilotModalVisible(false);
         setLoading(false);
     }
-
     const closeAnnouncementModal = () => {
         setLoading(true);
         setIsAnnouncementModalVisible(false);
@@ -122,6 +117,7 @@ const Favourite = ({ navigation }) => {
             method: 'GET',
             url: `${Globals.API_URL}/Promotions/GetRewardsByActivityTypeAndIDInMobile/${type}/${ID}`
         }).then(async (response) => {
+            setIsPromoModalVisible(false);
             if (Platform.OS === 'ios') {
                 Toast.show(
                     `Claimed Successfully!`,
@@ -133,7 +129,6 @@ const Favourite = ({ navigation }) => {
                 )
             }
             await getRefreshData();
-            setIsPromoModalVisible(false);
         }).catch(error => {
             console.error('Error retrieving dataa:', error);
             setLoading(false);
@@ -164,30 +159,19 @@ const Favourite = ({ navigation }) => {
         });
     }
 
-    async function setMemData(value) {
-        await setMemberData(value);
-    }
-
     const getRefreshData = () => {
-        console.log('dfghbgjdnfjknb')
         AsyncStorage.getItem('token')
             .then(async (value) => {
-                setLoading(true);
                 if (value !== null) {
-                    await setMemData(JSON.parse(value));
-                    memberID = (JSON.parse(value))[0].memberId;
                     await axios({
                         method: 'GET',
-                        url: `${wishListUrl}/${memberID}`
+                        url: `${wishListUrl}/${(JSON.parse(value))[0].memberId}`
                     }).then(async (response) => {
-                        console.log('response---', response.data)
                         await Geolocation.getCurrentPosition(
                             async position => {
                                 const { latitude, longitude } = position.coords;
 
                                 await setLangandLat(latitude, longitude);
-                                // You can now use the latitude and longitude in your app
-
                                 await response.data.map((data1, index) => {
 
                                     const toRadian = n => (n * Math.PI) / 180
@@ -210,7 +194,7 @@ const Favourite = ({ navigation }) => {
                                     data1.distance = parseInt(d * 0.621371);
                                 })
 
-                                response.data = response.data.sort((a, b) => { return a.distance = b.distance })
+                                response.data = response.data.sort((a, b) => { return a.distance - b.distance });
                                 await setWishListData(response.data);
                                 setLoading(false)
                             },
@@ -220,10 +204,8 @@ const Favourite = ({ navigation }) => {
                             { enableHighAccuracy: false, timeout: 5000 }
                         );
                     });
-                    memberID = (JSON.parse(value))[0].memberId;
                 }
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.error('Error retrieving dataa:', error);
                 setLoading(false);
             });
@@ -242,11 +224,11 @@ const Favourite = ({ navigation }) => {
         }
     }
     useEffect(() => {
-        isFocused && getRefreshData()
+        getRefreshData()
     }, [isFocused]);
 
     const likeProfile = (business) => {
-        console.log('businesssssss', business)
+        setLoading(true);
         AsyncStorage.getItem('token')
             .then(async (value) => {
                 if (value !== null) {
@@ -255,10 +237,6 @@ const Favourite = ({ navigation }) => {
                             data1.isLiked = true;
                         }
                     })
-                    memberID = (JSON.parse(value))[0].memberId;
-                    console.log(memberID)
-                    console.log('business', business.id)
-                    console.log('businessGroup', business.businessGroupID)
                     let currentDate = (new Date()).toISOString();
                     await fetch(Globals.API_URL + '/MembersWishLists/PostMemberWishlistInMobile', {
                         method: 'POST',
@@ -269,7 +247,7 @@ const Favourite = ({ navigation }) => {
                         body: JSON.stringify({
                             "uniqueId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                             "id": 0,
-                            "memberId": memberID,
+                            "memberId": (JSON.parse(value))[0].memberId,
                             "notes": null,
                             "badgeId": 1,
                             "tagId": null,
@@ -286,9 +264,9 @@ const Favourite = ({ navigation }) => {
                             "sourceId": 14,
                             "stateId": 3,
                             "isActive": true,
-                            "createdBy": memberID,
+                            "createdBy": (JSON.parse(value))[0].memberId,
                             "createdDate": currentDate,
-                            "lastModifiedBy": memberID,
+                            "lastModifiedBy": (JSON.parse(value))[0].memberId,
                             "lastModifiedDate": currentDate,
                             "businessLocationID": business.businessId,
                             "baseLocationID": business.businessId
@@ -303,17 +281,17 @@ const Favourite = ({ navigation }) => {
                         );
                         await getRefreshData();
                     }).catch(async (error) => {
-                        console.log("Error fetching data:/", error);
                         await wishList.map((data1, index) => {
-                            if (business, businessId == data1.businessId) {
+                            if (business.businessId == data1.businessId) {
                                 data1.isLiked = true;
                             }
                         })
-                        setLoading(false);
+                        setLoading(false)
                     });
                     ;
                 } else {
-                    console.log('not available')
+                    console.error('Error retrieving dataa:', error);
+                    setLoading(false);
                 }
             })
             .catch(error => {
@@ -324,15 +302,18 @@ const Favourite = ({ navigation }) => {
 
     return (
         <View style={styles.container} >
-
             <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={styles.welcomeText}>Favorite</Text>
                 <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
                     <Image source={require('../assets/notification-skD.png')} style={styles.setimg1} />
                 </TouchableOpacity>
             </View>
-
             <SafeAreaView style={styles.scrollContainer}>
+                {(wishList.length == 0 && !loading) &&
+                    <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                        <Image style={{ width: '70%', height: '40%', opacity: 0.8, borderRadius: 15 }} source={require('../assets/NodataImg.png')} />
+                    </View>
+                }
                 <ScrollView style={{ flex: 1, height: '100%', width: '100%', borderRadius: 50 }} showsVerticalScrollIndicator={false}>
                     {loading ?
                         <>
@@ -648,13 +629,13 @@ const Favourite = ({ navigation }) => {
 const styles = StyleSheet.create({
     gradient: {
         width: '100%',
-        height: 300,
+        height: '55%',
         borderRadius: 10
     },
     shimmer: {
         width: '100%',
         height: '100%',
-        borderRadius: 10
+        borderRadius: 10,
     },
     cancelImgContainer: {
         alignSelf: 'flex-end',

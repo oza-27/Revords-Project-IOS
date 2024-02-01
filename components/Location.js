@@ -97,8 +97,6 @@ const Location = ({ navigation }) => {
     }
 
     const getData = async () => {
-        setLoadingData(true);
-
         AsyncStorage.getItem('token')
             .then(async (value) => {
                 if (value != null) {
