@@ -26,8 +26,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 10,
-        // marginLeft: 7,
-        // paddingLeft: 10,
         alignItems: 'center',
         paddingHorizontal: width * 0.05, // Adjust based on your design
     },
@@ -50,7 +48,6 @@ const styles = StyleSheet.create({
     txt1: {
         fontSize: 24,
         fontWeight: '700',
-        // marginTop: '10%',
         color: '#140D05',
         borderRadius: width * 0.4
     },

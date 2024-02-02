@@ -4,7 +4,6 @@ import { View, Text, Platform } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import SelectDropdown from 'react-native-select-dropdown';
 import Globals from '../components/Globals';
 import moment from 'moment';
 import RNPickerSelect from 'react-native-picker-select';
@@ -52,7 +51,6 @@ export default function RegistrationPage({ route }) {
 
     const getToken = async () => {
         tokenid = await messaging().getToken();
-        console.log(tokenid);
     };
 
     const postData = async () => {
@@ -88,7 +86,6 @@ export default function RegistrationPage({ route }) {
     }
 
     const start = async () => {
-        console.log(selectedDay, '=', selectedMonth)
         if (email != null && email != '' && email != undefined) {
             const isValidEmail = validateEmail(email);
             setIsValid(isValidEmail);
@@ -158,8 +155,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 10,
-        // marginLeft: 7,
-        // paddingLeft: 10,
         alignItems: 'center',
     },
     pickerContainer: {
@@ -185,7 +180,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         backgroundColor: '#140d05',
-        //top:'100%'
     },
     registrationViewBtn: {
         width: '100%',

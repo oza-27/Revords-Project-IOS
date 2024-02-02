@@ -87,28 +87,6 @@ const NotificationTray = ({ navigation }) => {
         await getData();
         setLoading(false);
     }
-    const closeAutoPilotRedeemModal = async (type, ID) => {
-        setLoading(true)
-        await axios({
-            method: 'GET',
-            url: `${Globals.API_URL}/Promotions/GetRewardsByActivityTypeAndIDInMobile/${type}/${ID}`
-        }).then(async (response) => {
-            if (Platform.OS === 'ios') {
-                Toast.show(
-                    `Claimed Successfully!`,
-                    Toast.LONG,
-                    Toast.CENTER,
-                    {
-                        backgroundColor: 'blue'
-                    }
-                )
-            }
-            setIsAutoPilotModalVisible(false);
-        }).catch(error => {
-            console.error('Error retrieving dataa:', error);
-            setLoading(false);
-        });
-    }
 
     const ToastForClaimed = () => {
         Toast.show(

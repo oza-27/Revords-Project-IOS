@@ -101,7 +101,7 @@ export default function BusinessDetailsView({ route }) {
                 let lon2 = response.data[0].longitude
                 let lat1 = latitude
                 let lon1 = longitude
-                console.log(lat1, lon1 + "===" + lat2, lon2)
+                // console.log(lat1, lon1 + "===" + lat2, lon2)
                 let R = 6371  // km
                 let x1 = lat2 - lat1
                 let dLat = toRadian(x1)
@@ -116,7 +116,7 @@ export default function BusinessDetailsView({ route }) {
 
                 await setBusinessDetailsAwait(response.data[0])
                 await setMarkers(parseFloat(response.data[0].latitude), parseFloat(response.data[0].longitude));
-                console.log('memberID', memberID)
+                // console.log('memberID', memberID)
                 setLoading(false);
             },
             error => {
@@ -136,15 +136,15 @@ export default function BusinessDetailsView({ route }) {
                         method: 'GET',
                         url: `${businessDetailsAPI}/${id}/${(JSON.parse(value))[0].memberId}`
                     }).then(async (response) => {
-                        console.log(response.data);
+                        // console.log(response.data);
                         await getLocation(response);
                     }).catch((error) => {
-                        console.log("Error fetching data:/", error)
+                        // console.log("Error fetching data:/", error)
                         setLoading(false);
                     });
 
                 } else {
-                    console.log('not available')
+                    // console.log('not available')
                 }
             })
             .catch(error => {
@@ -211,7 +211,7 @@ export default function BusinessDetailsView({ route }) {
                             setButtonClikced(false);
                         });
                     } else {
-                        console.log('not available')
+                        // console.log('not available')
                     }
                 })
                 .catch(error => {

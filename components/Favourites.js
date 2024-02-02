@@ -1,17 +1,15 @@
 import axios from 'axios';
-import React, { useEffect, useState, useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { StyleSheet, Image, Text, View, TouchableOpacity, Modal, Platform, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Image, Text, View, TouchableOpacity, Modal, Platform } from 'react-native';
 import Globals from '../components/Globals';
-import { Button, Card } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Spinner from 'react-native-loading-spinner-overlay';
-import moment, { localeData } from 'moment/moment';
+import moment from 'moment/moment';
 import Toast from 'react-native-simple-toast';
 import * as Animatable from 'react-native-animatable';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'

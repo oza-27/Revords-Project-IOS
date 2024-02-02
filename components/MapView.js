@@ -52,7 +52,6 @@ export default function MapViewing({ navigation }) {
         setFilteredData(data);
     }
     async function setMarkers(centerLat, centerLong) {
-        console.log('hekkdkhkdfh')
         setInitialRegion({
             latitude: centerLat,
             longitude: centerLong,
@@ -61,18 +60,14 @@ export default function MapViewing({ navigation }) {
         });
     }
     const getCurrentLocation = async () => {
-        console.log('in')
         Geolocation.getCurrentPosition(
             async position => {
-                const { latitude, longitude } = position.coords;
-                console.log('position.coords', latitude)
                 await setLangandLat(position.coords.latitude, position.coords.longitude);
                 await setMarkers(position.coords.latitude, position.coords.longitude);
 
                 AsyncStorage.getItem('token')
                     .then(async (value) => {
                         if (value !== null) {
-                            // memberID = (JSON.parse(value))[0].memberId;
                             axios({
                                 method: 'GET',
                                 url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`

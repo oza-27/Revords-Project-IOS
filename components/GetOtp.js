@@ -45,7 +45,6 @@ const GetOtp = ({ route, navigation }) => {
     };
 
     const resendOtp = async () => {
-        console.log('resend')
         const randomOtp = await generateRandomNumber();
         console.log(randomOtp);
         try {

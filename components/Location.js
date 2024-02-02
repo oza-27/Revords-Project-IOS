@@ -1,11 +1,10 @@
-import { TextInput, Pressable, TouchableOpacity } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { Avatar, Card, Drawer, Title } from 'react-native-paper';
+import { Card, Title } from 'react-native-paper';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Spinner from 'react-native-loading-spinner-overlay';
 import Globals from './Globals';
 import Geolocation from '@react-native-community/geolocation';
 import { useIsFocused } from '@react-navigation/native';
@@ -27,7 +26,6 @@ const Location = ({ navigation }) => {
     lat = 0;
     const [loadingData, setLoadingData] = useState(true);
     const [userData, setUserData] = useState('');
-    const userId = "1";
     const baseUrl = Globals.API_URL + "/BusinessProfiles/GetBusinessProfilesForMobile";
     const pulse = {
         0: {
@@ -40,20 +38,6 @@ const Location = ({ navigation }) => {
             scale: 1
         }
     }
-    const getCurrentLocation = async () => {
-        Geolocation.getCurrentPosition(
-            async position => {
-                const { latitude, longitude } = position.coords;
-
-                await setLangandLat(latitude, longitude);
-
-            },
-            error => {
-                console.error('Error getting current location: ', error);
-            },
-            { enableHighAccuracy: false, timeout: 5000 }
-        );
-    };
     async function handleCheckPressed() {
         if (Platform.OS === 'android') {
             const checkEnabled = await isLocationEnabled();
@@ -75,9 +59,8 @@ const Location = ({ navigation }) => {
     async function handleEnabledPressed() {
         if (Platform.OS === 'android') {
             try {
-                const enableResult = await promptForEnableLocationIfNeeded();
+                await promptForEnableLocationIfNeeded();
                 await getData();
-
             } catch (error) {
                 if (error instanceof Error) {
                     console.error(error.message);
@@ -169,9 +152,6 @@ const Location = ({ navigation }) => {
             .then(async (value) => {
                 if (value !== null) {
                     memberID = (JSON.parse(value))[0].memberId;
-                    console.log(memberID)
-                    console.log('business', business.id)
-                    console.log('businessGroup', business.businessGroupID)
                     let currentDate = (new Date()).toISOString();
                     await fetch(Globals.API_URL + '/MembersWishLists/PostMemberWishlistInMobile', {
                         method: 'POST',
@@ -227,7 +207,6 @@ const Location = ({ navigation }) => {
                 setLoading(false);
             });
     }
-    const { isShimmering } = true;
     return (
         <>
             <View style={styles.container}>

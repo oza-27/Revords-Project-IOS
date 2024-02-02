@@ -9,7 +9,6 @@ import Globals from './Globals';
 
 const Profile = ({ route, navigation }) => {
     const focus = useIsFocused();
-    const Stack = createNativeStackNavigator();
     const [name, setName] = useState('');
     const [emailId, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -32,7 +31,6 @@ const Profile = ({ route, navigation }) => {
                             method: 'PUT'
                         }).then(async (res) => {
                             await AsyncStorage.removeItem('token');
-                            console.log('Token removed successfully');
                             navigation.navigate('LandingScreen')
                         });
                     } catch (error) {
@@ -91,7 +89,6 @@ const Profile = ({ route, navigation }) => {
             .catch(error => {
                 console.error('Error retrieving dataa:', error);
             });
-        console.log('platform', Platform.OS);
     }, [focus]);
 
     return (

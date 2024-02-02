@@ -7,7 +7,6 @@ import ProfileEdit from './ProfileEdit';
 const ProfileStack = ({ route, navigation }) => {
     const profileStack = createNativeStackNavigator();
     const { MemberData } = route.params
-    console.log(MemberData)
     return (
         <>
             <profileStack.Navigator initialRouteName='Profile' >

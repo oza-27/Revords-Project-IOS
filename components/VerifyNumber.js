@@ -31,10 +31,10 @@ const VerifyNumber = ({ navigation }) => {
   async function fetchAPI() {
     try {
       setLoading(true);
-      console.log(Globals.API_URL)
+      
       const response = await fetch(
         Globals.API_URL + '/MemberProfiles/GetMemberByPhoneNo/' + unMaskPhone)
-      console.log('sfdfsfsf')
+      
       const json = await response.json();
       CustomerExists = json != undefined && json.length > 0 ? json : null;
 
@@ -48,7 +48,6 @@ const VerifyNumber = ({ navigation }) => {
             'Content-Type': 'application/json',
           },
         }).then((res) => {
-          console.log('otp response-----', JSON.stringify(res))
           if (res.ok) {
             navigation.navigate('GetOtp', { OTP: randomOtp, CustomerExists: CustomerExists, Phone: unMaskPhone })
             setLoading(false);
@@ -90,7 +89,6 @@ const VerifyNumber = ({ navigation }) => {
   }
 
   const handleOnPress = async () => {
-    console.log(unMaskPhone)
     try {
       if (unMaskPhone.length == 10) {
         await fetchAPI();

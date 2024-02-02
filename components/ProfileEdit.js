@@ -217,52 +217,11 @@ const ProfileEdit = ({ navigation, route }) => {
 
     const openImagePicker = async (option) => {
         try {
-            if (Platform.OS === 'android') {
-                const result = await PermissionsAndroid.check(
-                    PermissionsAndroid.PERMISSIONS.CAMERA
-                );
-
-                if (result) {
-                    console.log('Camera permission is granted');
-
-                    setOptionModalVisible(false);
-                    const options = {
-                        mediaType: 'photo',
-                        includeBase64: false,
-                        maxHeight: 2000,
-                        maxWidth: 2000,
-                    };
-                    const launchCallback = (response) => {
-                        if (response.didCancel) {
-                            console.log('User cancelled image picker');
-                        } else if (response.error) {
-                            console.log('ImagePicker Error: ', response.error);
-                        } else {
-                            let imageUri = response.uri || response.assets?.[0]?.uri;
-                            setMemberProfilePic(null);
-                            setSelectedImage(imageUri);
-                            setImageRes(response);
-                            console.log(imageUri)
-                            console.log('response', response)
-                            console.log(MemberData[0].memberId)
-                        }
-                    };
-
-                    if (option === 'library') {
-                        console.log('library')
-                        launchImageLibrary(options, launchCallback);
-                    } else if (option === 'camera') {
-                        launchCamera(options, launchCallback);
-                    }
-                } else {
-                    console.log('Camera permission is not granted');
-                    requestCameraPermission();
-                }
-            } else if (Platform.OS === 'ios') {
+            if (Platform.OS === 'ios') {
                 setOptionModalVisible(false);
                 const options = {
-                    mediaType: 'photo',
-                    includeBase64: false,
+                    mediaType: 'mixed',
+                    includeBase64: true,
                     maxHeight: 2000,
                     maxWidth: 2000,
                 };
@@ -276,9 +235,6 @@ const ProfileEdit = ({ navigation, route }) => {
                         setMemberProfilePic(null);
                         setSelectedImage(imageUri);
                         setImageRes(response);
-                        console.log(imageUri)
-                        console.log('response', response)
-                        console.log(MemberData[0].memberId)
                     }
                 };
 
@@ -408,21 +364,21 @@ const ProfileEdit = ({ navigation, route }) => {
 
                                         {!MemberData[0].isBirthDateChange &&
                                             <>
-                                                <View style={styles.pickerContainer}>
+                                                <View style={pickerSelectStyles}>
                                                     <RNPickerSelect
                                                         placeholder={{ label: 'Select Birth Month', value: null }}
                                                         items={months}
                                                         onValueChange={(value) => setSelectedMonth(value)}
-                                                        style={pickerSelectStyles}
+                                                        style={pickerSelectStyles.inputIOS}
                                                         value={selectedMonth}
                                                     />
                                                 </View>
-                                                <View>
+                                                <View style={pickerSelectStyles}>
                                                     <RNPickerSelect
                                                         placeholder={{ label: 'Select Birth Day', value: null }}
                                                         items={daysInMonth}
                                                         onValueChange={(value) => setSelectedDay(value)}
-                                                        style={pickerSelectStyles}
+                                                        style={pickerSelectStyles.inputIOS}
                                                         value={selectedDay}
                                                     />
                                                 </View>
@@ -479,7 +435,8 @@ const ProfileEdit = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
     pickerContainer: {
-        width: '100%'
+        width: '100%',
+        marginBottom: 5
     },
     container: {
         height: '100%',
@@ -526,15 +483,6 @@ const styles = StyleSheet.create({
     settingImg: {
         width: 50,
         height: 50,
-    },
-    editContainer: {
-        width: 16,
-        height: 16,
-        backgroundColor: '#203139',
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
     },
     pencilView: {
         height: 40,
