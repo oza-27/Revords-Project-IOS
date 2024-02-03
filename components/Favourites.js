@@ -302,7 +302,7 @@ const Favourite = ({ navigation }) => {
         <View style={styles.container} >
             <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={styles.welcomeText}>Favorite</Text>
-                <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
+                <TouchableOpacity activeOpacity={.2} onPress={() => navigation.navigate('NotificationTray')}>
                     <Image source={require('../assets/notification-skD.png')} style={styles.setimg1} />
                 </TouchableOpacity>
             </View>

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     getStartednru: {
         backgroundColor: '#140d05',
         textTransform: 'uppercase',
-        fontFamily: 'SatoshiVariable, SourceSansPro',
+        fontFamily: 'Satoshi-Variable',
         flexShrink: 0,
         fontWeight: 'bold',
         fontSize: 16,

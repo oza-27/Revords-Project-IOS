@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 
 const AppTourGuide = ({ route, navigation }) => {
-    const [step, setStep] = useState;
+    const [step, setStep] = useState(1);
     const { MemberData, Phone } = route.params;
     let tokenid = "";
     let platformOS;

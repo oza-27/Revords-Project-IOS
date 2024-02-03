@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         lineHeight: 23,
         textTransform: 'uppercase',
         color: '#ffffff',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"',
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#140d05',
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         lineHeight: 23,
         color: '#203139',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"',
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"',
         flexShrink: 0,
         backgroundColor: 'black',
         textAlign: 'left'
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         lineHeight: 23,
         color: '#203139',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"',
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"',
         flexShrink: 0,
     },
     emailInput: {
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         lineHeight: 23,
         color: '#203139',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"',
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"',
         marginTop: '8%',
         marginLeft: '4%',
     },
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#203139',
         marginLeft: '4%',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"'
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"'
     },
     lineOne: {
         width: '95%',
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: '#000000',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"',
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"',
     }
 })
 

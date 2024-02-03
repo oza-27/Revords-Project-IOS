@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
         fontSize: 23,
         fontWeight: '900',
         color: '#000000',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"',
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"',
     },
     header: {
         margin: '2%',

@@ -13,7 +13,6 @@ const TourPage3 = () => {
                 <Text style={styles.txt2}>How App
                     <Text style={{ color: '#8D5A25' }}> Connects</Text>
                 </Text>
-
                 <Text style={styles.txt4}>customers to revords?</Text>
                 <Text style={styles.txt5}>Revords is a powerful set of service and features built on top of
                     React Framework that bring a totally new level of app development agility to mobile dev teams.</Text>

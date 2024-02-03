@@ -1,5 +1,5 @@
-import { TouchableOpacity, StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert, Platform } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert, Platform } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from "react-native";
 import Globals from '../components/Globals';
@@ -283,13 +283,13 @@ const ProfileEdit = ({ navigation, route }) => {
             <View style={styles.container}>
                 <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                     <View style={{ flexDirection: 'row', width: '95%', height: '10%', alignItems: 'center', justifyContent: 'center' }}>
-                        <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('Profiles')}>
+                        <Pressable activeOpacity={.7} onPress={() => navigation.navigate('Profiles')}>
                             <Image source={require('../assets/more-button-ved.png')} style={styles.setimg1} />
-                        </TouchableOpacity>
+                        </Pressable>
                         <Text style={styles.welcomeText}>Edit Profile</Text>
-                        <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
+                        <Pressable activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
                             <Image source={require('../assets/notification-swo.png')} style={styles.setimg1} />
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
 
                     <ScrollView showsVerticalScrollIndicator={false} style={{
@@ -351,7 +351,7 @@ const ProfileEdit = ({ navigation, route }) => {
                                     <View style={{ borderRadius: 23, padding: 5, width: '100%' }}>
                                         <Text style={{ fontSize: 18, fontWeight: '700', paddingLeft: 5 }}>Birth Date</Text>
                                         {MemberData[0].isBirthDateChange &&
-                                            <Pressable activeOpacity={.7} onPress={alertForBirthDate}>
+                                            <Pressable activeOpacity={.2} onPress={alertForBirthDate}>
                                                 <TextInput
                                                     style={{
                                                         height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10,
@@ -364,22 +364,24 @@ const ProfileEdit = ({ navigation, route }) => {
 
                                         {!MemberData[0].isBirthDateChange &&
                                             <>
-                                                <View style={pickerSelectStyles}>
+                                                <View style={styles.pickerContainer}>
                                                     <RNPickerSelect
                                                         placeholder={{ label: 'Select Birth Month', value: null }}
                                                         items={months}
                                                         onValueChange={(value) => setSelectedMonth(value)}
-                                                        style={pickerSelectStyles.inputIOS}
+                                                        style={pickerSelectStyles}
                                                         value={selectedMonth}
+                                                        useNativeAndroidPickerStyle={false}
                                                     />
                                                 </View>
-                                                <View style={pickerSelectStyles}>
+                                                <View style={styles.pickerContainer}>
                                                     <RNPickerSelect
                                                         placeholder={{ label: 'Select Birth Day', value: null }}
                                                         items={daysInMonth}
                                                         onValueChange={(value) => setSelectedDay(value)}
-                                                        style={pickerSelectStyles.inputIOS}
+                                                        style={pickerSelectStyles}
                                                         value={selectedDay}
+                                                        useNativeAndroidPickerStyle={false}
                                                     />
                                                 </View>
                                             </>
@@ -436,7 +438,8 @@ const ProfileEdit = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     pickerContainer: {
         width: '100%',
-        marginBottom: 5
+        borderColor: 'white',
+        marginBottom: 5,
     },
     container: {
         height: '100%',
@@ -526,24 +529,22 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
         fontSize: 16,
-        paddingVertical: 12,
         paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: 'gray',
-        borderRadius: 4,
+        paddingVertical: 12,
+        borderColor: 'white',
+        borderRadius: 15,
         color: 'black',
         paddingRight: 30,
         marginTop: 5,
         width: '100%',
         alignSelf: 'center',
-        backgroundColor: '#e6edf1',
+        backgroundColor: '#f9f9f9',
     },
     inputAndroid: {
         fontSize: 16,
         paddingHorizontal: 10,
         paddingVertical: 8,
-        borderWidth: 2,
-        borderColor: '#000',
+        borderColor: 'white',
         borderRadius: 15,
         color: 'black',
         paddingRight: 30,
@@ -553,13 +554,13 @@ const pickerSelectStyles = StyleSheet.create({
         backgroundColor: '#f9f9f9',
     },
     inputIOSContainer: {
-        borderBottomColor: 'purple', // Border color when open
+        borderColor: 'white',  // Border color when open
         borderBottomWidth: 2, // Border width when open
         borderWidth: 2,
         borderColor: '#000',
     },
     inputAndroidContainer: {
-        borderBottomColor: 'purple', // Border color when open
+        borderColor: 'white', // Border color when open
         borderBottomWidth: 2, // Border width when open
         borderWidth: 2,
         borderColor: '#000',

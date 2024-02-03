@@ -121,7 +121,7 @@ export default function MapViewing({ navigation }) {
 
             <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={styles.welcomeText}>Where to go?</Text>
-                <TouchableOpacity activeOpacity={.7} onPress={() => navigation.navigate('NotificationTray')}>
+                <TouchableOpacity activeOpacity={.9} onPress={() => navigation.navigate('NotificationTray')}>
                     <Image source={require('../assets/notification-oRK.png')} style={styles.setimg1} />
                 </TouchableOpacity>
             </View>
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: '900',
         color: '#000000',
-        fontFamily: 'Satoshi Variable, "Source Sans Pro"',
+        fontFamily: 'Satoshi-Variable, "Source Sans Pro"',
         marginTop: '2%',
         top: '2%'
     },

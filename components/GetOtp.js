@@ -3,6 +3,7 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { useRef, useState, useEffect } from 'react';
 import { Toast } from 'react-native-simple-toast';
 import Globals from './Globals';
+import LinearGradient from 'react-native-linear-gradient';
 const GetOtp = ({ route, navigation }) => {
     const [otp, setOtp] = useState(['', '', '', '']);
     const refs = [useRef(), useRef(), useRef(), useRef()];
@@ -12,10 +13,10 @@ const GetOtp = ({ route, navigation }) => {
     console.log(Phone);
     const [seconds, setSeconds] = useState(60);
     const [isResentDisabled, setResentDisabled] = useState(false);
-    const [token, setToken] = useState(null);
     const handleInputChange = (text, index) => {
         let newOtp = [...otp];
         newOtp[index] = text;
+        setIsVerified(true);
         setOtp(newOtp);
 
         if (index < 3 && text !== '') {
@@ -75,10 +76,13 @@ const GetOtp = ({ route, navigation }) => {
 
     const verifyOtp = async () => {
         try {
+            console.log("I m in")
             if (otp.join('').length !== 0) {
                 if (otp.join('') == OTP) {
                     setIsVerified(true);
                     setSeconds(0);
+                    console.log("This is exust",CustomerExists);
+                    console.log("This is phone", Phone)
                     navigation.navigate('AppTour', { MemberData: CustomerExists, Phone: Phone });
                 } else {
                     setIsVerified(false);
@@ -111,54 +115,67 @@ const GetOtp = ({ route, navigation }) => {
         }
     };
 
+
     return (
         <View style={styles.container}>
-            <Text style={styles.welcomeText}>Enter Otp</Text>
-            <View style={styles.deviceView}>
-                <Image source={require('../assets/envelopesimple-8N5.png')} style={styles.emaillogo} />
-            </View>
-            <Text style={styles.verifyCodeText}>Verification Code</Text>
-            <Text style={styles.verifyText}>OTP has been sent to your mobile number.</Text>
+            <LinearGradient
+                colors={['#d9e7ed', '#bfdfed', '#d9e7ed']}
+                style={[styles.gradient]}>
+                <Text style={styles.welcomeText}>Enter Otp</Text>
+                <View style={styles.deviceView}>
+                    <Image source={require('../assets/envelopesimple-8N5.png')} style={styles.emaillogo} />
+                </View>
+                <Text style={styles.verifyCodeText}>Verification Code</Text>
+                <Text style={styles.verifyText}>OTP has been sent to your mobile number.</Text>
 
-            <View style={styles.otpContainer}>
-                {[0, 1, 2, 3].map((index) => (
-                    <TextInput
-                        key={index}
-                        ref={refs[index]}
-                        style={styles.otpInput}
-                        keyboardType="numeric"
-                        maxLength={1}
-                        onChangeText={(text) => handleInputChange(text, index)}
-                        onKeyPress={(e) => handleKeyPress(e, index)}
-                        value={otp[index]}
-                        textContentType='oneTimeCode'
-                        autoComplete='sms-otp'
-                        onTextInput={(e) => handleAutoFill(e, index)}
-                    />
-                ))}
-            </View>
-            <View style={{ 'height': 25 }}>
-                {!isVerified && <Text style={{ 'paddingTop': 4, 'color': 'red' }}>Please Enter Correct OTP</Text>}
-                {otp.join('').length == 0 && <Text style={{ 'paddingTop': 4, 'color': '#203139' }}>Please Enter the OTP</Text>}
-            </View>
-            <TouchableOpacity activeOpacity={.7} onPress={verifyOtp} style={styles.frame2vJu}>
-                <Text style={styles.getStartednru}>Verify</Text>
-            </TouchableOpacity>
+                <View style={styles.otpContainer}>
+                    {[0, 1, 2, 3].map((index) => (
+                        <TextInput
+                            key={index}
+                            ref={refs[index]}
+                            style={styles.otpInput}
+                            keyboardType="numeric"
+                            maxLength={1}
+                            onChangeText={(text) => handleInputChange(text, index)}
+                            onKeyPress={(e) => handleKeyPress(e, index)}
+                            value={otp[index]}
+                            textContentType='oneTimeCode'
+                            autoComplete='sms-otp'
+                            onTextInput={(e) => handleAutoFill(e, index)}
+                        />
+                    ))}
+                </View>
+                <View style={{ 'height': 25 }}>
+                    {!isVerified && <Text style={{ 'paddingTop': 4, 'color': 'red' }}>Please Enter Correct OTP</Text>}
+                    {otp.join('').length == 0 && <Text style={{ 'paddingTop': 4, 'color': '#203139' }}>Please Enter the OTP</Text>}
+                </View>
+                <TouchableOpacity activeOpacity={.7} onPress={verifyOtp} style={styles.frame2vJu}>
+                    <Text style={styles.getStartednru}>Verify</Text>
+                </TouchableOpacity>
 
-            <Text style={styles.verifyCodeText1}>Didn't receive the code?</Text>
-            {seconds !== 0 && <Text style={styles.timerText}>{`${Math.floor(seconds / 60)}:${(seconds % 60).toLocaleString('en-US', {
-                minimumIntegerDigits: 2,
-                useGrouping: false,
-            })}`}</Text>}
-            {(seconds === 0 && !isResentDisabled) && <TouchableOpacity activeOpacity={.7} onPress={resendOtp} style={styles.resendView}>
-                <Text style={styles.verifyCodeText2}>Resend</Text>
-            </TouchableOpacity>}
-            {(seconds === 0 && isResentDisabled) && <Text style={styles.resentText}>Resent</Text>}
+                <Text style={styles.verifyCodeText1}>Didn't receive the code?</Text>
+                {seconds !== 0 && <Text style={styles.timerText}>{`${Math.floor(seconds / 60)}:${(seconds % 60).toLocaleString('en-US', {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                })}`}</Text>}
+                {(seconds === 0 && !isResentDisabled) && <TouchableOpacity activeOpacity={.7} onPress={resendOtp} style={styles.resendView}>
+                    <Text style={styles.verifyCodeText2}>Resend</Text>
+                </TouchableOpacity>}
+                {(seconds === 0 && isResentDisabled) && <Text style={styles.resentText}>Resent</Text>}
+            </LinearGradient>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    gradient: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10,
+        // marginLeft: 7,
+        // paddingLeft: 10,
+        alignItems: 'center',
+    },
     container: {
         height: '100%',
         width: '100%',
