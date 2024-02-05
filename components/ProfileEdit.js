@@ -201,11 +201,34 @@ const ProfileEdit = ({ navigation, route }) => {
                     console.log('Camera permission denied after request');
                     setOptionModalVisible(false);
                 }
-            } else {
+            } else if (Platform.OS === 'ios') {
                 const result = await request(PERMISSIONS.IOS.CAMERA);
-
                 if (result === RESULTS.GRANTED) {
+
                     console.log('Camera permission granted after request');
+                    const options = {
+                        mediaType: 'photo',
+                        includeBase64: false,
+                        maxHeight: 2000,
+                        maxWidth: 2000,
+                    };
+
+                    launchImageLibrary(options, (response) => {
+                        if (response.didCancel) {
+                            console.log('User cancelled image picker');
+                        } else if (response.error) {
+                            console.log('Image picker error: ', response.error);
+                        } else {
+                            let imageUri = response.uri || response.assets?.[0]?.uri;
+                            setMemberProfilePic(null);
+                            setSelectedImage(imageUri);
+                            setImageRes(response);
+                            console.log(imageUri)
+                            console.log('response', response)
+                            console.log(MemberData[0].memberId)
+                        }
+                        setOptionModalVisible(false);
+                    });
                 } else {
                     console.log('Camera permission denied after request');
                 }
@@ -243,6 +266,8 @@ const ProfileEdit = ({ navigation, route }) => {
                 } else if (option === 'camera') {
                     launchCamera(options, launchCallback);
                 }
+            } else {
+                requestCameraPermission();
             }
         } catch (error) {
             console.error('Error checking camera permission:', error);

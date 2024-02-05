@@ -14,6 +14,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
@@ -58,6 +60,8 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow Revords to access your Location to see nearby restaurants, cafe, etc</string>
 	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow Revords to access your Library to change your Profile Picture</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allow Revords to access your Library to change your Profile Picture</string>
 	<key>UIAppFonts</key>
 	<array>

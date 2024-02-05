@@ -39,7 +39,6 @@ const Profile = ({ route, navigation }) => {
                 }
             },
         ]);
-
     const onDeleteAccount = () =>
         Alert.alert('Delete', 'Do you want to Delete your Account?', [
             {
@@ -65,7 +64,6 @@ const Profile = ({ route, navigation }) => {
         ]);
     async function setMemData(value) {
         await setMemberData(value);
-        console.log('111111', MemberData)
         setName(value[0].name);
         setEmail(value[0].emailId);
         let bDay = (value[0].birthDay == '' || value[0].birthDay == null || value[0].birthDay == undefined ||
