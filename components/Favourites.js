@@ -866,9 +866,6 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         top: 25,
         marginRight: 5
-        // right: '21%',
-        // marginBottom: '5%',
-        // marginTop: '100%'
     },
     likeFillHeart: {
         width: 24,
