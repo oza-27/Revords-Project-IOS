@@ -164,115 +164,49 @@ const ProfileEdit = ({ navigation, route }) => {
                 console.error('Error saving data:', error);
             });
     }
-
-    const requestCameraPermission = async () => {
-        try {
-            if (Platform.OS === 'android') {
-                const result = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.CAMERA
-                );
-
-                if (result === PermissionsAndroid.RESULTS.GRANTED) {
-                    console.log('Camera permission granted after request');
-                    const options = {
-                        mediaType: 'photo',
-                        includeBase64: false,
-                        maxHeight: 2000,
-                        maxWidth: 2000,
-                    };
-
-                    launchImageLibrary(options, (response) => {
-                        if (response.didCancel) {
-                            console.log('User cancelled image picker');
-                        } else if (response.error) {
-                            console.log('Image picker error: ', response.error);
-                        } else {
-                            let imageUri = response.uri || response.assets?.[0]?.uri;
-                            setMemberProfilePic(null);
-                            setSelectedImage(imageUri);
-                            setImageRes(response);
-                            console.log(imageUri)
-                            console.log('response', response)
-                            console.log(MemberData[0].memberId)
-                        }
-                        setOptionModalVisible(false);
-                    });
-                } else {
-                    console.log('Camera permission denied after request');
-                    setOptionModalVisible(false);
-                }
-            } else if (Platform.OS === 'ios') {
-                const result = await request(PERMISSIONS.IOS.CAMERA);
-                if (result === RESULTS.GRANTED) {
-
-                    console.log('Camera permission granted after request');
-                    const options = {
-                        mediaType: 'photo',
-                        includeBase64: false,
-                        maxHeight: 2000,
-                        maxWidth: 2000,
-                    };
-
-                    launchImageLibrary(options, (response) => {
-                        if (response.didCancel) {
-                            console.log('User cancelled image picker');
-                        } else if (response.error) {
-                            console.log('Image picker error: ', response.error);
-                        } else {
-                            let imageUri = response.uri || response.assets?.[0]?.uri;
-                            setMemberProfilePic(null);
-                            setSelectedImage(imageUri);
-                            setImageRes(response);
-                            console.log(imageUri)
-                            console.log('response', response)
-                            console.log(MemberData[0].memberId)
-                        }
-                        setOptionModalVisible(false);
-                    });
-                } else {
-                    console.log('Camera permission denied after request');
-                }
-            }
-        } catch (error) {
-            console.error('Error requesting camera permission:', error);
-        }
-    };
-
-    const openImagePicker = async (option) => {
-        try {
-            if (Platform.OS === 'ios') {
-                setOptionModalVisible(false);
-                const options = {
-                    mediaType: 'mixed',
-                    includeBase64: true,
-                    maxHeight: 2000,
-                    maxWidth: 2000,
-                };
-                const launchCallback = (response) => {
-                    if (response.didCancel) {
-                        console.log('User cancelled image picker');
-                    } else if (response.error) {
-                        console.log('ImagePicker Error: ', response.error);
-                    } else {
-                        let imageUri = response.uri || response.assets?.[0]?.uri;
-                        setMemberProfilePic(null);
-                        setSelectedImage(imageUri);
-                        setImageRes(response);
-                    }
-                };
-
-                if (option === 'library') {
-                    launchImageLibrary(options, launchCallback);
-                } else if (option === 'camera') {
-                    launchCamera(options, launchCallback);
-                }
+    const openGallery = async () => {
+        const launchCallback = async (response) => {
+            if (response.didCancel) {
+                console.log("User cancelled image picker");
+            } else if (response.error) {
+                console.log("Image Picker error", response.error);
             } else {
-                requestCameraPermission();
+                let imageUri = response.uri || response.assets?.[0]?.uri;
+                setMemberProfilePic(null);
+                setSelectedImage(imageUri);
+                setImageRes(response);
             }
-        } catch (error) {
-            console.error('Error checking camera permission:', error);
-        }
-    };
+        };
+        const resultGallery = await launchImageLibrary({
+            mediaType: 'photo',
+            quality: 0
+        }, launchCallback);
+        setOptionModalVisible(false)
+        console.log(resultGallery);
+    }
+
+    const openCamera = async () => {
+        const launchCallback = (response) => {
+            if (response.didCancel) {
+                console.log("User cancelled image picker");
+            } else if (response.error) {
+                console.log("Image Picker error", response.error);
+            } else {
+                let imageUri = response.uri || response.assets?.[0]?.uri;
+                setMemberProfilePic(null);
+                setSelectedImage(imageUri);
+                setImageRes(response);
+            }
+        };
+        const resultCamera = await launchCamera({
+            mediaType: 'photo',
+            quality: 0,
+            cameraType: 'front',
+            saveToPhotos: true
+        }, launchCallback);
+        setOptionModalVisible(false);
+        console.log(resultCamera);
+    }
 
     const uploadImage = async (response) => {
         const formData = new FormData();
@@ -432,12 +366,12 @@ const ProfileEdit = ({ navigation, route }) => {
                             </TouchableWithoutFeedback>
                             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, width: 300 }}>
                                 <TouchableWithoutFeedback style={{ flex: 1 }}>
-                                    <Pressable style={{ zIndex: 1000 }} onPress={() => openImagePicker('library')}>
+                                    <Pressable style={{ zIndex: 1000 }} onPress={openGallery}>
                                         <Text style={{ fontSize: 18, marginBottom: 10 }}>Choose from Library</Text>
                                     </Pressable>
                                 </TouchableWithoutFeedback>
                                 <TouchableWithoutFeedback>
-                                    <Pressable onPress={() => openImagePicker('camera')}>
+                                    <Pressable onPress={openCamera}>
                                         <Text style={{ fontSize: 18 }}>Take Photo</Text>
                                     </Pressable>
                                 </TouchableWithoutFeedback>

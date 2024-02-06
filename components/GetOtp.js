@@ -81,7 +81,7 @@ const GetOtp = ({ route, navigation }) => {
                 if (otp.join('') == OTP) {
                     setIsVerified(true);
                     setSeconds(0);
-                    console.log("This is exust",CustomerExists);
+                    console.log("This is exust", CustomerExists);
                     console.log("This is phone", Phone)
                     navigation.navigate('AppTour', { MemberData: CustomerExists, Phone: Phone });
                 } else {

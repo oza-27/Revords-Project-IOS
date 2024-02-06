@@ -54,7 +54,6 @@
     "react-native-tooltip": "^5.2.0",
     "react-native-vector-icons": "^10.0.3",
     "react-native-video": "^5.2.1",
-    "react-native-vision-camera": "^3.8.2",
     "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
