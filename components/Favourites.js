@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, TouchableOpacity, Modal, Platform } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity, Modal, Platform, Pressable } from 'react-native';
 import Globals from '../components/Globals';
 import { Card } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
@@ -300,11 +300,11 @@ const Favourite = ({ navigation }) => {
 
     return (
         <View style={styles.container} >
-            <View style={{ flexDirection: 'row', width: '97%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', width: '97%', height: '17%', alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={styles.welcomeText}>Favorite</Text>
-                <TouchableOpacity activeOpacity={.2} onPress={() => navigation.navigate('NotificationTray')}>
-                    <Image source={require('../assets/notification-skD.png')} style={styles.setimg1} />
-                </TouchableOpacity>
+                <Pressable activeOpacity={.9} onPress={() => navigation.navigate('NotificationTray')}>
+                    <Image source={require('../assets/notification-oRK.png')} style={styles.setimg1} />
+                </Pressable>
             </View>
             <SafeAreaView style={styles.scrollContainer}>
                 {(wishList.length == 0 && !loading) &&
@@ -931,10 +931,10 @@ const styles = StyleSheet.create({
     setimg1: {
         width: 50,
         height: 50,
-        marginTop: -16,
+        marginTop: -10,
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -30
+        right: -20
     },
     modalbusinessName: {
         fontWeight: '800',

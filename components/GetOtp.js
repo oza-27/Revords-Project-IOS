@@ -9,8 +9,6 @@ const GetOtp = ({ route, navigation }) => {
     const refs = [useRef(), useRef(), useRef(), useRef()];
     const [isVerified, setIsVerified] = useState(true);
     let { OTP, CustomerExists, Phone } = route.params;
-    console.log(OTP);
-    console.log(Phone);
     const [seconds, setSeconds] = useState(60);
     const [isResentDisabled, setResentDisabled] = useState(false);
     const handleInputChange = (text, index) => {
@@ -57,7 +55,6 @@ const GetOtp = ({ route, navigation }) => {
                 },
             }).then((res) => {
                 OTP = randomOtp;
-                console.log('in')
                 setResentDisabled(true);
             });
         } catch (error) {
@@ -76,13 +73,10 @@ const GetOtp = ({ route, navigation }) => {
 
     const verifyOtp = async () => {
         try {
-            console.log("I m in")
             if (otp.join('').length !== 0) {
                 if (otp.join('') == OTP) {
                     setIsVerified(true);
                     setSeconds(0);
-                    console.log("This is exust", CustomerExists);
-                    console.log("This is phone", Phone)
                     navigation.navigate('AppTour', { MemberData: CustomerExists, Phone: Phone });
                 } else {
                     setIsVerified(false);
@@ -100,16 +94,14 @@ const GetOtp = ({ route, navigation }) => {
         }, 1000);
 
         if (seconds === 0) {
-
             clearInterval(interval);
         }
-
-
         return () => clearInterval(interval);
-    }, [seconds]);
+    }, [isVerified]);
 
     const handleAutoFill = (event, index) => {
-        if (event.nativeEvent.textContentType === 'oneTimeCode') {
+        if (event.nativeEvent.autoComplete === 'one-time-code') {
+            console.log("In");
             const autoFilledValue = event.nativeEvent.text;
             handleInputChange(autoFilledValue, index);
         }
@@ -139,8 +131,8 @@ const GetOtp = ({ route, navigation }) => {
                             onChangeText={(text) => handleInputChange(text, index)}
                             onKeyPress={(e) => handleKeyPress(e, index)}
                             value={otp[index]}
-                            textContentType='oneTimeCode'
-                            autoComplete='sms-otp'
+                            autoComplete='one-time-code'
+                            autoFocus={true}
                             onTextInput={(e) => handleAutoFill(e, index)}
                         />
                     ))}
@@ -172,8 +164,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 10,
-        // marginLeft: 7,
-        // paddingLeft: 10,
         alignItems: 'center',
     },
     container: {

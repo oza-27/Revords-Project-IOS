@@ -9,7 +9,6 @@ import { SafeAreaView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Spinner from 'react-native-loading-spinner-overlay';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import currentIcon from '../assets/casinoIcon.png';
 import Geolocation from '@react-native-community/geolocation';
@@ -443,18 +442,20 @@ export default function BusinessDetailsView({ route }) {
                                         </Fragment>
                                     ))}
                                 </View>}
-                                <View style={{ paddingHorizontal: '3%' }}>
-                                    <Text style={{ marginTop: '7%', fontWeight: '700', fontSize: 18 }}>Photos</Text>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                        <View style={{ flexDirection: 'row', width: 350, height: 100, marginTop: 20 }}>
-                                            {images.map((image, index) => (
-                                                <TouchableOpacity key={index} onPress={() => handleGalleryImagePress(index)}>
-                                                    <Image style={{ width: 80, height: 80, borderRadius: 10, marginTop: '2%', marginLeft: '2%' }} source={{ uri: image.url }} />
-                                                </TouchableOpacity>
-                                            ))}
-                                        </View>
-                                    </ScrollView>
-                                </View>
+                                {(galleryImagePath1 != null || galleryImagePath2 != null || galleryImagePath3 != null ||
+                                    galleryImagePath4 != null) &&
+                                    <View style={{ paddingHorizontal: '3%', marginTop: 5 }}>
+                                        <Text style={{ marginTop: '7%', fontWeight: '700', fontSize: 18 }}>Photos</Text>
+                                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                            <View style={{ flexDirection: 'row', width: 350, height: 100, marginTop: 20 }}>
+                                                {images.map((image, index) => (
+                                                    <TouchableOpacity key={index} onPress={() => handleGalleryImagePress(index)}>
+                                                        <Image style={{ width: 80, height: 80, borderRadius: 10, marginTop: '2%', marginLeft: '2%' }} source={{ uri: image.url }} />
+                                                    </TouchableOpacity>
+                                                ))}
+                                            </View>
+                                        </ScrollView>
+                                    </View>}
                                 <View style={{ paddingHorizontal: '3%' }} >
                                     <Text style={{ marginTop: '7%', fontWeight: '700', fontSize: 18 }}>Hours</Text>
                                     {businessDetails.businesswiseWorkingDays && businessDetails.businesswiseWorkingDays.map((day, index) => (

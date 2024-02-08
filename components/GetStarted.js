@@ -21,7 +21,7 @@ const GetStarted = ({ navigation }) => {
             <LinearGradient colors={['#d9e7ed', '#a5becb', '#d9e7ed']} style={styles.gradient}>
                 <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
                 <Image source={require('../assets/vector-Ypq.png')} style={styles.vectorP61} />
-                <View style={{ width: '90%', alignItems: 'center', position:'absolute', bottom:'5%' }}>
+                <View style={{ width: '90%', alignItems: 'center', position: 'absolute', bottom: '5%' }}>
                     <Pressable activeOpacity={.7} onPress={() => { navigation.navigate('VerifyNumber') }} style={styles.frame2vJu}>
                         <Text style={styles.getStartednru}>Get Started</Text>
                         <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
