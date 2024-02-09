@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		5117E1AB2B4971B700173562 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5117E1AA2B4971B700173562 /* GoogleService-Info.plist */; };
 		51255CC82B75F1CD00556F34 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 51255CC72B75F1CD00556F34 /* main.jsbundle */; };
+		51255CCE2B75FB0500556F34 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 51D0B0F82B4BC1FF00B3E43E /* assets */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -197,6 +198,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51255CCE2B75FB0500556F34 /* assets in Resources */,
 				51255CC82B75F1CD00556F34 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				5117E1AB2B4971B700173562 /* GoogleService-Info.plist in Resources */,

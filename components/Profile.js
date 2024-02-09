@@ -113,7 +113,7 @@ const Profile = ({ route, navigation }) => {
                                 <Image source={{ uri: memberProfilePic }} style={styles.img1} />}
                             <Text style={styles.welcomeText}>{name}</Text>
 
-                            <View style={{ backgroundColor: '#f2f5f6', width: '95%', marginTop: 16, borderRadius: 23 }}>
+                            <View style={{ backgroundColor: '#f2f5f6', width: '95%', marginTop: 14, borderRadius: 23 }}>
                                 <View style={{
                                     flexDirection: 'row', width: '90%', alignItems: 'left', justifyContent: 'left',
                                     marginTop: 16, marginLeft: 16
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     },
     iconimg1: {
         width: 35,
-        height: 35
+        height: 35,
     },
     welcomeText: {
         color: 'black',

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, TouchableOpacity, Modal, Platform, Pressable } from 'react-native';
+import { StyleSheet, Image, Text, View, Modal, Platform, Pressable } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Globals from '../components/Globals';
 import { Card } from 'react-native-paper';
 import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
@@ -17,7 +18,6 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 const Favourite = ({ navigation }) => {
-    const businessGroupId = "1";
     lang = 0;
     lat = 0;
     const wishListUrl = `${Globals.API_URL}/MembersWishLists/GetMemberWishListByMemberID`;
@@ -26,17 +26,12 @@ const Favourite = ({ navigation }) => {
     const [promotionClaimData, setPromotionClaimData] = useState([]);
     const [autoPilotClaimData, setAutoPilotClaimData] = useState([]);
     const [businessClaimData, setbusinessClaimData] = useState([]);
-    const [formattedDate, setFormattedDate] = useState([]);
-    const logoPath = wishList[0] ? wishList[0].logoPath : null;
-    const logoUrl = Globals.Root_URL + `${logoPath}`;
-    const [MemberData, setMemberData] = useState([{}]);
     const [loading, setLoading] = useState(true);
     const [earnerRewards, setEarnedRevards] = useState([]);
     const isFocused = useIsFocused();
     const [isPromoModalVisible, setIsPromoModalVisible] = useState(false);
     const [isAutoPilotModalVisible, setIsAutoPilotModalVisible] = useState(false);
     const [isAnnouncementModalVisible, setIsAnnouncementModalVisible] = useState(false);
-    const [active, setActive] = useState(true);
 
     const pulse = {
         0: {
@@ -300,11 +295,11 @@ const Favourite = ({ navigation }) => {
 
     return (
         <View style={styles.container} >
-            <View style={{ flexDirection: 'row', width: '97%', height: '17%', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', width: '95%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={styles.welcomeText}>Favorite</Text>
-                <Pressable activeOpacity={.9} onPress={() => navigation.navigate('NotificationTray')}>
-                    <Image source={require('../assets/notification-oRK.png')} style={styles.setimg1} />
-                </Pressable>
+                <TouchableOpacity activeOpacity={.9} onPress={() => navigation.navigate('NotificationTray')}>
+                    <Image source={require('../assets/notification-swo.png')} style={styles.setimg1} />
+                </TouchableOpacity>
             </View>
             <SafeAreaView style={styles.scrollContainer}>
                 {(wishList.length == 0 && !loading) &&
@@ -931,10 +926,10 @@ const styles = StyleSheet.create({
     setimg1: {
         width: 50,
         height: 50,
-        marginTop: -10,
+        marginTop: -16,
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -20
+        right: -30
     },
     modalbusinessName: {
         fontWeight: '800',

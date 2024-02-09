@@ -145,7 +145,6 @@ const NotificationTray = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-
                 <View style={{ flexDirection: 'row', width: '97%', height: '10%', alignItems: 'center', justifyContent: 'center' }}>
                     <TouchableOpacity activeOpacity={.7} onPress={() => navigation.goBack()}>
                         <Image source={require('../assets/more-button-ved.png')} style={styles.setimg1} />
