@@ -97,7 +97,7 @@ const GetOtp = ({ route, navigation }) => {
             clearInterval(interval);
         }
         return () => clearInterval(interval);
-    }, [isVerified]);
+    }, [seconds]);
 
     const handleAutoFill = (event, index) => {
         if (event.nativeEvent.autoComplete === 'one-time-code') {
