@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, Modal, Platform, Pressable } from 'react-native';
+import { StyleSheet, Image, Text, View, Modal, Platform, Pressable, TouchableWithoutFeedback } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Globals from '../components/Globals';
 import { Card } from 'react-native-paper';
@@ -295,9 +295,9 @@ const Favourite = ({ navigation }) => {
 
     return (
         <View style={styles.container} >
-            <View style={{ flexDirection: 'row', width: '95%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row', width: '97%', height: '17%', alignItems: 'center', justifyContent: 'center', zIndex: 10 }}>
                 <Text style={styles.welcomeText}>Favorite</Text>
-                <TouchableOpacity activeOpacity={.9} onPress={() => navigation.navigate('NotificationTray')}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('NotificationTray')}>
                     <Image source={require('../assets/notification-swo.png')} style={styles.setimg1} />
                 </TouchableOpacity>
             </View>
@@ -622,8 +622,10 @@ const Favourite = ({ navigation }) => {
 const styles = StyleSheet.create({
     gradient: {
         width: '100%',
-        height: '55%',
-        borderRadius: 10
+        height: 350,
+        borderRadius: 10,
+        marginLeft: 7,
+        paddingLeft: 10
     },
     shimmer: {
         width: '100%',
@@ -644,12 +646,11 @@ const styles = StyleSheet.create({
         marginEnd: 5
     },
     scrollContainer: {
-        paddingTop: '5%',
         height: '100%',
-        width: '97%',
+        width: '100%',
         alignItems: 'center',
         borderRadius: 50,
-        marginTop: '-15%'
+        marginTop: '-15%',
     },
     modalcontainer: {
         flex: 1,
@@ -910,8 +911,8 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         color: 'black',
-        fontSize: 18,
-        fontWeight: '800',
+        fontSize: 24,
+        fontWeight: '600',
         textTransform: 'uppercase',
         marginTop: '5%',
         textAlign: 'center',
@@ -921,7 +922,6 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         backgroundColor: '#d9e7ed',
-        alignItems: 'center'
     },
     setimg1: {
         width: 50,
@@ -929,7 +929,7 @@ const styles = StyleSheet.create({
         marginTop: -16,
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -30
+        right: -30,
     },
     modalbusinessName: {
         fontWeight: '800',

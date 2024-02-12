@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         color: 'black',
-        fontSize: 18,
-        fontWeight: '800',
+        fontSize: 24,
+        fontWeight: '600',
         textTransform: 'uppercase',
         marginTop: '5%',
         textAlign: 'center',
