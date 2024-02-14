@@ -63,9 +63,6 @@ const AppTourGuide = ({ route, navigation }) => {
             targetComponent: <TourPage2 />,
         },
         {
-            targetComponent: <TourPage3 />,
-        },
-        {
             targetComponent: <TourPage4 />,
         }
     ];
@@ -89,7 +86,7 @@ const AppTourGuide = ({ route, navigation }) => {
             </View>}
             {step == 4 && <View style={styles.tourBtnStart}>
                 <Pressable activeOpacity={.7} onPress={GotoRegistration} style={styles.startButton}>
-                    <Text style={{ fontSize: 20, color: '#fff', fontWeight: '700' }}>LET'S STARTED</Text>
+                    <Text style={{ fontSize: 20, color: '#fff', fontWeight: '700' }}>LET'S START</Text>
                 </Pressable>
             </View>}
         </View>

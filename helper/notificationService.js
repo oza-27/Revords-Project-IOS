@@ -6,9 +6,11 @@ export async function requestPermission() {
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
   if (enabled) {
     console.log("Authorization Status", authStatus);
+  } else if (messaging.AuthorizationStatus.DENIED || !enabled) {
+    console.log("Authorization status", authStatus);
+    messaging().requestPermission();
   }
 }
 
@@ -32,5 +34,5 @@ export const notificationListener = async () => {
         );
         console.log("Remote Message", remoteMessage.notification);
       }
-    })
+    });
 } 

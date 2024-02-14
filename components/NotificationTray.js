@@ -14,27 +14,15 @@ import Toast from 'react-native-simple-toast';
 
 const NotificationTray = ({ navigation }) => {
     const focus = useIsFocused();
-    memberID = 0;
     const [userData, setUserData] = useState('');
     const baseUrl = Globals.API_URL + "/MembersWishLists/GetMobileNotificationTray"
-    const [MemberData, setMemberData] = useState([{}]);
     const [isPromoModalVisible, setIsPromoModalVisible] = useState(false);
-    const [isAutoPilotModalVisible, setIsAutoPilotModalVisible] = useState(false);
     const [notificationData, setNotificationData] = useState([]);
-    const [autoPilotClaimData, setAutoPilotClaimData] = useState([]);
     const [loading, setLoading] = useState(false);
-
-    async function setMemData(value) {
-        await setMemberData(value);
-    }
 
     const setIsPromoModalVisibleData = async (promotion) => {
         setIsPromoModalVisible(true);
         setNotificationData(promotion);
-    }
-    const setIsAPModalVisibleData = async (autopilot, businessdata) => {
-        setIsAutoPilotModalVisible(true);
-        setAutoPilotClaimData(autopilot);
     }
 
     const openPromoModal = async (promotion) => {
@@ -42,20 +30,9 @@ const NotificationTray = ({ navigation }) => {
         await setIsPromoModalVisibleData(promotion);
         setLoading(false)
     }
-    const openAPModal = async (autopilot, item) => {
-        setLoading(true)
-        await setIsAPModalVisibleData(autopilot, item);
-        setLoading(false)
-    }
-
     const closePromoModal = () => {
         setLoading(true);
         setIsPromoModalVisible(false);
-        setLoading(false);
-    }
-    const closeAPModal = () => {
-        setLoading(true);
-        setIsAutoPilotModalVisible(false);
         setLoading(false);
     }
 
@@ -64,16 +41,14 @@ const NotificationTray = ({ navigation }) => {
             method: 'GET',
             url: `${Globals.API_URL}/Promotions/GetRewardsByActivityTypeAndIDInMobile/${type}/${ID}`
         }).then(async (response) => {
-            if (Platform.OS === 'ios') {
-                Toast.show(
-                    `Claimed Successfully!`,
-                    Toast.LONG,
-                    Toast.CENTER,
-                    {
-                        backgroundColor: 'blue'
-                    }
-                )
-            }
+            Toast.show(
+                `Claimed Successfully!`,
+                Toast.LONG,
+                Toast.CENTER,
+                {
+                    backgroundColor: 'blue'
+                }
+            );
             setIsPromoModalVisible(false);
         }).catch(error => {
             console.error('Error retrieving dataa:', error);
@@ -121,14 +96,10 @@ const NotificationTray = ({ navigation }) => {
         AsyncStorage.getItem('token')
             .then(async (value) => {
                 setLoading(true);
-
                 if (value !== null) {
-                    await setMemData(JSON.parse(value));
-                    memberID = (JSON.parse(value))[0].memberId;
-
                     await axios({
                         method: 'GET',
-                        url: `${baseUrl}/${memberID}`
+                        url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
                     }).then(async response => {
                         await setUserData(response.data);
                         setLoading(false)
@@ -145,7 +116,8 @@ const NotificationTray = ({ navigation }) => {
     return (
         <>
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', width: '97%', height: '10%', alignItems: 'center', justifyContent: 'center' }}>
+                <View style={[{ flexDirection: 'row', width: '97%', height: '10%', alignItems: 'center', justifyContent: 'center' },
+                isPromoModalVisible ? { backgroundColor: 'rgba(0,0,0,0.5)', opacity: 0.4 } : '']}>
                     <TouchableOpacity activeOpacity={.7} onPress={() => navigation.goBack()}>
                         <Image source={require('../assets/more-button-ved.png')} style={styles.setimg1} />
                     </TouchableOpacity>
@@ -153,21 +125,21 @@ const NotificationTray = ({ navigation }) => {
                 </View>
 
                 <View style={[{ width: '97%', height: '90%', marginTop: '5%' },
-                isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
+                isPromoModalVisible ? { opacity: 0.4 } : '']}>
                     {(userData == '' && !loading) &&
                         <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                             <Image style={{ width: '70%', height: '40%', borderRadius: 15, opacity: 0.8, marginBottom: '40%' }} source={require('../assets/NodataImg.png')} />
                         </View>
                     }
-                    <View style={[styles.store, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
+                    <View style={[styles.store, isPromoModalVisible ? { opacity: 0.4 } : '']}>
                         <FlatList showsVerticalScrollIndicator={false}
                             data={userData}
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item }) => {
                                 return (
                                     <TouchableOpacity style={{ paddingVertical: 10 }} activeOpacity={.9} onPress={() => openPromoModal(item)}>
-                                        <Card style={[styles.card, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
-                                            <Card.Content style={[styles.cardContent, isPromoModalVisible ? { opacity: 0.4 } : '', isAutoPilotModalVisible ? { opacity: 0.4 } : '']}>
+                                        <Card style={[styles.card, isPromoModalVisible ? { opacity: 0.4 } : '']}>
+                                            <Card.Content style={[styles.cardContent, isPromoModalVisible ? { opacity: 0.4 } : '']}>
                                                 <View style={{ width: '20%', height: '100%', alignItems: 'center' }}>
                                                     <Image source={require('../assets/giftImg1.png')} style={[styles.giftIcon]} />
                                                 </View>

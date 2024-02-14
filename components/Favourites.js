@@ -620,6 +620,18 @@ const Favourite = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    ViewAnnouncement: {
+        backgroundColor: '#6b6868',
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '60%',
+        height: 35,
+        position: 'absolute',
+        top: 105,
+        alignSelf: 'center',
+        marginTop: 5
+    },
     gradient: {
         width: '100%',
         height: 350,

@@ -40,7 +40,8 @@ export default function App() {
     })
   }, []);
   const getDeviceToken = async () => {
-    token = await messaging().getToken()
+    token = await messaging().getToken();
+    console.log("THis is token",token);
   };
 
   const postData = async (memberId) => {

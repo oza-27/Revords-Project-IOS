@@ -1,10 +1,10 @@
-import { StyleSheet, Image, Text, View, Alert, Platform, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Image, Text, View, Alert, Platform, ScrollView, Pressable, Linking } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
-import { useIsFocused } from "@react-navigation/native";
+import { Link, useIsFocused } from "@react-navigation/native";
 import Globals from './Globals';
 
 const Profile = ({ route, navigation }) => {
@@ -135,7 +135,7 @@ const Profile = ({ route, navigation }) => {
                                         marginTop: '2%',
                                         marginLeft: '5%',
                                         width: '80%',
-                                    }}>No Email</Text>}
+                                    }}>Email</Text>}
                                 </View>
                                 <View style={{
                                     flexDirection: 'row', width: '90%', alignItems: 'left', justifyContent: 'left',
@@ -150,7 +150,7 @@ const Profile = ({ route, navigation }) => {
                                         marginTop: '2%',
                                         marginLeft: '5%',
                                         width: '80%',
-                                    }}>No BirthDate Given</Text>}
+                                    }}>Birth Date</Text>}
 
                                 </View>
                             </View>
@@ -158,22 +158,40 @@ const Profile = ({ route, navigation }) => {
                                 <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left', marginLeft: 16
                                 }}>
-                                    <Image source={require('../assets/group-6.png')} style={styles.iconimg1} />
-                                    <Text style={styles.innerDText}>Help Center</Text>
+                                    <TouchableOpacity activeOpacity={.7}
+                                        onPress={() => Linking.openURL('mailto:info@revords.com')}
+                                        style={{
+                                            flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
+                                        }}>
+                                        <Image source={require('../assets/group-6.png')} style={styles.iconimg1} />
+                                        <Text style={styles.innerDText}>Contact Us</Text>
+                                    </TouchableOpacity>
                                 </View>
                                 <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
                                     marginTop: 16, marginLeft: 16
                                 }}>
-                                    <Image source={require('../assets/group-7.png')} style={styles.iconimg1} />
-                                    <Text style={styles.innerDText}>Refer & Earn</Text>
+                                    <TouchableOpacity activeOpacity={.7}
+                                        onPress={() => Linking.openURL('https://revords.com/t&c.html')}
+                                        style={{
+                                            flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
+                                        }}>
+                                        <Image source={require('../assets/group-7.png')} style={styles.iconimg1} />
+                                        <Text style={styles.innerDText}>Terms & Conditions</Text>
+                                    </TouchableOpacity>
                                 </View>
                                 <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
                                     marginTop: 16, marginLeft: 16
                                 }}>
-                                    <Image source={require('../assets/group-8.png')} style={styles.iconimg1} />
-                                    <Text style={styles.innerDText}>About Revord App</Text>
+                                    <TouchableOpacity activeOpacity={.7}
+                                        onPress={() => Linking.openURL('https://revords.com/privacy.html')}
+                                        style={{
+                                            flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
+                                        }}>
+                                        <Image source={require('../assets/group-8.png')} style={styles.iconimg1} />
+                                        <Text style={styles.innerDText}>Privacy Policy</Text>
+                                    </TouchableOpacity>
                                 </View>
                                 <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
@@ -187,7 +205,7 @@ const Profile = ({ route, navigation }) => {
                                         <Text style={styles.innerDText}>Logout</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{
+                                {/* <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
                                     marginLeft: 16, paddingVertical: 9
                                 }}>
@@ -198,7 +216,7 @@ const Profile = ({ route, navigation }) => {
                                         <Image source={require('../assets/trash.png')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Delete Account</Text>
                                     </TouchableOpacity>
-                                </View>
+                                </View> */}
                             </View>
                             <Text style={{ fontWeight: '600', color: '#c2c3c5' }}>App Version: {appVersion}</Text>
                         </View>

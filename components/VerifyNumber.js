@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Platform, Dimensions, StyleSheet, Image, Text, View, Pressable, Button, SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { Platform, Dimensions, StyleSheet, Image, Text, View, Pressable, Button, SafeAreaView, KeyboardAvoidingView, Linking } from 'react-native';
 import MaskInput from 'react-native-mask-input';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Globals from '../components/Globals';
@@ -7,7 +7,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { requestPermission } from '../helper/notificationService';
 const { height, width } = Dimensions.get('window');
 const isIPad = Platform.OS === 'ios' && (height > 1024 || width > 1024);
 
@@ -109,7 +109,19 @@ const VerifyNumber = ({ navigation }) => {
       alert(e);
     }
   }
+  const checkApplicationPermission = async () => {
+    if (Platform.OS === 'ios') {
+      try {
+        requestPermission()
+      } catch (error) {
+        console.log("Error getting request", error);
+      }
+    }
+  }
 
+  useEffect(() => {
+    checkApplicationPermission();
+  })
   return (
     <KeyboardAwareScrollView style={{ backgroundColor: '#d9e7ed' }}>
       <View style={styles.container}>
@@ -147,14 +159,24 @@ const VerifyNumber = ({ navigation }) => {
             <Text style={styles.getStartednru}>Request Otp</Text>
             <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
           </TouchableOpacity>
+          <View style={{ justifyContent: 'center', alignContent: 'center', width: '80%', position: 'relative', marginTop: '10%' }}>
+            <Text style={{ fontSize: 14, textAlign: 'center' }}>
+              By signing up, agree to receive rewards by auto text and to our
+              <TouchableOpacity activeOpacity={.7} onPress={() => Linking.openURL('https://revords.com/t&c.html')}
+                style={{ flexDirection: 'row', top: 3 }}>
+                <Text style={{ color: 'grey' }}> Terms </Text>
+              </TouchableOpacity> &
+              <TouchableOpacity activeOpacity={.7} onPress={() => Linking.openURL('https://revords.com/privacy.html')}
+                style={{ flexDirection: 'row', top: 3 }}>
+                <Text style={{ color: 'grey' }}> Privacy Policy. </Text>
+              </TouchableOpacity> Consent not required, opt out anytime.
+            </Text>
+          </View>
           <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
               <Spinner
-                //visibility of Overlay Loading Spinner
                 visible={loading}
-                //Text with the Spinner
                 textContent={''}
-                //Text style of the Spinner Text
                 textStyle={styles.spinnerTextStyle}
               />
             </View>

@@ -10,12 +10,12 @@ const TourPage1 = () => {
                 colors={['#d9e7ed', '#bfdfed', '#d9e7ed']}
                 style={[styles.gradient]}>
                 <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
-                <Image source={require('../assets/image-1-Mpm.png')} style={styles.img1} />
-                <Text style={styles.txt1}>Welcome!</Text>
-                <Text style={styles.txt2}>Everything is <Text style={{ color: '#8D5A25' }}>Straight</Text></Text>
-                <Text style={styles.txt3}>to the point.</Text>
-                <Text style={styles.txt4}>Revords App is an connection between customer and business owners,
-                    where customer can earn rewards from business owners for their loyalty.</Text>
+                <Image source={require('../assets/03TourImage.png')} style={styles.img1} />
+                <Text style={styles.txt1}> How does it Work? </Text>
+                <Text style={styles.txt5}>
+                    Each time you visit the Revords business, you earn point(s).
+                    Accumulated points can be redeemed for amazing rewards.
+                </Text>
             </LinearGradient>
         </View>
     );

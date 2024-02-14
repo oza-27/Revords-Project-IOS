@@ -38,7 +38,24 @@ export default function MapViewing({ navigation }) {
     useEffect(() => {
         setLoading(true);
         requestLocationPermission();
-        checkApplicationPermission();
+        AsyncStorage.getItem('token')
+            .then(async (value) => {
+                if (value !== null) {
+                    axios({
+                        method: 'GET',
+                        url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
+                    }).then(async response => {
+                        await setBusinessDataWhole(response.data);
+                        setLoading(false);
+                    })
+                        .catch((error) => {
+                            console.log("Error fetching data", error);
+                            setLoading(false);
+                        })
+                }
+            }).catch((error) => {
+                console.log('Error retrieving data', error);
+            });
         setLoading(false);
 
     }, [isFocused]);
@@ -93,16 +110,6 @@ export default function MapViewing({ navigation }) {
         );
     };
 
-    const checkApplicationPermission = async () => {
-        if (Platform.OS === 'ios') {
-            try {
-                requestPermission()
-            } catch (error) {
-                console.log("Error getting request", error);
-            }
-        }
-    }
-
     const requestLocationPermission = async () => {
         await getCurrentLocation();
         await setBusinessDataWhole();
@@ -112,7 +119,13 @@ export default function MapViewing({ navigation }) {
         if (text === '') {
             setFilteredData(businessData);
         } else {
-            let data = businessData.filter(item => item.metaData.toLowerCase().includes(text.toLowerCase()));
+            let data = businessData.filter(item => {
+                if (item.metaData !== null && item.metaData !== undefined && item.metaData !== '') {
+                    return
+                    item.metaData.toLowerCase().includes(text.toLowerCase())
+                }
+            });
+            setFilteredData(data);
         }
     }
 
@@ -212,15 +225,13 @@ export default function MapViewing({ navigation }) {
                                 style={{ width: 32, height: 32 }}
                                 resizeMode="contain"
                             />
-                            <Callout onPress={() => navigation.navigate('BusinessDetailView', { id: business.id })}>
-                                <CalloutSubview
-                                    style={styles.locationbuttoncallout}>
-                                    <Pressable style={{ width: 180 }} >
-                                        <Text style={{ textAlign: 'center' }}>
-                                            {business.businessName}
-                                        </Text>
-                                    </Pressable>
-                                </CalloutSubview>
+                            <Callout onPress={() => navigation.navigate('BusinessDetailView', { id: business.id })}
+                                style={styles.locationbuttonCallout}>
+                                <TouchableHighlight style={{ width: 180 }}>
+                                    <Text style={{ textAlign: 'center' }}>
+                                        {business.businessName}
+                                    </Text>
+                                </TouchableHighlight>
                             </Callout>
                         </Marker>
                     ))}
@@ -240,6 +251,11 @@ export default function MapViewing({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    locationbuttonCallout: {
+        borderRadius: 0,
+        opacity: 0.8,
+        backgroundColor: 'lightgrey'
+    },
     setimg1: {
         width: 50,
         height: 50,
