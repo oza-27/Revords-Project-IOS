@@ -40,6 +40,7 @@ export default function App() {
     })
   }, []);
   const getDeviceToken = async () => {
+    messaging().getAPNSToken();
     token = await messaging().getToken();
     console.log("THis is token",token);
   };

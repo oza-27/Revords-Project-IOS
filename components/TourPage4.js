@@ -12,7 +12,6 @@ const TourPage4 = () => {
                 <Text style={styles.txt2}> Ready to
                     <Text style={{ color: '#8D5A25' }}> Explore?</Text>
                 </Text>
-                <Text style={styles.txt5}>Best of Luck for your Revords journey.</Text>
             </LinearGradient>
         </View>
     );

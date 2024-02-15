@@ -11,8 +11,8 @@ const TourPage1 = () => {
                 style={[styles.gradient]}>
                 <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
                 <Image source={require('../assets/03TourImage.png')} style={styles.img1} />
-                <Text style={styles.txt1}> How does it Work? </Text>
-                <Text style={styles.txt5}>
+                <Text style={styles.txt1}> How does it <Text style={{color:'#964B00'}}>Work</Text>? </Text>
+                <Text style={styles.txt4}>
                     Each time you visit the Revords business, you earn point(s).
                     Accumulated points can be redeemed for amazing rewards.
                 </Text>

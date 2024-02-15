@@ -11,10 +11,7 @@ const TourPage1 = () => {
                 <Image source={require('../assets/companylogo.png')} style={styles.companylogo} />
                 <Image source={require('../assets/image-1-Mpm.png')} style={styles.img1} />
                 <Text style={styles.txt1}>Welcome!</Text>
-                <Text style={styles.txt2}> Everything is
-                    <Text style={{ color: '#8D5A25' }}>
-                        Straight
-                    </Text>
+                <Text style={styles.txt2}> Everything is <Text style={{ color: '#8D5A25' }}> Straight </Text>
                 </Text>
                 <Text style={styles.txt3}> to the points.</Text>
                 <Text style={styles.txt4}>

@@ -76,7 +76,7 @@ const AppTourGuide = ({ route, navigation }) => {
             <View style={styles.tourPages}>
                 {tourSteps[step - 1].targetComponent}
             </View>
-            {step !== 4 && <View style={styles.tourBtn}>
+            {step !== 3 && <View style={styles.tourBtn}>
                 <Pressable activeOpacity={.7} onPress={closeTour} style={styles.skipButton}>
                     <Text style={{ fontSize: 20, color: '#fff', fontWeight: '700' }}>SKIP</Text>
                 </Pressable>
@@ -84,7 +84,7 @@ const AppTourGuide = ({ route, navigation }) => {
                     <Text style={{ fontSize: 20, color: '#fff', fontWeight: '700' }}>NEXT</Text>
                 </Pressable>
             </View>}
-            {step == 4 && <View style={styles.tourBtnStart}>
+            {step == 3 && <View style={styles.tourBtnStart}>
                 <Pressable activeOpacity={.7} onPress={GotoRegistration} style={styles.startButton}>
                     <Text style={{ fontSize: 20, color: '#fff', fontWeight: '700' }}>LET'S START</Text>
                 </Pressable>

@@ -15,7 +15,7 @@ export default function TabNavigation({ route, navigation }) {
     AsyncStorage.getItem('token')
         .then(value => {
             if (value !== null) {
-                console.log("This is not null value:- ", value)
+                console.log("This is not null value:- ")
             } else {
                 AsyncStorage.setItem('token', JSON.stringify(MemberData))
                     .then(() => {

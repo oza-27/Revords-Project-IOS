@@ -96,7 +96,7 @@ const Profile = ({ route, navigation }) => {
                     <View style={{ flexDirection: 'row', width: '95%', height: '15%', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={styles.welcomeText}>User Profile</Text>
                         <Pressable activeOpacity={.7} onPress={() => navigation.navigate('ProfileEdit', { MemberData: MemberData })}>
-                            <Image source={require('../assets/more-button.png')} style={styles.setimg1} />
+                            <Image source={require('../assets/editImg.png')} style={styles.setimg1} />
                         </Pressable>
                     </View>
 
@@ -154,19 +154,7 @@ const Profile = ({ route, navigation }) => {
 
                                 </View>
                             </View>
-                            <View style={{ backgroundColor: 'white', width: '100%', marginTop: 16, borderRadius: 23 }}>
-                                <View style={{
-                                    flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left', marginLeft: 16
-                                }}>
-                                    <TouchableOpacity activeOpacity={.7}
-                                        onPress={() => Linking.openURL('mailto:info@revords.com')}
-                                        style={{
-                                            flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
-                                        }}>
-                                        <Image source={require('../assets/group-6.png')} style={styles.iconimg1} />
-                                        <Text style={styles.innerDText}>Contact Us</Text>
-                                    </TouchableOpacity>
-                                </View>
+                            <View style={{ backgroundColor: 'white', width: '100%', marginTop: 16, borderRadius: 23, left: '2%' }}>
                                 <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
                                     marginTop: 16, marginLeft: 16
@@ -176,7 +164,7 @@ const Profile = ({ route, navigation }) => {
                                         style={{
                                             flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
                                         }}>
-                                        <Image source={require('../assets/group-7.png')} style={styles.iconimg1} />
+                                        <Image source={require('../assets/termsImg.png')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Terms & Conditions</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -189,8 +177,21 @@ const Profile = ({ route, navigation }) => {
                                         style={{
                                             flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
                                         }}>
-                                        <Image source={require('../assets/group-8.png')} style={styles.iconimg1} />
+                                        <Image source={require('../assets/privacyImg.png')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Privacy Policy</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{
+                                    flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left', marginLeft: 16,
+                                    marginTop: 16
+                                }}>
+                                    <TouchableOpacity activeOpacity={.7}
+                                        onPress={() => Linking.openURL('mailto:info@revords.com')}
+                                        style={{
+                                            flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
+                                        }}>
+                                        <Image source={require('../assets/group-6.png')} style={styles.iconimg1} />
+                                        <Text style={styles.innerDText}>Contact Us</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{
@@ -246,7 +247,8 @@ const styles = StyleSheet.create({
         marginTop: -16,
         position: 'absolute',
         alignSelf: 'flex-end',
-        right: -30
+        right: -30,
+        borderRadius:10
     },
     iconimg1: {
         width: 35,
