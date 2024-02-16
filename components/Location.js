@@ -19,7 +19,6 @@ import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 const Location = ({ navigation }) => {
-    const [search, setSearch] = useState('');
     const [filteredData, setFilteredData] = useState('');
     const focus = useIsFocused();
     lang = 0;

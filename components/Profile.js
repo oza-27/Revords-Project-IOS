@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'flex-end',
         right: -30,
-        borderRadius:10
+        borderRadius: 10
     },
     iconimg1: {
         width: 35,

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, Modal, Platform, Pressable, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Image, Text, View, Modal, Platform } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Globals from '../components/Globals';
 import { Card } from 'react-native-paper';
-import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
@@ -478,7 +478,6 @@ const Favourite = ({ navigation }) => {
                                                     <Text style={styles.achievableName}>{autopilot.rewardName}</Text>
                                                     {autopilot.expiryDays > 1 && <Text style={styles.achievalbeValue}>Expires in - {autopilot.expiryDays} days</Text>}
                                                     {autopilot.expiryDays == 1 && <Text style={styles.achievalbeValue}>Expiring Today</Text>}
-                                                    {/* {autopilot.expiryDays == 0 &&<Text style={styles.achievalbeValue}>Expiring Today</Text>} */}
                                                     <TouchableOpacity activeOpacity={.7} onPress={() => openAPModal(autopilot, item)} style={[autopilot.isClaimed == false ? styles.frame2vJuClaim : styles.frame2vJuClaimed]}>
                                                         {autopilot.isClaimed == false && <Text style={styles.getStartednru}>Claim</Text>}
                                                         {autopilot.isClaimed == true && <Text style={styles.getStartednru}>Claimed</Text>}

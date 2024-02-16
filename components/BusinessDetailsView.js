@@ -27,21 +27,12 @@ export default function BusinessDetailsView({ route }) {
     const [initialRegion, setInitialRegion] = useState(null);
     const [loading, setLoading] = useState(false);
     const businessDetailsAPI = `${Globals.API_URL}/BusinessProfiles/GetBusinessLocationWiseMemberDetails`;
-    const businessGroupId = "1";
-    const userEarnedRewardsAPI = Globals.API_URL + `/RewardConfigs/GetRewardConfigBusinessGroupwiseMemberwise/${businessGroupId}`;
     const id = route.params.id;
     const [businessDetails, setBusinessDetails] = useState([]);
-    const [earnerRewards, setEarnedRevards] = useState([]);
     const imagePath = businessDetails ? businessDetails.imagePath : null;
     const logoPath = businessDetails ? businessDetails.logoPath : null;
     const imageUrl = Globals.Root_URL + `${imagePath}`;
     const logoUrl = Globals.Root_URL + `${logoPath}`;
-    const wdays = Globals.API_URL + '/BusinessProfiles/GetBusinesswiseWorkingDaysForMobile';
-    const [workingDays, setWorkingDays] = useState([{}]);
-    const [selectedMarker, setSelectedMarker] = useState(null);
-    const [error, setError] = useState(null);
-    const [MemberData, setMemberData] = useState([{}]);
-    let isSave = false;
     const [buttonClicked, setButtonClikced] = useState(false);
     const galleryImagePath1 = businessDetails ? businessDetails.galleryImagePath1 : null;
     const galleryImagePath2 = businessDetails ? businessDetails.galleryImagePath2 : null;
@@ -78,16 +69,6 @@ export default function BusinessDetailsView({ route }) {
 
     async function setBusinessDetailsAwait(data) {
         await setBusinessDetails(data);
-    }
-    async function setworkingDaysAwait(data) {
-        await setWorkingDays(data);
-    }
-
-    async function setMemData(value) {
-        await setMemberData(value);
-    }
-    async function setEarnedRevardsData(value) {
-        await setEarnedRevards(value);
     }
 
     const getLocation = (response) => {

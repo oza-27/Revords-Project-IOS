@@ -159,17 +159,18 @@ const VerifyNumber = ({ navigation }) => {
             <Text style={styles.getStartednru}>Request Otp</Text>
             <Image source={require('../assets/arrowcircleright-R8m.png')} style={styles.arrowcirclerightTy3} />
           </TouchableOpacity>
-          <View style={{ justifyContent: 'center', alignContent: 'center', width: '80%', position: 'relative', marginTop: '10%' }}>
+          <View style={{ justifyContent: 'center', alignContent: 'center', width: '90%', position: 'relative', marginTop: '9%' }}>
             <Text style={{ fontSize: 14, textAlign: 'center' }}>
-              By signing up, agree to receive rewards by auto text and to our
+              By participating, you consent to receive auto text and email messages
+              and to our
               <TouchableOpacity activeOpacity={.7} onPress={() => Linking.openURL('https://revords.com/t&c.html')}
                 style={{ flexDirection: 'row', top: 3 }}>
                 <Text style={{ color: 'grey' }}> Terms </Text>
-              </TouchableOpacity> &
+              </TouchableOpacity>&
               <TouchableOpacity activeOpacity={.7} onPress={() => Linking.openURL('https://revords.com/privacy.html')}
                 style={{ flexDirection: 'row', top: 3 }}>
                 <Text style={{ color: 'grey' }}> Privacy Policy. </Text>
-              </TouchableOpacity> Consent not required, opt out anytime.
+              </TouchableOpacity>Message and data rates may apply. Reply STOP to any messages to unsubscribe.
             </Text>
           </View>
           <SafeAreaView style={{ flex: 1 }}>

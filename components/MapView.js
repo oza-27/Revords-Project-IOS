@@ -1,5 +1,5 @@
-import { StyleSheet, View, Text, Image, TextInput, SafeAreaView, BackHandler, Platform, Pressable, TouchableOpacity } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE, CalloutSubview } from 'react-native-maps';
+import { StyleSheet, View, Text, Image, TextInput, SafeAreaView, BackHandler, TouchableOpacity } from 'react-native';
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect, useCallback } from 'react';
@@ -8,7 +8,6 @@ import Geolocation from '@react-native-community/geolocation';
 import Globals from './Globals';
 import axios from 'axios';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { requestPermission } from '../helper/notificationService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MapViewing({ navigation }) {
@@ -121,8 +120,7 @@ export default function MapViewing({ navigation }) {
         } else {
             let data = businessData.filter(item => {
                 if (item.metaData !== null && item.metaData !== undefined && item.metaData !== '') {
-                    return
-                    item.metaData.toLowerCase().includes(text.toLowerCase())
+                    return item.metaData.toLowerCase().includes(text.toLowerCase());
                 }
             });
             setFilteredData(data);

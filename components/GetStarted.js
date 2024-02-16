@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { StyleSheet, Image, Text, View, BackHandler, Pressable, Platform, Dimensions } from 'react-native';
+import { StyleSheet, Image, Text, View, BackHandler, Pressable } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 const GetStarted = ({ navigation }) => {
     const backPressed = () => {
