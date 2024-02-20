@@ -1,5 +1,5 @@
-import { StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert, Platform } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert, Platform } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from "react-native";
 import Globals from '../components/Globals';
@@ -312,16 +312,16 @@ const ProfileEdit = ({ navigation, route }) => {
                                     <View style={{ borderRadius: 23, padding: 5, width: '100%' }}>
                                         <Text style={{ fontSize: 18, fontWeight: '700', paddingLeft: 5 }}>Birth Date</Text>
                                         {MemberData[0].isBirthDateChange &&
-                                            <Pressable activeOpacity={.2} onPress={alertForBirthDate}>
+                                            <TouchableOpacity activeOpacity={.7} onPress={alertForBirthDate}>
                                                 <TextInput
                                                     style={{
                                                         height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10,
-                                                        marginTop: 5, fontSize: 16, borderRadius: 10, backgroundColor: '#e1e5e8', fontWeight: '600'
+                                                        marginTop: 5, fontSize: 16, borderRadius: 10, backgroundColor: '#e1e5e8', fontWeight: '600',
                                                     }}
                                                     value={(birthDate == '' || birthDate == null || birthDate == undefined) ? 'No BirthDate Given' : birthDate}
                                                     editable={false}
                                                 />
-                                            </Pressable>}
+                                            </TouchableOpacity>}
 
                                         {!MemberData[0].isBirthDateChange &&
                                             <>

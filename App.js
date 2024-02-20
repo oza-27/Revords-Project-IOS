@@ -22,11 +22,7 @@ Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
 
 export default function App() {
-
-  let token = "";
-  let platformOS;
-  let long = 0;
-  let lat = 0;
+  
   useEffect(() => {
     setTimeout(() => SplashScreen.hide(), 2000);
   }, []);
@@ -39,10 +35,12 @@ export default function App() {
       }
     })
   }, []);
+
+  let token = "";
+  let platformOS;
   const getDeviceToken = async () => {
-    messaging().getAPNSToken();
     token = await messaging().getToken();
-    console.log("THis is token",token);
+    console.log(token);
   };
 
   const postData = async (memberId) => {

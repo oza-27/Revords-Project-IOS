@@ -29,21 +29,21 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true/>
+		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>ho.hitechprojects.co.in</key>
+			<key>dashboard.revords.com</key>
 			<dict>
-				<key>NSTemporaryExceptionMinimumTLSVersion</key>
-				<string>TLSv1.1</string>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
 			</dict>
-			<key>dashboard.revords.com</key>
+			<key>ho.hitechprojects.co.in</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>

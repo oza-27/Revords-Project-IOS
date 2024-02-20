@@ -44,7 +44,7 @@ const NotificationTray = ({ navigation }) => {
             Toast.show(
                 `Claimed Successfully!`,
                 Toast.LONG,
-                Toast.CENTER,
+                Toast.BOTTOM,
                 {
                     backgroundColor: 'blue'
                 }
@@ -57,10 +57,8 @@ const NotificationTray = ({ navigation }) => {
     }
 
     const closePromoRedeemModal = async (type, ID) => {
-        setLoading(true)
         await claimData(type, ID);
         await getData();
-        setLoading(false);
     }
 
     const ToastForClaimed = () => {
@@ -95,17 +93,17 @@ const NotificationTray = ({ navigation }) => {
     const getData = async () => {
         AsyncStorage.getItem('token')
             .then(async (value) => {
-                setLoading(true);
+                //setLoading(true);
                 if (value !== null) {
                     await axios({
                         method: 'GET',
                         url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
                     }).then(async response => {
                         await setUserData(response.data);
-                        setLoading(false)
+                        //etLoading(false)
                     }).catch((error) => {
                         console.error("Error fetching data", error)
-                        setLoading(false);
+                        //setLoading(false);
                     });
                 }
             })

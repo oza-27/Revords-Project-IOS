@@ -26,6 +26,7 @@ const Location = ({ navigation }) => {
     const [loadingData, setLoadingData] = useState(true);
     const [userData, setUserData] = useState('');
     const baseUrl = Globals.API_URL + "/BusinessProfiles/GetBusinessProfilesForMobile";
+    const [initialRegion, setInitialRegion] = useState(null);
     const pulse = {
         0: {
             scale: 1,
@@ -37,6 +38,7 @@ const Location = ({ navigation }) => {
             scale: 1
         }
     }
+
     async function handleCheckPressed() {
         if (Platform.OS === 'android') {
             const checkEnabled = await isLocationEnabled();
@@ -77,17 +79,27 @@ const Location = ({ navigation }) => {
         navigation.navigate("BusinessDetailView", { id: item })
 
     }
-
+    async function setMarkers(centerLat, centerLong) {
+        setInitialRegion({
+            latitude: centerLat,
+            longitude: centerLong,
+            longitudeDelta: (0.0922 * 2),
+            latitudeDelta: 0.0922
+        });
+    }
     const getData = async () => {
-        AsyncStorage.getItem('token')
-            .then(async (value) => {
-                if (value != null) {
-                    await axios({
-                        method: 'GET',
-                        url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
-                    }).then(async response => {
-                        await Geolocation.getCurrentPosition(
-                            async position => {
+        Geolocation.getCurrentPosition(
+            async position => {
+                await setLangandLat(position.coords.latitude, position.coords.longitude);
+                await setMarkers(position.coords.latitude, position.coords.longitude);
+                AsyncStorage.getItem('token')
+                    .then(async (value) => {
+                        if (value != null) {
+                            await axios({
+                                method: 'GET',
+                                url: `${baseUrl}/${(JSON.parse(value))[0].memberId}`
+                            }).then(async response => {
+
                                 const { latitude, longitude } = position.coords;
                                 await setLangandLat(latitude, longitude);
                                 await response.data.map((data1, index) => {
@@ -115,28 +127,25 @@ const Location = ({ navigation }) => {
                                 await setFilteredData(response.data);
                                 console.log(response.data)
                                 setLoadingData(false)
-                            },
-                            error => {
-                                console.error('Error getting current location: ', error);
-                                setLoadingData(false)
-                            },
-                            { enableHighAccuracy: false, timeout: 5000 }
-                        );
 
-                    }).catch((error) => {
-                        console.error("Error fetching data", error)
+
+                            }).catch((error) => {
+                                console.error("Error fetching data", error)
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.log("Error retreiving data", error);
                     });
-                }
-            })
-            .catch((error) => {
-                console.log("Error retreiving data", error);
             });
     }
 
     useEffect(() => {
-        handleCheckPressed();
+        requestLocationPermission();
     }, [focus]);
-
+    const requestLocationPermission = async () => {
+        await getData();
+    };
     const handleInputChange = (text) => {
         if (text === '') {
             setFilteredData(userData);

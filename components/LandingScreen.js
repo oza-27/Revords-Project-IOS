@@ -26,7 +26,6 @@ const LandingScreen = ({ navigation }) => {
                 console.error('Error retrieving data:', error);
             });
     }, [focus]);
-
     const getMemberData = async (phone, value) => {
         const response = await fetch(
             Globals.API_URL + '/MemberProfiles/GetMemberByPhoneNo/' + phone)

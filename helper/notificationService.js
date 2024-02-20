@@ -8,9 +8,8 @@ export async function requestPermission() {
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
   if (enabled) {
     console.log("Authorization Status", authStatus);
-  } else if (messaging.AuthorizationStatus.DENIED || !enabled) {
-    console.log("Authorization status", authStatus);
-    messaging().requestPermission();
+    let token = messaging().getToken();
+    console.log(token);
   }
 }
 

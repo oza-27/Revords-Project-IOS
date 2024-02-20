@@ -15,7 +15,7 @@ const AppTourGuide = ({ route, navigation }) => {
     let platformOS;
     const getToken = async () => {
         platformOS = (Platform.OS == "android" ? 1 : 2);
-        tokenid = messaging().getToken();
+        tokenid = await messaging().getToken();
     };
 
     const nextStep = () => {
@@ -26,7 +26,8 @@ const AppTourGuide = ({ route, navigation }) => {
         setStep(null);
         if (MemberData) {
             let platformOS = Platform.OS == "android" ? 1 : 2;
-            await getToken()
+            await getToken();
+            console.log("token",tokenid);
             fetch(`${Globals.API_URL}/MemberProfiles/PutDeviceTokenInMobileApp/${MemberData[0].memberId}/${tokenid}/${platformOS}                                       `, {
                 method: 'PUT'
             }).then((res) => {
