@@ -194,7 +194,7 @@ const NotificationTray = ({ navigation }) => {
                             {(notificationData.expiryDays > 1 && notificationData.type != 3) && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expires in - </Text>{notificationData.expiryDays} days</Text>}
                             {(notificationData.expiryDays == 1 && notificationData.type != 3) && <Text style={styles.modaltext}><Text style={{ fontWeight: '700' }}>Expiring Today</Text></Text>}
                             {(notificationData.expiryDays <= 0 && notificationData.type != 3) && <Text style={styles.modaltext}><Text style={{ fontWeight: '600', color: '#b0afaf' }}>Expired</Text></Text>}
-                            {(notificationData.offerEndDate && notificationData.type == 3) && <Text style={[styles.modaltext, { textAlign: 'center' }]}><Text style={{ fontWeight: '700' }}>Expire Date:</Text>{moment(notificationData.offerEndDate).format("MM/DD/YYYY")}</Text>}
+                            {(notificationData.offerEndDate && notificationData.type == 3) && <Text style={[styles.modaltext, { textAlign: 'center' }]}><Text style={{ fontWeight: '700' }}>Expiry Date:</Text>{moment(notificationData.offerEndDate).format("MM/DD/YYYY")}</Text>}
 
                             {/* for image */}
                             {(notificationData.filePath != '' && notificationData.filePath != null) && <Image style={styles.avatarImg} source={{ uri: Globals.Root_URL + notificationData.filePath }} ></Image>}

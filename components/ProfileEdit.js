@@ -281,7 +281,7 @@ const ProfileEdit = ({ navigation, route }) => {
                                                 height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 10,
                                                 marginTop: 5, fontSize: 16, borderRadius: 10, backgroundColor: '#e6edf1', fontWeight: '600'
                                             }}
-                                            onChangeText={(inputText) => { setName(inputText.trim()) }}
+                                            onChangeText={(inputText) => { setName(inputText) }}
                                             value={name}
                                         />
                                         {!isValidName && <Text style={{ color: 'red' }}> Name shouldn't be empty </Text>}

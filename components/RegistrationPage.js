@@ -116,7 +116,7 @@ export default function RegistrationPage({ route }) {
                 colors={['#d9e7ed', '#bfdfed', '#d9e7ed']}
                 style={[styles.gradient]}>
                 <Text style={styles.createYourAccount}> Create your Account! </Text>
-                <TextInput style={styles.nameInput} onChangeText={(t) => setName(t.trim())} placeholder='Enter your Name'></TextInput>
+                <TextInput style={styles.nameInput} onChangeText={(t) => setName(t)} placeholder='Enter your Name'></TextInput>
                 <View style={styles.lineOne}></View>
                 <TextInput style={styles.emailInput} onChangeText={(t) => setEmail(t)} placeholder='Enter your Email' />
                 <View style={styles.lineTwo}></View>
