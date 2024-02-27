@@ -1,4 +1,4 @@
-import { StyleSheet, Image, Text, View, Alert, Platform, ScrollView, Pressable, Linking } from 'react-native';
+import { StyleSheet, Image, Text, View, Alert, Platform, ScrollView, Pressable, Linking, Modal } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { Link, useIsFocused } from "@react-navigation/native";
 import Globals from './Globals';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 const Profile = ({ route, navigation }) => {
     const focus = useIsFocused();
@@ -16,6 +17,15 @@ const Profile = ({ route, navigation }) => {
     const [memberProfilePic, setMemberProfilePic] = useState('');
     const [MemberData, setMemberData] = useState([{}]);
     const appVersion = require('../package.json').version;
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const images = [
+        { url: memberProfilePic }
+    ]
+
+    const handleGalleryImagePress = () => {
+        setModalVisible(true);
+    }
 
     const createTwoButtonAlert = () =>
         Alert.alert('Log Out', 'Do you want to logout?', [
@@ -109,8 +119,10 @@ const Profile = ({ route, navigation }) => {
                         }}>
                             {(memberProfilePic == null || memberProfilePic == '' || memberProfilePic == undefined) &&
                                 <Image source={require('../assets/defaultUser1.png')} style={styles.img1} />}
-                            {(memberProfilePic != null && memberProfilePic != '' && memberProfilePic != undefined) &&
-                                <Image source={{ uri: memberProfilePic }} style={styles.img1} />}
+                            <TouchableOpacity onPress={handleGalleryImagePress}>
+                                {(memberProfilePic != null && memberProfilePic != '' && memberProfilePic != undefined) &&
+                                    <Image source={{ uri: memberProfilePic }} style={styles.img1} />}
+                            </TouchableOpacity>
                             <Text style={styles.welcomeText}>{name}</Text>
 
                             <View style={{ backgroundColor: '#f2f5f6', width: '95%', marginTop: 14, borderRadius: 23 }}>
@@ -164,7 +176,7 @@ const Profile = ({ route, navigation }) => {
                                         style={{
                                             flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
                                         }}>
-                                        <Image source={require('../assets/termsImg.png')} style={styles.iconimg1} />
+                                        <Image source={require('../assets/termsImg.jpeg')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Terms & Conditions</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -177,7 +189,7 @@ const Profile = ({ route, navigation }) => {
                                         style={{
                                             flexDirection: 'row', alignItems: 'left', justifyContent: 'left'
                                         }}>
-                                        <Image source={require('../assets/privacyImg.png')} style={styles.iconimg1} />
+                                        <Image source={require('../assets/privacyImg.jpeg')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Privacy Policy</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -206,22 +218,32 @@ const Profile = ({ route, navigation }) => {
                                         <Text style={styles.innerDText}>Logout</Text>
                                     </TouchableOpacity>
                                 </View>
-                                {/* <View style={{
+                                <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
-                                    marginLeft: 16, paddingVertical: 9
+                                    marginLeft: 16
                                 }}>
                                     <TouchableOpacity activeOpacity={.7} onPress={onDeleteAccount} style={{
                                         flexDirection: 'row', alignItems: 'left', justifyContent: 'left',
 
                                     }}>
-                                        <Image source={require('../assets/trash.png')} style={styles.iconimg1} />
+                                        <Image source={require('../assets/trashDel.png')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Delete Account</Text>
                                     </TouchableOpacity>
-                                </View> */}
+                                </View>
                             </View>
                             <Text style={{ fontWeight: '600', color: '#c2c3c5' }}>App Version: {appVersion}</Text>
                         </View>
                     </ScrollView>
+                    <Modal visible={modalVisible} transparent={true}>
+                        <ImageViewer
+                            imageUrls={images}
+                            enableImageZoom={true}
+                            enableSwipeDown={true}
+                            scrollEnabled={true}
+                            onCancel={() => setModalVisible(false)}
+                            onClick={() => setModalVisible(false)}
+                        />
+                    </Modal>
                 </View>
             </View>
         </>
@@ -253,6 +275,7 @@ const styles = StyleSheet.create({
     iconimg1: {
         width: 35,
         height: 35,
+        borderRadius: 15
     },
     welcomeText: {
         color: 'black',

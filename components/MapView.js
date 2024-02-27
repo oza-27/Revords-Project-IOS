@@ -56,7 +56,6 @@ export default function MapViewing({ navigation }) {
                 console.log('Error retrieving data', error);
             });
         setLoading(false);
-
     }, [isFocused]);
 
     async function setLangandLat(latitude, longitude) {

@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet, Image, Text, View, ScrollView, PermissionsAndroid, Modal, TouchableWithoutFeedback, Pressable, Alert, Platform } from 'react-native';
+import { TouchableOpacity, StyleSheet, Image, Text, View, ScrollView, Modal, TouchableWithoutFeedback, Pressable, Alert, Platform } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { useEffect, useState } from 'react';
 import { SafeAreaView } from "react-native";
@@ -6,12 +6,12 @@ import Globals from '../components/Globals';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
-import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { useIsFocused } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import moment from 'moment';
 import Toast from 'react-native-simple-toast';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 const ProfileEdit = ({ navigation, route }) => {
     const focus = useIsFocused();
@@ -24,7 +24,7 @@ const ProfileEdit = ({ navigation, route }) => {
     const [loading, setLoading] = useState(false);
     const [isValid, setIsValid] = useState(true);
     const [isValidName, setIsValidName] = useState(true);
-
+    const [modalVisible, setModalVisible] = useState(false);
     const [memberProfilePic, setMemberProfilePic] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageRes, setImageRes] = useState(null);
@@ -53,6 +53,11 @@ const ProfileEdit = ({ navigation, route }) => {
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailPattern.test(email);
     }
+
+
+    const images = [
+        { url: memberProfilePic }
+    ]
 
     async function setMemData(value) {
         await setMemberData(value);
@@ -112,9 +117,7 @@ const ProfileEdit = ({ navigation, route }) => {
 
             axios.put(apiUrl, requestBody)
                 .then(async (response) => {
-                    if (selectedImage) {
-                        await uploadImage(imageRes);
-                    }
+                    await uploadImage(imageRes);
                     await getMemberData();
                     setLoading(false);
                     Toast.show(
@@ -137,6 +140,13 @@ const ProfileEdit = ({ navigation, route }) => {
         } else {
             putData();
         }
+    }
+
+    const removeImage = () => {
+        setOptionModalVisible(false);
+        setMemberProfilePic(null);
+        setSelectedImage(null);
+        setImageRes(null);
     }
 
     const getMemberData = async () => {
@@ -197,11 +207,15 @@ const ProfileEdit = ({ navigation, route }) => {
 
     const uploadImage = async (response) => {
         const formData = new FormData();
-        formData.append('file', {
-            uri: response.uri || response.assets?.[0]?.uri,
-            type: response.type || response.assets?.[0]?.type,
-            name: response.fileName || response.assets?.[0]?.fileName,
-        });
+        if (response == null) {
+            formData.append('file', null);
+        } else {
+            formData.append('file', {
+                uri: response.uri || response.assets?.[0]?.uri,
+                type: response.type || response.assets?.[0]?.type,
+                name: response.fileName || response.assets?.[0]?.fileName,
+            });
+        }
         try {
             const response = await axios.post(Globals.API_URL + `/MemberProfiles/UpdateMemberImageInMobileApp/${MemberData[0].memberId}`, formData, {
                 headers: {
@@ -238,6 +252,10 @@ const ProfileEdit = ({ navigation, route }) => {
             setDaysInMonth(daysArray);
             setSelectedDay('');
         }
+    }
+
+    const handleGalleryImagePress = () => {
+        setModalVisible(true);
     }
     return (
         <>
@@ -368,20 +386,40 @@ const ProfileEdit = ({ navigation, route }) => {
                             </TouchableWithoutFeedback>
                             <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, width: 300 }}>
                                 <TouchableWithoutFeedback style={{ flex: 1 }}>
-                                    <Pressable style={{ zIndex: 1000 }} onPress={openGallery}>
-                                        <Text style={{ fontSize: 18, marginBottom: 10 }}>Choose from Library</Text>
+                                    <Pressable style={{ zIndex: 1000, display: 'flex', flexDirection: 'row' }} onPress={openGallery} >
+                                        <Image source={require('../assets/galleryImg.png')} style={{ width: 30, height: 25 }} />
+                                        <Text style={{ fontSize: 18, marginBottom: 15, marginLeft: 10 }}>Choose from Library</Text>
                                     </Pressable>
                                 </TouchableWithoutFeedback>
                                 <TouchableWithoutFeedback>
-                                    <Pressable onPress={openCamera}>
-                                        <Text style={{ fontSize: 18 }}>Take Photo</Text>
+                                    <Pressable onPress={openCamera} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                        <Image source={require('../assets/cameraImg.png')} style={{ width: 30, height: 25 }} />
+                                        <Text style={{ fontSize: 18, marginLeft: 10 }}>Take Photo</Text>
                                     </Pressable>
                                 </TouchableWithoutFeedback>
+                                {memberProfilePic && <TouchableWithoutFeedback>
+                                    <Pressable onPress={() => removeImage('remove')} style={{ display: 'flex', flexDirection: 'row', marginTop: 12, alignItems: 'center' }}>
+                                        <Image source={require('../assets/trashImg.png')} style={{ width: 30, height: 30 }} />
+                                        <Text style={{ fontSize: 18, color: '#7b3d3dde', marginLeft: 10 }}>Remove Photo</Text>
+                                    </Pressable>
+                                </TouchableWithoutFeedback>}
                             </View>
                         </View>
                     </Modal>
 
                 </View >
+
+                <Modal visible={modalVisible} transparent={true}>
+                    <ImageViewer
+                        imageUrls={images}
+                        enableImageZoom={true}
+                        enableSwipeDown={true}
+                        scrollEnabled={true}
+                        onCancel={() => setModalVisible(false)}
+                        onClick={() => setModalVisible(false)}
+                    />
+                </Modal>
+
                 <SafeAreaView style={{ flex: 1 }}>
                     <View style={styles.container}>
                         <Spinner
