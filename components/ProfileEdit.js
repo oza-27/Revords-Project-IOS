@@ -11,7 +11,6 @@ import { useIsFocused } from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
 import moment from 'moment';
 import Toast from 'react-native-simple-toast';
-import ImageViewer from 'react-native-image-zoom-viewer';
 
 const ProfileEdit = ({ navigation, route }) => {
     const focus = useIsFocused();
@@ -281,7 +280,7 @@ const ProfileEdit = ({ navigation, route }) => {
                             }}>
                                 <View>
                                     {(!memberProfilePic && !selectedImage) && <Image source={require('../assets/defaultUser1.png')} style={styles.img1} />}
-                                    {memberProfilePic && <Image source={{ uri: memberProfilePic }} style={styles.img1} />}
+                                    {memberProfilePic && <Image source={{ uri: memberProfilePic }} style={styles.img1} resizeMode='contain' />}
                                     {selectedImage && <Image source={{ uri: selectedImage }} style={styles.img1} />}
 
                                     <View style={styles.pencilView}>
@@ -408,18 +407,6 @@ const ProfileEdit = ({ navigation, route }) => {
                     </Modal>
 
                 </View >
-
-                <Modal visible={modalVisible} transparent={true}>
-                    <ImageViewer
-                        imageUrls={images}
-                        enableImageZoom={true}
-                        enableSwipeDown={true}
-                        scrollEnabled={true}
-                        onCancel={() => setModalVisible(false)}
-                        onClick={() => setModalVisible(false)}
-                    />
-                </Modal>
-
                 <SafeAreaView style={{ flex: 1 }}>
                     <View style={styles.container}>
                         <Spinner
