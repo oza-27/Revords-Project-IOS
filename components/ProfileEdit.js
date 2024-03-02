@@ -216,7 +216,7 @@ const ProfileEdit = ({ navigation, route }) => {
             });
         }
         try {
-            const response = await axios.post(Globals.API_URL + `/MemberProfiles/UpdateMemberImageInMobileApp/${MemberData[0].memberId}`, formData, {
+            await axios.post(Globals.API_URL + `/MemberProfiles/UpdateMemberImageInMobileApp/${MemberData[0].memberId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

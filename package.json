@@ -1,6 +1,6 @@
 {
   "name": "AwesomeProject",
-  "version": "15.3",
+  "version": "15.4",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

@@ -314,7 +314,7 @@ export default function BusinessDetailsView({ route }) {
                                 </LinearGradient>
                             </> :
                             <View style={styles.detailView}>
-                                <Image source={{ uri: imageUrl }} style={styles.imageBusiness} resizeMode='contain' />
+                                <Image source={{ uri: imageUrl }} style={styles.imageBusiness} resizeMode='stretch' />
                                 <Text style={{ fontWeight: '800', paddingHorizontal: '3%', fontSize: 18, top: 5 }}>{businessDetails.businessName}</Text>
 
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

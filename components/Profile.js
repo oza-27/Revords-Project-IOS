@@ -49,29 +49,29 @@ const Profile = ({ route, navigation }) => {
                 }
             },
         ]);
-    const onDeleteAccount = () =>
-        Alert.alert('Delete', 'Do you want to Delete your Account?', [
-            {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-            },
-            {
-                text: 'Yes', onPress: async () => {
-                    try {
-                        fetch(`${Globals.API_URL}/MemberProfiles/PutDeviceTokenInMobileApp/${MemberData[0].memberId}/NULL`, {
-                            method: 'PUT'
-                        }).then(async (res) => {
-                            await AsyncStorage.removeItem('token');
-                            console.log('Token removed successfully');
-                            navigation.navigate('LandingScreen')
-                        });
-                    } catch (error) {
-                        console.error('Error removing token:', error);
-                    }
-                }
-            },
-        ]);
+    // const onDeleteAccount = () =>
+    //     Alert.alert('Delete', 'Do you want to Delete your Account?', [
+    //         {
+    //             text: 'Cancel',
+    //             onPress: () => console.log('Cancel Pressed'),
+    //             style: 'cancel',
+    //         },
+    //         {
+    //             text: 'Yes', onPress: async () => {
+    //                 try {
+    //                     fetch(`${Globals.API_URL}/MemberProfiles/PutDeviceTokenInMobileApp/${MemberData[0].memberId}/NULL`, {
+    //                         method: 'PUT'
+    //                     }).then(async (res) => {
+    //                         await AsyncStorage.removeItem('token');
+    //                         console.log('Token removed successfully');
+    //                         navigation.navigate('LandingScreen')
+    //                     });
+    //                 } catch (error) {
+    //                     console.error('Error removing token:', error);
+    //                 }
+    //             }
+    //         },
+    //     ]);
     async function setMemData(value) {
         await setMemberData(value);
         setName(value[0].name);
@@ -218,7 +218,7 @@ const Profile = ({ route, navigation }) => {
                                         <Text style={styles.innerDText}>Logout</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{
+                                {/* <View style={{
                                     flexDirection: 'row', width: '95%', alignItems: 'left', justifyContent: 'left',
                                     marginLeft: 16
                                 }}>
@@ -229,7 +229,7 @@ const Profile = ({ route, navigation }) => {
                                         <Image source={require('../assets/trashDel.png')} style={styles.iconimg1} />
                                         <Text style={styles.innerDText}>Delete Account</Text>
                                     </TouchableOpacity>
-                                </View>
+                                </View> */}
                             </View>
                             <Text style={{ fontWeight: '600', color: '#c2c3c5' }}>App Version: {appVersion}</Text>
                         </View>
