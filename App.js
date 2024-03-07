@@ -22,7 +22,7 @@ Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
 
 export default function App() {
-  
+
   useEffect(() => {
     setTimeout(() => SplashScreen.hide(), 2000);
   }, []);
@@ -55,6 +55,7 @@ export default function App() {
       "deviceOS": platformOS,
       "appToken": token
     })
+
 
     fetch(Globals.API_URL + '/MobileAppVisitersLogs/PostMobileAppVisitersLog', {
       method: 'POST',
