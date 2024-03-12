@@ -8,7 +8,6 @@ import { Link, useIsFocused } from "@react-navigation/native";
 import Globals from './Globals';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
-
 const Profile = ({ route, navigation }) => {
     const focus = useIsFocused();
     const [name, setName] = useState('');
